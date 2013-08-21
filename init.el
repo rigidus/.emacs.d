@@ -78,7 +78,8 @@
 ;; (setq common-lisp-hyperspec-root "file:///Users/lisp/HyperSpec")
 
 ;; SLIME
-(add-to-list 'load-path "~/.emacs.d/slime-20110829-cvs") ;; Путь к slime
+;; (add-to-list 'load-path "~/.emacs.d/slime-20110829-cvs") ;; Путь к slime
+(add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-20120307-cvs/") ;; Путь к slime
 (require 'slime)
 (setq slime-net-coding-system 'utf-8-unix)
 (slime-setup '(slime-fancy))
