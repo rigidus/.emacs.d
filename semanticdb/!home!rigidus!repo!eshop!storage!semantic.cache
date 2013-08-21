@@ -1,0 +1,21 @@
+;; Object storage/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "storage/"
+  :tables (list 
+   (semanticdb-table "dao-test.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("*slime-repl sbcl*" section nil nil [190 1004])
+            ("; SLIME 2011-10-19
+<span class="slime-repl-prompt">CL-USER&gt;" section nil nil [1004 9066]))          
+    :file "dao-test.html"
+    :pointmax 9066
+    :fsize 9065
+    :lastmodtime '(20340 25597)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!rigidus!repo!eshop!storage!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

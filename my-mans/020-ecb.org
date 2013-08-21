@@ -1,0 +1,29 @@
+Добавляем в CEDET EmacsCodeBrowser, который превращает emacs в
+многоязыковую IDE.
+
+Берем снапшот из http://ecb.sourceforge.net/cvs_snapshots/ecb.tar.gz
+и распаковываем в ~/.emacs.d/ecb.
+
+Добавляем в конфиграционный файл Емакса следующие строчки:
+<pre>
+;; Load ECB
+(add-to-list 'load-path "~/.emacs.d/ecb")
+(require 'ecb-autoloads)
+(global-set-key (kbd "C-x p") 'ecb-activate)
+(global-set-key (kbd "C-x j") 'ecb-deactivate)
+(global-set-key (kbd "C-x ,") 'ecb-toggle-ecb-windows)
+(global-set-key (kbd "\e\eg") 'goto-line)
+(global-set-key [?\M-g] 'goto-line)
+(define-key global-map (kbd "C-<tab>") 'workspace-controller)
+(setq ecb-tip-of-the-day nil)
+(setq ecb-prescan-directories-for-emptyness nil)
+</pre>
+После этого перезапускаем Емакс и даем команду M-x ecb-byte-compile,
+которая ускорит загрузку нашей среды программирования.
+
+Теперь, чтобы запустить ECB можно нажать C-x p
+А чтобы скрыть C-x ,
+Ну а если вы хотите вообще выключить ECB - C-x j
+При желании вы можете настроить свои комбинации клавишь
+
+Продуктивной работы!

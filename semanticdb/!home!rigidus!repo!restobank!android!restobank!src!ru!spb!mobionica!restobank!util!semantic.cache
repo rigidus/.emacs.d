@@ -1,0 +1,262 @@
+;; Object util/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "util/"
+  :tables (list 
+   (semanticdb-table "Log.java"
+    :major-mode 'java-mode
+    :tags 
+        '( ("ru.spb.mobionica.restobank.util" package nil nil [1 41])
+            ("java.io.BufferedWriter" include nil nil [43 73])
+            ("java.io.File" include nil nil [74 94])
+            ("java.io.FileWriter" include nil nil [95 121])
+            ("java.io.IOException" include nil nil [122 149])
+            ("android.text.TextUtils" include nil nil [151 181])
+            ("Log" type
+               (:typemodifiers ("public")
+                :members 
+                  ( ("PATH_LOG_FOLDER" variable
+                       (:typemodifiers ("private" "static" "final")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [275 329])
+                    ("logToFile" variable
+                       (:typemodifiers ("private" "static")
+                        :type "boolean")
+                        (reparse-symbol class_member_declaration) [332 365])
+                    ("logLevel" variable
+                       (:typemodifiers ("private" "static")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [367 395])
+                    ("ERRORS_ONLY" variable
+                       (:typemodifiers ("private" "static" "final")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [398 439])
+                    ("ERRORS_WARNINGS" variable
+                       (:typemodifiers ("private" "static" "final")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [441 486])
+                    ("ERRORS_WARNINGS_INFO" variable
+                       (:typemodifiers ("private" "static" "final")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [488 538])
+                    ("ERRORS_WARNINGS_INFO_DEBUG" variable
+                       (:typemodifiers ("private" "static" "final")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [540 596])
+                    ("ERRORS_WARNINGS_INFO_DEBUG_VERBOSE" variable
+                       (:typemodifiers ("private" "static" "final")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [598 662])
+                    ("log_v" variable
+                       (:typemodifiers ("private" "static")
+                        :type "boolean")
+                        (reparse-symbol class_member_declaration) [716 722])
+                    ("log_d" variable
+                       (:typemodifiers ("private" "static")
+                        :type "boolean")
+                        (reparse-symbol class_member_declaration) [709 715])
+                    ("log_i" variable
+                       (:typemodifiers ("private" "static")
+                        :type "boolean")
+                        (reparse-symbol class_member_declaration) [702 708])
+                    ("log_w" variable
+                       (:typemodifiers ("private" "static")
+                        :type "boolean")
+                        (reparse-symbol class_member_declaration) [695 701])
+                    ("log_e" variable
+                       (:typemodifiers ("private" "static")
+                        :type "boolean")
+                        (reparse-symbol class_member_declaration) [665 694])
+                    ("v" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [819 829])
+                            ("string" variable (:type "String") (reparse-symbol formal_parameters) [831 844]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [798 950])
+                    ("d" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [974 984])
+                            ("string" variable (:type "String") (reparse-symbol formal_parameters) [986 999]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [953 1105])
+                    ("i" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [1129 1139])
+                            ("string" variable (:type "String") (reparse-symbol formal_parameters) [1141 1154]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1108 1260])
+                    ("w" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [1284 1294])
+                            ("string" variable (:type "String") (reparse-symbol formal_parameters) [1296 1309]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1263 1415])
+                    ("e" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [1439 1449])
+                            ("string" variable (:type "String") (reparse-symbol formal_parameters) [1451 1464]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1418 1570])
+                    ("v" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [1594 1604])
+                            ("format" variable (:type "String") (reparse-symbol formal_parameters) [1606 1619]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1573 1783])
+                    ("d" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [1807 1817])
+                            ("format" variable (:type "String") (reparse-symbol formal_parameters) [1819 1832]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1786 1996])
+                    ("i" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [2020 2030])
+                            ("format" variable (:type "String") (reparse-symbol formal_parameters) [2032 2045]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1999 2209])
+                    ("w" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [2233 2243])
+                            ("format" variable (:type "String") (reparse-symbol formal_parameters) [2245 2258]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [2212 2422])
+                    ("e" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [2446 2456])
+                            ("format" variable (:type "String") (reparse-symbol formal_parameters) [2458 2471]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [2425 2635])
+                    ("w" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [2659 2669])
+                            ("e" variable (:type "Throwable") (reparse-symbol formal_parameters) [2671 2682]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [2638 2851])
+                    ("e" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [2875 2885])
+                            ("e" variable (:type "Throwable") (reparse-symbol formal_parameters) [2887 2898]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [2854 3067])
+                    ("throwableToString" function
+                       (:typemodifiers ("private" "static")
+                        :arguments 
+                          ( ("e" variable (:type "Throwable") (reparse-symbol formal_parameters) [3110 3121]))                          
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [3070 3355])
+                    ("w" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [3379 3389])
+                            ("message" variable (:type "String") (reparse-symbol formal_parameters) [3391 3405])
+                            ("e" variable (:type "Throwable") (reparse-symbol formal_parameters) [3407 3418]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [3358 3576])
+                    ("e" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [3600 3610])
+                            ("message" variable (:type "String") (reparse-symbol formal_parameters) [3612 3626])
+                            ("e" variable (:type "Throwable") (reparse-symbol formal_parameters) [3628 3639]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [3579 3797])
+                    ("vl" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [3822 3832])
+                            ("format" variable (:type "String") (reparse-symbol formal_parameters) [3834 3847]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [3800 4043])
+                    ("dl" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [4068 4078])
+                            ("format" variable (:type "String") (reparse-symbol formal_parameters) [4080 4093]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [4046 4289])
+                    ("il" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [4314 4324])
+                            ("format" variable (:type "String") (reparse-symbol formal_parameters) [4326 4339]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [4292 4535])
+                    ("wl" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [4560 4570])
+                            ("format" variable (:type "String") (reparse-symbol formal_parameters) [4572 4585]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [4538 4781])
+                    ("el" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("tag" variable (:type "String") (reparse-symbol formal_parameters) [4806 4816])
+                            ("format" variable (:type "String") (reparse-symbol formal_parameters) [4818 4831]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [4784 5027])
+                    ("setLogToFile" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("logging" variable (:type "boolean") (reparse-symbol formal_parameters) [5062 5077]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [5030 5106])
+                    ("getLogToFile" function
+                       (:typemodifiers ("public" "static")
+                        :type "boolean")
+                        (reparse-symbol class_member_declaration) [5109 5170])
+                    ("getRecentLogFileName" function
+                       (:typemodifiers ("public" "static")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [5173 5323])
+                    ("setLogLevel" function
+                       (:typemodifiers ("public" "static")
+                        :arguments 
+                          ( ("level" variable (:type "int") (reparse-symbol formal_parameters) [5357 5366]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [5326 5402])
+                    ("init" function
+                       (:typemodifiers ("private" "static")
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [5405 5662])
+                    ("getLocation" function
+                       (:typemodifiers ("private" "static")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [5665 6376])
+                    ("getClassName" function
+                       (:typemodifiers ("private" "static")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [6379 6618])
+                    ("writeToFile" function
+                       (:typemodifiers ("private" "static")
+                        :arguments 
+                          ( ("level" variable (:type "String") (reparse-symbol formal_parameters) [6653 6665])
+                            ("tag" variable (:type "String") (reparse-symbol formal_parameters) [6667 6677])
+                            ("string" variable (:type "String") (reparse-symbol formal_parameters) [6679 6692]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [6621 7390]))                  
+                :type "class")
+                nil [255 7393]))          
+    :file "Log.java"
+    :pointmax 7394
+    :fsize 7393
+    :lastmodtime '(20336 6094)
+    :unmatched-syntax '((GT 6421 . 6422) (QUESTION 6420 . 6421) (IDENTIFIER 6414 . 6419) (LT 6419 . 6420) (DOT 4841 . 4842) (IDENTIFIER 4833 . 4839) (DOT 4840 . 4841) (DOT 4595 . 4596) (IDENTIFIER 4587 . 4593) (DOT 4594 . 4595) (DOT 4349 . 4350) (IDENTIFIER 4341 . 4347) (DOT 4348 . 4349) (DOT 4103 . 4104) (IDENTIFIER 4095 . 4101) (DOT 4102 . 4103) (DOT 3857 . 3858) (IDENTIFIER 3849 . 3855) (DOT 3856 . 3857) (DOT 2481 . 2482) (IDENTIFIER 2473 . 2479) (DOT 2480 . 2481) (DOT 2268 . 2269) (IDENTIFIER 2260 . 2266) (DOT 2267 . 2268) (DOT 2055 . 2056) (IDENTIFIER 2047 . 2053) (DOT 2054 . 2055) (DOT 1842 . 1843) (IDENTIFIER 1834 . 1840) (DOT 1841 . 1842) (DOT 1629 . 1630) (IDENTIFIER 1621 . 1627) (DOT 1628 . 1629))
+    )
+   )
+  :file "!home!rigidus!repo!restobank!android!restobank!src!ru!spb!mobionica!restobank!util!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

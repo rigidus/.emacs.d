@@ -1,0 +1,637 @@
+;; Object entity/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "entity/"
+  :tables (list 
+   (semanticdb-table "Restaurant.java"
+    :major-mode 'java-mode
+    :tags 
+        '( ("ru.spb.mobionica.restobank.entity" package nil nil [1 43])
+            ("android.os.Parcel" include nil nil [45 70])
+            ("android.os.Parcelable" include nil nil [71 100])
+            ("Restaurant" type
+               (:typemodifiers ("public")
+                :interfaces ("Parcelable")
+                :members 
+                  ( ("id" variable
+                       (:typemodifiers ("private")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [152 167])
+                    ("name" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [169 189])
+                    ("description" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [191 218])
+                    ("openingDate" variable
+                       (:typemodifiers ("private")
+                        :type "long")
+                        (reparse-symbol class_member_declaration) [220 245])
+                    ("price" variable
+                       (:typemodifiers ("private")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [247 265])
+                    ("photo" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [267 288])
+                    ("site" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [290 310])
+                    ("phone" variable
+                       (:typemodifiers ("private")
+                        :type "Phone")
+                        (reparse-symbol class_member_declaration) [312 332])
+                    ("address" variable
+                       (:typemodifiers ("private")
+                        :type "Address")
+                        (reparse-symbol class_member_declaration) [334 358])
+                    ("estimate" variable
+                       (:typemodifiers ("private")
+                        :type "Estimate")
+                        (reparse-symbol class_member_declaration) [360 386])
+                    ("workTime" variable
+                       (:dereference 2
+                        :typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [388 416])
+                    ("optional" variable
+                       (:typemodifiers ("private")
+                        :type "Optional")
+                        (reparse-symbol class_member_declaration) [418 444])
+                    ("getId" function
+                       (:typemodifiers ("public")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [447 483])
+                    ("setId" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("id" variable (:type "int") (reparse-symbol formal_parameters) [504 510]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [486 532])
+                    ("getName" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [535 578])
+                    ("setName" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("name" variable (:type "String") (reparse-symbol formal_parameters) [601 612]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [581 638])
+                    ("getDescription" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [641 698])
+                    ("setDescription" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("description" variable (:type "String") (reparse-symbol formal_parameters) [728 746]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [701 786])
+                    ("getOpeningDate" function
+                       (:typemodifiers ("public")
+                        :type "long")
+                        (reparse-symbol class_member_declaration) [789 844])
+                    ("setOpeningDate" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("openingDate" variable (:type "long") (reparse-symbol formal_parameters) [874 890]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [847 930])
+                    ("getPrice" function
+                       (:typemodifiers ("public")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [933 975])
+                    ("setPrice" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("price" variable (:type "int") (reparse-symbol formal_parameters) [999 1008]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [978 1036])
+                    ("getPhoto" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [1039 1084])
+                    ("setPhoto" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("photo" variable (:type "String") (reparse-symbol formal_parameters) [1108 1120]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1087 1148])
+                    ("getSite" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [1151 1194])
+                    ("setSite" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("site" variable (:type "String") (reparse-symbol formal_parameters) [1217 1228]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1197 1254])
+                    ("getPhone" function
+                       (:typemodifiers ("public")
+                        :type "Phone")
+                        (reparse-symbol class_member_declaration) [1257 1301])
+                    ("setPhone" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("phone" variable (:type "Phone") (reparse-symbol formal_parameters) [1325 1336]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1304 1364])
+                    ("getAddress" function
+                       (:typemodifiers ("public")
+                        :type "Address")
+                        (reparse-symbol class_member_declaration) [1367 1417])
+                    ("setAddress" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("address" variable (:type "Address") (reparse-symbol formal_parameters) [1443 1458]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1420 1490])
+                    ("getEstimate" function
+                       (:typemodifiers ("public")
+                        :type "Estimate")
+                        (reparse-symbol class_member_declaration) [1493 1546])
+                    ("setEstimate" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("estimate" variable (:type "Estimate") (reparse-symbol formal_parameters) [1573 1590]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1549 1624])
+                    ("getWorkTime" function
+                       (:typemodifiers ("public")
+                        :type "String[][]")
+                        (reparse-symbol class_member_declaration) [1627 1682])
+                    ("setWorkTime" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("workTime" variable
+                               (:dereference 2
+                                :type "String")
+                                (reparse-symbol formal_parameters) [1709 1728]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1685 1762])
+                    ("getOptional" function
+                       (:typemodifiers ("public")
+                        :type "Optional")
+                        (reparse-symbol class_member_declaration) [1765 1818])
+                    ("setOptional" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("optional" variable (:type "Optional") (reparse-symbol formal_parameters) [1845 1862]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1821 1896])
+                    ("Restaurant" function
+                       (:constructor-flag t
+                        :typemodifiers ("public"))
+                        (reparse-symbol class_member_declaration) [1948 1970])
+                    ("Restaurant" function
+                       (:constructor-flag t
+                        :typemodifiers ("public")
+                        :arguments 
+                          ( ("in" variable (:type "Parcel") (reparse-symbol formal_parameters) [1991 2000]))                          )
+                        (reparse-symbol class_member_declaration) [1973 2028])
+                    ("readFromParcel" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("in" variable (:type "Parcel") (reparse-symbol formal_parameters) [2058 2067]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [2031 2501])
+                    ("writeToParcel" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("out" variable (:type "Parcel") (reparse-symbol formal_parameters) [2541 2551])
+                            ("flags" variable (:type "int") (reparse-symbol formal_parameters) [2553 2562]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [2515 2905])
+                    ("describeContents" function
+                       (:typemodifiers ("public")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [2919 2965]))                  
+                :type "class")
+                nil [102 3264]))          
+    :file "Restaurant.java"
+    :pointmax 3265
+    :fsize 3708
+    :lastmodtime '(20357 21238)
+    :unmatched-syntax '((SEMICOLON 3260 . 3261) (PAREN_BLOCK 3064 . 3066) (GT 3063 . 3064) (LT 3052 . 3053) (NEW 3030 . 3033) (EQ 3028 . 3029) (GT 3018 . 3019) (PUBLIC 2969 . 2975) (LT 3007 . 3008) (punctuation 2908 . 2909) (punctuation 2504 . 2505))
+    )
+   (semanticdb-table "Address.java"
+    :major-mode 'java-mode
+    :tags 
+        '( ("ru.spb.mobionica.restobank.entity" package nil nil [1 43])
+            ("android.os.Parcel" include nil nil [45 70])
+            ("android.os.Parcelable" include nil nil [71 100])
+            ("Address" type
+               (:typemodifiers ("public")
+                :interfaces ("Parcelable")
+                :members 
+                  ( ("latitude" variable
+                       (:typemodifiers ("private")
+                        :type "double")
+                        (reparse-symbol class_member_declaration) [149 173])
+                    ("longitude" variable
+                       (:typemodifiers ("private")
+                        :type "double")
+                        (reparse-symbol class_member_declaration) [175 200])
+                    ("postalCode" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [202 228])
+                    ("country" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [230 253])
+                    ("city" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [255 275])
+                    ("subway" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [277 299])
+                    ("street" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [301 323])
+                    ("building" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [325 349])
+                    ("getLatitude" function
+                       (:typemodifiers ("public")
+                        :type "double")
+                        (reparse-symbol class_member_declaration) [352 403])
+                    ("setLatitude" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("latitude" variable (:type "double") (reparse-symbol formal_parameters) [430 445]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [406 479])
+                    ("getLongitude" function
+                       (:typemodifiers ("public")
+                        :type "double")
+                        (reparse-symbol class_member_declaration) [482 535])
+                    ("setLongitude" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("longitude" variable (:type "double") (reparse-symbol formal_parameters) [563 579]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [538 615])
+                    ("getPostalCode" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [618 673])
+                    ("setPostalCode" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("postalCode" variable (:type "String") (reparse-symbol formal_parameters) [702 719]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [676 757])
+                    ("getCountry" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [760 809])
+                    ("setCountry" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("country" variable (:type "String") (reparse-symbol formal_parameters) [835 849]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [812 881])
+                    ("getCity" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [884 927])
+                    ("setCity" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("city" variable (:type "String") (reparse-symbol formal_parameters) [950 961]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [930 987])
+                    ("getSubway" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [990 1037])
+                    ("setSubway" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("subway" variable (:type "String") (reparse-symbol formal_parameters) [1062 1075]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1040 1105])
+                    ("getStreet" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [1108 1155])
+                    ("setStreet" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("street" variable (:type "String") (reparse-symbol formal_parameters) [1180 1193]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1158 1223])
+                    ("getBuilding" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [1226 1277])
+                    ("setBuilding" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("building" variable (:type "String") (reparse-symbol formal_parameters) [1304 1319]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1280 1353])
+                    ("getShortAddress" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [1357 1455])
+                    ("Address" function
+                       (:constructor-flag t
+                        :typemodifiers ("public"))
+                        (reparse-symbol class_member_declaration) [1507 1526])
+                    ("Address" function
+                       (:constructor-flag t
+                        :typemodifiers ("public")
+                        :arguments 
+                          ( ("in" variable (:type "Parcel") (reparse-symbol formal_parameters) [1544 1553]))                          )
+                        (reparse-symbol class_member_declaration) [1529 1581])
+                    ("readFromParcel" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("in" variable (:type "Parcel") (reparse-symbol formal_parameters) [1611 1620]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1584 1860])
+                    ("writeToParcel" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("out" variable (:type "Parcel") (reparse-symbol formal_parameters) [1900 1910])
+                            ("flags" variable (:type "int") (reparse-symbol formal_parameters) [1912 1921]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1874 2153])
+                    ("describeContents" function
+                       (:typemodifiers ("public")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [2167 2213]))                  
+                :type "class")
+                nil [102 2494]))          
+    :file "Address.java"
+    :pointmax 2495
+    :fsize 2710
+    :lastmodtime '(20357 21238)
+    :unmatched-syntax '((SEMICOLON 2490 . 2491) (PAREN_BLOCK 2306 . 2308) (GT 2305 . 2306) (LT 2297 . 2298) (NEW 2275 . 2278) (EQ 2273 . 2274) (GT 2263 . 2264) (PUBLIC 2217 . 2223) (LT 2255 . 2256) (punctuation 2156 . 2157) (punctuation 1863 . 1864))
+    )
+   (semanticdb-table "Optional.java"
+    :major-mode 'java-mode
+    :tags 
+        '( ("ru.spb.mobionica.restobank.entity" package nil nil [1 43])
+            ("java.util.Arrays" include nil nil [45 69])
+            ("android.os.Parcel" include nil nil [71 96])
+            ("android.os.Parcelable" include nil nil [97 126])
+            ("Optional" type
+               (:typemodifiers ("public")
+                :interfaces ("Parcelable")
+                :members 
+                  ( ("kitchen" variable
+                       (:dereference 1
+                        :typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [176 201])
+                    ("service" variable
+                       (:dereference 1
+                        :typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [203 228])
+                    ("additionally" variable
+                       (:dereference 1
+                        :typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [230 260])
+                    ("children" variable
+                       (:dereference 1
+                        :typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [262 288])
+                    ("music" variable
+                       (:dereference 1
+                        :typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [290 313])
+                    ("view" variable
+                       (:dereference 1
+                        :typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [315 337])
+                    ("getKitchen" function
+                       (:typemodifiers ("public")
+                        :type "String[]")
+                        (reparse-symbol class_member_declaration) [340 391])
+                    ("setKitchen" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("kitchen" variable
+                               (:dereference 1
+                                :type "String")
+                                (reparse-symbol formal_parameters) [417 433]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [394 465])
+                    ("getService" function
+                       (:typemodifiers ("public")
+                        :type "String[]")
+                        (reparse-symbol class_member_declaration) [468 519])
+                    ("setService" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("service" variable
+                               (:dereference 1
+                                :type "String")
+                                (reparse-symbol formal_parameters) [545 561]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [522 593])
+                    ("getAdditionally" function
+                       (:typemodifiers ("public")
+                        :type "String[]")
+                        (reparse-symbol class_member_declaration) [596 657])
+                    ("setAdditionally" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("additionally" variable
+                               (:dereference 1
+                                :type "String")
+                                (reparse-symbol formal_parameters) [688 709]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [660 751])
+                    ("getChildren" function
+                       (:typemodifiers ("public")
+                        :type "String[]")
+                        (reparse-symbol class_member_declaration) [754 807])
+                    ("setChildren" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("children" variable
+                               (:dereference 1
+                                :type "String")
+                                (reparse-symbol formal_parameters) [834 851]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [810 885])
+                    ("getMusic" function
+                       (:typemodifiers ("public")
+                        :type "String[]")
+                        (reparse-symbol class_member_declaration) [888 935])
+                    ("setMusic" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("music" variable
+                               (:dereference 1
+                                :type "String")
+                                (reparse-symbol formal_parameters) [959 973]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [938 1001])
+                    ("getView" function
+                       (:typemodifiers ("public")
+                        :type "String[]")
+                        (reparse-symbol class_member_declaration) [1004 1049])
+                    ("setView" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("view" variable
+                               (:dereference 1
+                                :type "String")
+                                (reparse-symbol formal_parameters) [1072 1085]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1052 1111])
+                    ("Optional" function
+                       (:constructor-flag t
+                        :typemodifiers ("public"))
+                        (reparse-symbol class_member_declaration) [1163 1183])
+                    ("Optional" function
+                       (:constructor-flag t
+                        :typemodifiers ("public")
+                        :arguments 
+                          ( ("in" variable (:type "Parcel") (reparse-symbol formal_parameters) [1202 1211]))                          )
+                        (reparse-symbol class_member_declaration) [1186 1239])
+                    ("readFromParcel" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("in" variable (:type "Parcel") (reparse-symbol formal_parameters) [1269 1278]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1242 1813])
+                    ("convertObjectArrayToStringArray" function
+                       (:typemodifiers ("private")
+                        :arguments 
+                          ( ("objectArray" variable
+                               (:dereference 1
+                                :type "Object")
+                                (reparse-symbol formal_parameters) [1866 1886]))                          
+                        :type "String[]")
+                        (reparse-symbol class_member_declaration) [1817 1965])
+                    ("writeToParcel" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("out" variable (:type "Parcel") (reparse-symbol formal_parameters) [2005 2015])
+                            ("flags" variable (:type "int") (reparse-symbol formal_parameters) [2017 2026]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [1979 2195])
+                    ("describeContents" function
+                       (:typemodifiers ("public")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [2209 2255]))                  
+                :type "class")
+                nil [128 2542]))          
+    :file "Optional.java"
+    :pointmax 2543
+    :fsize 2542
+    :lastmodtime '(20340 3544)
+    :unmatched-syntax '((SEMICOLON 2538 . 2539) (PAREN_BLOCK 2350 . 2352) (GT 2349 . 2350) (LT 2340 . 2341) (NEW 2318 . 2321) (EQ 2316 . 2317) (GT 2306 . 2307) (PUBLIC 2259 . 2265) (LT 2297 . 2298) (punctuation 2198 . 2199) (punctuation 1968 . 1969))
+    )
+   (semanticdb-table "Phone.java"
+    :major-mode 'java-mode
+    :tags 
+        '( ("ru.spb.mobionica.restobank.entity" package nil nil [1 43])
+            ("android.os.Parcel" include nil nil [45 70])
+            ("android.os.Parcelable" include nil nil [71 100])
+            ("Phone" type
+               (:typemodifiers ("public")
+                :interfaces ("Parcelable")
+                :members 
+                  ( ("main" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [147 167])
+                    ("delivery" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [169 193])
+                    ("banquet" variable
+                       (:typemodifiers ("private")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [195 218])
+                    ("getMain" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [221 264])
+                    ("setMain" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("main" variable (:type "String") (reparse-symbol formal_parameters) [287 298]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [267 324])
+                    ("getDelivery" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [327 378])
+                    ("setDelivery" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("delivery" variable (:type "String") (reparse-symbol formal_parameters) [405 420]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [381 454])
+                    ("getBanquet" function
+                       (:typemodifiers ("public")
+                        :type "String")
+                        (reparse-symbol class_member_declaration) [457 506])
+                    ("setBanquet" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("banquet" variable (:type "String") (reparse-symbol formal_parameters) [532 546]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [509 578])
+                    ("Phone" function
+                       (:constructor-flag t
+                        :typemodifiers ("public"))
+                        (reparse-symbol class_member_declaration) [630 647])
+                    ("Phone" function
+                       (:constructor-flag t
+                        :typemodifiers ("public")
+                        :arguments 
+                          ( ("in" variable (:type "Parcel") (reparse-symbol formal_parameters) [663 672]))                          )
+                        (reparse-symbol class_member_declaration) [650 700])
+                    ("readFromParcel" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("in" variable (:type "Parcel") (reparse-symbol formal_parameters) [730 739]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [703 830])
+                    ("writeToParcel" function
+                       (:typemodifiers ("public")
+                        :arguments 
+                          ( ("out" variable (:type "Parcel") (reparse-symbol formal_parameters) [870 880])
+                            ("flags" variable (:type "int") (reparse-symbol formal_parameters) [882 891]))                          
+                        :type "void")
+                        (reparse-symbol class_member_declaration) [844 979])
+                    ("describeContents" function
+                       (:typemodifiers ("public")
+                        :type "int")
+                        (reparse-symbol class_member_declaration) [993 1039]))                  
+                :type "class")
+                nil [102 1308]))          
+    :file "Phone.java"
+    :pointmax 1309
+    :fsize 1308
+    :lastmodtime '(20336 6094)
+    :unmatched-syntax '((SEMICOLON 1304 . 1305) (PAREN_BLOCK 1128 . 1130) (GT 1127 . 1128) (LT 1121 . 1122) (NEW 1099 . 1102) (EQ 1097 . 1098) (GT 1087 . 1088) (PUBLIC 1043 . 1049) (LT 1081 . 1082) (punctuation 982 . 983) (punctuation 833 . 834))
+    )
+   )
+  :file "!home!rigidus!repo!restobank!android!restobank!src!ru!spb!mobionica!restobank!entity!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

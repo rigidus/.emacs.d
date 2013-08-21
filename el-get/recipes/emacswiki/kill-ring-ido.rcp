@@ -1,0 +1,5 @@
+(:name kill-ring-ido
+:auto-generated t
+:type emacswiki
+:description "command for keyring browsing with ido"
+:website "https://raw.github.com/emacsmirror/emacswiki.org/master/kill-ring-ido.el")
