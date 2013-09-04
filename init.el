@@ -560,6 +560,7 @@ to the previously saved position"
 
 ;; PHP - HTML - JAVASCRIPT
 ;; http://php-mode.svn.sourceforge.net/svnroot/php-mode/tags/php-mode-1.5.0/php-mode.el
+(add-to-list 'load-path "~/.emacs.d/php-mode")
 (require 'php-mode) 						; подгружаем php режим
 ;; http://www.stcamp.net/share/php-electric.el
 (require 'php-electric)						; режим autocompletion конструкций языка
@@ -1431,3 +1432,43 @@ to the previously saved position"
     ;; add some Distel bindings to the Erlang shell
     (dolist (spec distel-shell-keys)
     (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
+
+
+;; PARROT
+
+(load "parrot")
+(load "pasm")
+
+(add-to-list 'auto-mode-alist (cons "\\.pasm\\'" 'pasm-mode))
+
+(add-hook 'pasm-mode-hook
+          (function (lambda ()
+                      (setq indent-tabs-mode nil))))
+
+
+;; FORMATTING
+
+;; abbrev-mode
+(add-hook 'php-mode-hook
+'(lambda ()
+(define-abbrev php-mode-abbrev-table "ex" "extends")
+(c-set-style "cc-mode")
+(c-set-offset 'arglist-close 0)))
+
+;; А также небольшой набор моих предпочтений:
+;; - отступ по табулции только если курсор в начале строки;
+;; - отображение позиции курсора в строке;
+;; - отступ символами табуляции;
+;; - отображение размера окна;
+;; - ширина табуляции - 4 символа.
+
+(custom-set-variables
+;; custom-set-variables was added by Custom.
+;; If you edit it by hand, you could mess it up, so be careful.
+;; Your init file should contain only one such instance.
+;; If there is more than one, they won't work right.
+'(c-tab-always-indent nil)
+'(column-number-mode t)
+'(indent-tabs-mode t)
+'(size-indication-mode t)
+'(tab-width 4))
