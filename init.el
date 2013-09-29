@@ -165,8 +165,10 @@
 (setq use-dialog-boxes nil)                  ;; Не использовать диалоговые окна
 (setq cursor-in-non-selected-windows nil)    ;; Не показывать курсоры в неактивных окнах
 (setq default-tab-width 4)                   ;; размер табуляции
-;; (setq c-basic-offset 4)                      ;; табуляция для режимов, основанных на c-mode
-;; (setq sgml-basic-offset 4)                   ;; для HTML и XML
+(setq c-basic-offset 4)                      ;; табуляция для режимов, основанных на c-mode
+(setq tab-width 4)
+(setq cperl-indent-level 4)
+(setq sgml-basic-offset 4)                   ;; для HTML и XML
 (setq-default indent-tabs-mode nil)          ;; отступ только пробелами
 (setq initial-scratch-message nil)           ;; Scratch buffer settings. Очищаем его.
 (setq case-fold-search t)                    ;; Поиск без учёта регистра
@@ -1469,6 +1471,5 @@ to the previously saved position"
 ;; If there is more than one, they won't work right.
 '(c-tab-always-indent nil)
 '(column-number-mode t)
-'(indent-tabs-mode t)
 '(size-indication-mode t)
 '(tab-width 4))
