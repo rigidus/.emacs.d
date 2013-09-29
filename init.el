@@ -20,14 +20,13 @@
 ;;(emms-default-players)
 
 
-
 ;; EXPAND_REGION
-(add-to-list 'load-path "~/.emacs.d/el-get/expand-region")
+(add-to-list 'load-path "~/.emacs.d/expand-region")
 (require 'expand-region)
 ;; (global-set-key (kbd "C-c =") 'er/expand-region)
 
 ;; MULTIPLE_CURSORS
-(add-to-list 'load-path "~/.emacs.d/el-get/multiple-cursors")
+(add-to-list 'load-path "~/.emacs.d/multiple-cursors")
 (require 'multiple-cursors)
 
 (global-set-key (kbd "C-c >") 'mc/mark-next-like-this)
@@ -79,7 +78,7 @@
 
 ;; SLIME
 ;; (add-to-list 'load-path "~/.emacs.d/slime-20110829-cvs") ;; Путь к slime
-(add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-20120307-cvs/") ;; Путь к slime
+(add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-20130720-cvs/") ;; Путь к slime
 (require 'slime)
 (setq slime-net-coding-system 'utf-8-unix)
 (slime-setup '(slime-fancy))
@@ -1403,11 +1402,12 @@ to the previously saved position"
 
 ;; Erlang mode
 (setq erlang-root-dir "/usr/lib/erlang")
-(setq load-path (cons "/usr/lib/erlang/lib/tools-2.6.8/emacs" load-path))
+(setq load-path (cons "/usr/lib/erlang/lib/tools-2.6.7/emacs" load-path))
 (setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
-(setq erlang-man-root-dir "/usr/lib/erlang/man")(require 'erlang-start)
+(setq erlang-man-root-dir "/usr/lib/erlang/man")
+(require 'erlang-start)
 ;; Distel
-(add-to-list 'load-path "/home/rigidus/repo/distel/elisp")
+(add-to-list 'load-path "~/.emacs.d/share/distel/elisp")
 (require 'distel)
 (distel-setup)
 ;; Some Erlang customizations
@@ -1422,18 +1422,18 @@ to the previously saved position"
 ;; shell too
 (defconst distel-shell-keys
     '(("\C-\M-i"   erl-complete)
-      ("\M-?"      erl-complete)
-      ("\M-."      erl-find-source-under-point)
-      ("\M-,"      erl-find-source-unwind)
-      ("\M-*"      erl-find-source-unwind)
-      )
+    ("\M-?"      erl-complete)
+    ("\M-."      erl-find-source-under-point)
+    ("\M-,"      erl-find-source-unwind)
+    ("\M-*"      erl-find-source-unwind)
+  )
     "Additional keys to bind when in Erlang shell.")
 
 (add-hook 'erlang-shell-mode-hook
-(lambda ()
-    ;; add some Distel bindings to the Erlang shell
-    (dolist (spec distel-shell-keys)
-    (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
+	  (lambda ()
+	    ;; add some Distel bindings to the Erlang shell
+	    (dolist (spec distel-shell-keys)
+	      (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
 
 
 ;; PARROT
@@ -1451,11 +1451,11 @@ to the previously saved position"
 ;; FORMATTING
 
 ;; abbrev-mode
-(add-hook 'php-mode-hook
-'(lambda ()
-(define-abbrev php-mode-abbrev-table "ex" "extends")
-(c-set-style "cc-mode")
-(c-set-offset 'arglist-close 0)))
+;; (add-hook 'php-mode-hook
+;; '(lambda ()
+;; (define-abbrev php-mode-abbrev-table "ex" "extends")
+;; (c-set-style "cc-mode")
+;; (c-set-offset 'arglist-close 0)))
 
 ;; А также небольшой набор моих предпочтений:
 ;; - отступ по табулции только если курсор в начале строки;
@@ -1469,7 +1469,7 @@ to the previously saved position"
 ;; If you edit it by hand, you could mess it up, so be careful.
 ;; Your init file should contain only one such instance.
 ;; If there is more than one, they won't work right.
-'(c-tab-always-indent nil)
-'(column-number-mode t)
-'(size-indication-mode t)
-'(tab-width 4))
+ '(c-tab-always-indent nil)
+ '(column-number-mode t)
+ '(size-indication-mode t)
+ '(tab-width 4))
