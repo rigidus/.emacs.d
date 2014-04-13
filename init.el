@@ -395,45 +395,45 @@ to the previously saved position"
 ;; Сортировать буферы по теме
 (setq ibuffer-saved-filter-groups
       (quote (("default"
-               ("SYS"       (or
-                             (mode . dired-mode)
-                             (name . "^\\*scratch\\*$")
-                             (name . "^\\*Messages\\*$")))
-               ("REPL"      (or
-                             (name . "^\\*inferior-lisp.*")
-                             (name . "^\\*slime-events.*")
-                             (name . "^\\*slime-repl.*")
-                             (name . "^\\*Python.*")
-                             (name . "*\\*sldb.*")))
-               ("SHELL"     (or
-                             (name . "^\\*Shell\\*$")
-                             (name . "^\\*grep\\*$")))
                ("C/CPP"     (or
-                             (mode . c-mode)
-                             (mode . c++-mode)))
+                              (mode . c-mode)
+                              (mode . c++-mode)))
+               ("ERLANG"    (or
+                              (mode . erlang-mode)))
+               ("JS"        (or
+                              (mode . espresso-mode)))
+               ("CSS"       (or
+                              (mode . css-mode)))
+               ("HTML"      (or
+                              (mode . html-mode)
+                              (mode . closure-template-html-mode)))
+               ("CHAT"      (or
+                              (name . "^\\*---.*")))
+               ("CONF"      (or
+                              (name . "^\\*===.*")))
+               ("JABBER"    (or
+                              (name . "^\\*-jabber-roster.*")))
+               ("SYS"       (or
+                              (mode . dired-mode)
+                              (name . "^\\*scratch\\*$")
+                              (name . "^\\*Messages\\*$")))
+               ("SHELL"     (or
+                              (name . "^\\*Shell\\*$")
+                              (name . "^\\*grep\\*$")))
+               ("REPL"      (or
+                              (name . "^\\*inferior-lisp.*")
+                              (name . "^\\*slime-events.*")
+                              (name . "^\\*slime-repl.*")
+                              (name . "^\\*Python.*")
+                              (name . "*\\*sldb.*")))
                ("ORG"       (or
                               (mode . org-mode)))
                ("LISP"      (or
                               (mode . lisp-mode)))
-               ("ERLANG"    (or
-                              (mode . erlang-mode)))
-               ("HTML"       (or
-                              (mode . html-mode)
-                              (mode . closure-template-html-mode)))
-               ("JS"         (or
-                              (mode . espresso-mode)))
-               ("CSS"        (or
-                              (mode . css-mode)))
-               ("ELISP"      (or
+               ("ELISP"     (or
                               (mode . elisp-mode)
-                              (mode . emacs-lisp-mode)))
-               ("CHAT"       (or
-                              (name . "^\\*---.*")))
-               ("CONF"       (or
-                              (name . "^\\*===.*")))
-               ("JABBER"     (or
-                              (name . "^\\*-jabber-roster.*")))
-               ))))
+                              (mode . emacs-lisp-mode)))))))
+
 (add-hook 'ibuffer-mode-hook
           (lambda ()
             (ibuffer-switch-to-saved-filter-groups
@@ -755,6 +755,19 @@ to the previously saved position"
 (setq jabber-history-enabled t)
 (setq jabber-history-muc-enabled t)
 (setq jabber-history-size-limit 1024000000)
+
+;; ;; Не закрывать буфер ростера при активном подключении
+;; (my-hook-for (kill-buffer-query-functions)
+;;   (not
+;;    (and *jabber-connected*
+;;     (eql (current-buffer)
+;;           (get-buffer jabber-roster-buffer)))))
+
+;; ;; Не закрывать буферы с активными конференциями
+;; (my-hook-for (kill-buffer-query-functions)
+;;   (not (and jabber-group
+;;             (assoc jabber-group *jabber-active-groupchats*))))
+
 ;; M-x jabber-edit-bookmarks - для редактирвания закладок
 
 
