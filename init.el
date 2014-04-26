@@ -88,10 +88,10 @@
 ;; SLIME
 ;; (add-to-list 'load-path "~/.emacs.d/slime-20110829-cvs") ;; Путь к slime
 (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-20130720-cvs/") ;; Путь к slime
-(require 'slime)
-(setq slime-net-coding-system 'utf-8-unix)
-(slime-setup '(slime-fancy))
-(setq slime-enable-evaluate-in-emacs t)
+;;(require 'slime)
+;;(setq slime-net-coding-system 'utf-8-unix)
+;;(slime-setup '(slime-fancy))
+;;(setq slime-enable-evaluate-in-emacs t)
 ;; swank:invoke-slime-debugger
 ;; (let ((*emacs-connection* ...)) (eval-in-emacs '(+ 1 2)))
 
