@@ -30,42 +30,42 @@
 
 
 ;; EXPAND_REGION
-(add-to-list 'load-path "~/.emacs.d/expand-region")
-(require 'expand-region)
+;;(add-to-list 'load-path "~/.emacs.d/expand-region")
+;;(require 'expand-region)
 ;; (global-set-key (kbd "C-c =") 'er/expand-region)
 
 ;; MULTIPLE_CURSORS
-(add-to-list 'load-path "~/.emacs.d/multiple-cursors")
-(require 'multiple-cursors)
+;;(add-to-list 'load-path "~/.emacs.d/multiple-cursors")
+;;(require 'multiple-cursors)
 
-(global-set-key (kbd "C-c >") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-c <") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-c <") 'mc/mark-all-like-this)
-(global-set-key (kbd "C-c C-c >") 'mc/edit-lines)
+;;(global-set-key (kbd "C-c >") 'mc/mark-next-like-this)
+;;(global-set-key (kbd "C-c <") 'mc/mark-previous-like-this)
+;;(global-set-key (kbd "C-c C-c <") 'mc/mark-all-like-this)
+;;(global-set-key (kbd "C-c C-c >") 'mc/edit-lines)
 
 
-(defvar jc/mc-search--last-term nil)
+;;(defvar jc/mc-search--last-term nil)
 
-(defun jc/mc-search (search-command)
-  ;; Read new search term when not repeated command or applying to fake cursors
-  (when (and (not mc--executing-command-for-fake-cursor)
-             (not (eq last-command 'jc/mc-search-forward))
-             (not (eq last-command 'jc/mc-search-backward)))
-    (setq jc/mc-search--last-term (read-from-minibuffer "Search: ")))
-  (funcall search-command jc/mc-search--last-term))
+;;(defun jc/mc-search (search-command)
+;;  ;; Read new search term when not repeated command or applying to fake cursors
+;;  (when (and (not mc--executing-command-for-fake-cursor)
+;;             (not (eq last-command 'jc/mc-search-forward))
+;;             (not (eq last-command 'jc/mc-search-backward)))
+;;    (setq jc/mc-search--last-term (read-from-minibuffer "Search: ")))
+;;  (funcall search-command jc/mc-search--last-term))
 
-(defun jc/mc-search-forward ()
-  "Simplified version of forward search that supports multiple cursors"
-  (interactive)
-  (jc/mc-search 'search-forward))
+;;(defun jc/mc-search-forward ()
+;;  "Simplified version of forward search that supports multiple cursors"
+;;  (interactive)
+;;  (jc/mc-search 'search-forward))
 
-(defun jc/mc-search-backward ()
-  "Simplified version of backward search that supports multiple cursors"
-  (interactive)
-  (jc/mc-search 'search-backward))
+;;(defun jc/mc-search-backward ()
+;;  "Simplified version of backward search that supports multiple cursors"
+;;  (interactive)
+;;  (jc/mc-search 'search-backward))
 
-(define-key mc/keymap (kbd "C-c s") 'jc/mc-search-forward)
-(define-key mc/keymap (kbd "C-c r") 'jc/mc-search-backward)
+;;(define-key mc/keymap (kbd "C-c s") 'jc/mc-search-forward)
+;;(define-key mc/keymap (kbd "C-c r") 'jc/mc-search-backward)
 
 ;; C-x C-e eval-and-replace
 
@@ -899,39 +899,39 @@ to the previously saved position"
 ;;   M-x mc-encrypt.
 ;;   M-x mc-wl-decrypt-message
 ;; http://box.matto.nl/wanderlustgpg.html
-(load-library "mailcrypt") ; provides "mc-setversion"
-(mc-setversion "gpg")    ; for PGP 2.6 (default); also "5.0" and "gpg"
+;; (load-library "mailcrypt") ; provides "mc-setversion"
+;; (mc-setversion "gpg")    ; for PGP 2.6 (default); also "5.0" and "gpg"
 
-(autoload 'mc-install-write-mode "mailcrypt" nil t)
-(autoload 'mc-install-read-mode "mailcrypt" nil t)
-(add-hook 'mail-mode-hook 'mc-install-write-mode)
+;; (autoload 'mc-install-write-mode "mailcrypt" nil t)
+;; (autoload 'mc-install-read-mode "mailcrypt" nil t)
+;; (add-hook 'mail-mode-hook 'mc-install-write-mode)
 
-(require 'mailcrypt)
-(add-hook 'wl-summary-mode-hook 'mc-install-read-mode)
-(add-hook 'wl-mail-setup-hook 'mc-install-write-mode)
+;; (require 'mailcrypt)
+;; (add-hook 'wl-summary-mode-hook 'mc-install-read-mode)
+;; (add-hook 'wl-mail-setup-hook 'mc-install-write-mode)
 
-(defun mc-wl-verify-signature ()
-  (interactive)
-  (save-window-excursion
-    (wl-summary-jump-to-current-message)
-    (mc-verify)))
+;; (defun mc-wl-verify-signature ()
+;;   (interactive)
+;;   (save-window-excursion
+;;     (wl-summary-jump-to-current-message)
+;;     (mc-verify)))
 
-(defun mc-wl-decrypt-message ()
-  (interactive)
-  (save-window-excursion
-    (wl-summary-jump-to-current-message)
-    (let ((inhibit-read-only t))
-      (mc-decrypt))))
+;; (defun mc-wl-decrypt-message ()
+;;   (interactive)
+;;   (save-window-excursion
+;;     (wl-summary-jump-to-current-message)
+;;     (let ((inhibit-read-only t))
+;;       (mc-decrypt))))
 
-(eval-after-load "mailcrypt"
-  '(setq mc-modes-alist
-       (append
-        (quote
-         ((wl-draft-mode (encrypt . mc-encrypt-message)
-            (sign . mc-sign-message))
-          (wl-summary-mode (decrypt . mc-wl-decrypt-message)
-            (verify . mc-wl-verify-signature))))
-        mc-modes-alist)))
+;; (eval-after-load "mailcrypt"
+;;   '(setq mc-modes-alist
+;;        (append
+;;         (quote
+;;          ((wl-draft-mode (encrypt . mc-encrypt-message)
+;;             (sign . mc-sign-message))
+;;           (wl-summary-mode (decrypt . mc-wl-decrypt-message)
+;;             (verify . mc-wl-verify-signature))))
+;;         mc-modes-alist)))
 
 
 ;; ;; Load CEDET.
@@ -1203,6 +1203,8 @@ to the previously saved position"
 
 
 ;; OrgMode
+;; http://orgmode.org/manual/Installation.html
+(add-to-list 'load-path "/home/rigidus/repo/org-mode/lisp")
 (require 'org-install)
 ;; Включение автоматического переключения в Org Mode при открытии файла с расширением .org:
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
@@ -1372,7 +1374,7 @@ to the previously saved position"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Специальные настройки jabber-аккаунтов
-(load-file "~/.emacs.d/jabber-account.el")
+;; (load-file "~/.emacs.d/jabber-account.el")
 
 
 (custom-set-faces
@@ -1395,28 +1397,6 @@ to the previously saved position"
 ;; Split Window Preferred Function: Hide Value
 ;; split-window-sensibly
 ;; (setq split-width-threshold nil)
-
-
-;; hilighting for def~ and other constructions
-(font-lock-add-keywords 'lisp-mode
-                        '(("(\\(\\(define-\\|def~\\|do-\\|with-\\)\\(\\s_\\|\\w\\)*\\)"
-                           1 font-lock-keyword-face)))
-
-;; hilightining for def~daoclass-entity name-clasee
-(add-hook 'lisp-mode-hook
-  (lambda ()
-    (font-lock-add-keywords nil
-                            '(("(\\(def~daoclass-entity\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
-         (1 font-lock-keyword-face)
-         (2 font-lock-type-face))))))
-
-;; indent for def~daoclass-entity as defclass
-(put 'def~daoclass-entity 'common-lisp-indent-function
-     (get 'defclass 'common-lisp-indent-function))
-
-
-(setq c-default-style
-      '((c-mode . "k&r") (other . "k&r")))
 
 
 ;; ERLANG
@@ -1538,3 +1518,58 @@ to the previously saved position"
  '(column-number-mode t)
  '(size-indication-mode t)
  '(tab-width 4))
+
+
+(defun reverse-input-method (input-method)
+  "Build the reverse mapping of single letters from INPUT-METHOD."
+  (interactive
+   (list (read-input-method-name "Use input method (default current): ")))
+  (if (and input-method (symbolp input-method))
+      (setq input-method (symbol-name input-method)))
+  (let ((current current-input-method)
+        (modifiers '(nil (control) (meta) (control meta))))
+    (when input-method
+      (activate-input-method input-method))
+    (when (and current-input-method quail-keyboard-layout)
+      (dolist (map (cdr (quail-map)))
+        (let* ((to (car map))
+                      (from (quail-get-translation
+                                   (cadr map) (char-to-string to) 1)))
+            (when (and (characterp from) (characterp to))
+                  (dolist (mod modifiers)
+                          (define-key local-function-key-map
+                            (vector (append mod (list from)))
+                            (vector (append mod (list to)))))))))
+    (when input-method
+      (activate-input-method current))))
+
+(reverse-input-method 'russian-computer)
+
+
+;; hilighting for def~ and other constructions
+(font-lock-add-keywords 'lisp-mode
+                        '(("(\\(\\(define-\\|def~\\|do-\\|with-\\|when-\\|awhen-\\|loop-\\)\\(\\s_\\|\\w\\)*\\)"
+                           1 font-lock-keyword-face)))
+
+;; hilightining for def~daoclass-entity name-clasee
+(add-hook 'lisp-mode-hook
+          (lambda ()
+            (font-lock-add-keywords nil
+                                    '(("(\\(def~daoclass-entity\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
+                                       (1 font-lock-keyword-face)
+                                       (2 font-lock-type-face))))))
+
+;; indent for def~daoclass-entity as defclass
+(put 'def~daoclass-entity 'common-lisp-indent-function
+     (get 'defclass 'common-lisp-indent-function))
+
+(put 'when-file 'common-lisp-indent-function
+     (get 'when 'common-lisp-indent-function))
+
+(put 'awhen-file 'common-lisp-indent-function
+     (get 'when 'common-lisp-indent-function))
+
+(put 'loop-dir 'common-lisp-indent-function 3)
+
+(setq c-default-style
+      '((c-mode . "k&r") (other . "k&r")))
