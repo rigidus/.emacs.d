@@ -87,8 +87,9 @@
 
 ;; SLIME
 ;; (add-to-list 'load-path "~/.emacs.d/slime-20110829-cvs") ;; Путь к slime
-(add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-20130720-cvs/") ;; Путь к slime
-;;(require 'slime)
+;; (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-20130720-cvs/") ;; Путь к slime
+(add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-2.4") ;; Путь к slime
+(require 'slime)
 ;;(setq slime-net-coding-system 'utf-8-unix)
 ;;(slime-setup '(slime-fancy))
 ;;(setq slime-enable-evaluate-in-emacs t)
@@ -1544,7 +1545,6 @@ to the previously saved position"
       (activate-input-method current))))
 
 (reverse-input-method 'russian-computer)
-
 
 ;; hilighting for def~ and other constructions
 (font-lock-add-keywords 'lisp-mode
