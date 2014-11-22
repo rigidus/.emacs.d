@@ -629,122 +629,6 @@ to the previously saved position"
 	'msf-abbrev-define-new-abbrev-this-mode)
 (msf-abbrev-load) 							; пусть этот режим будет всегда :)
 
-
-
-;; YASNIPPET
-(add-to-list 'load-path "~/.emacs.d/yasnippet-0.6.1c")
-(require 'yasnippet) ;; not yasnippet-bundle
-(yas/initialize)
-(yas/load-directory "~/.emacs.d/yasnippet-0.6.1c/snippets")
-
-
-;; IRC
-
-(require 'erc)
-(setq erc-modules '(autojoin button completion irccontrols match menu
-                             netsplit noncommands readonly ring services
-                             stamp spelling track fill))
-(require 'erc-services)
-(erc-services-mode 1)
-(erc-fill-mode t)
-(erc-log-mode 1)
-(erc-autojoin-mode t)
-
-;; Если я правильно помню, тут соответствие имени сервера, имени сети и адреса сервера
-(setq erc-server-alist '(("freenode.org" irc.freenode.net "irc.freenode.net" 6667)))
-
-;; Настройки Nickserv для разных irc-сетей, что-то из swamp тут
-;; лишнее, не помню, какой именно
-(setq erc-prompt-for-nickserv-password nil)
-(setq erc-nickserv-passwords
-      '((irc.freenode.ru (("rigidus" . "*****")))
-        ;; (swamp (("rigidus" . "******")))
-        ;; ("irc.swamp.ru" (("rigidus" .  "******")))
-        ))
-
-(setq erc-encoding-coding-alist '(("#programmers" . cp1251)))
-(setq erc-interpret-controls-p 'remove)
-(setq erc-nick "rigidus")
-(setq erc-nicklist-use-icons nil)
-(setq erc-notice-highlight-type 'all)
-(setq erc-paranoid t)
-(setq erc-join-buffer 'bury)
-(setq erc-pcomplete-nick-postfix "")
-(setq erc-server "irc.ircnet.su")
-(setq erc-port 6669)
-(setq erc-server-coding-system '(utf-8 . undecided))
-(setq erc-user-full-name "yoda")
-(setq erc-prompt "$")
-(setq erc-insert-timestamp-function 'erc-insert-timestamp-left)
-(setq erc-track-exclude-types '("JOIN" "KICK" "NICK" "PART" "QUIT" "MODE"))
-(setq erc-log-channels-directory "~/.history/emacs-irc/")
-(setq erc-save-buffer-on-part t)
-(setq erc-max-buffer-size 10000)
-(setq erc-autojoin-channels-alist '(("irc.ircnet.su" "#programmers")
-                                    ("irc.nov.ru" "#programmers")
-                                    ("irc.swamp.ru" "#quake")))
-
-(defun string-list-match (lst s)
-  (if lst
-      (if (string-match (car lst) s)
-          t
-        (string-list-match (cdr lst) s))
-    nil))
-
-;; Для дёргания nickserv'а после соединения
-(add-hook 'erc-after-connect
-          (lambda (server nick)
-            (cond
-             ((string-list-match '("irc\\.nov\\.ru"
-                                   ".*irc\\.ircnet\\.su.*")
-                                 server)
-                                        ;(erc-message "PRIVMSG" "NickServ identify ***")
-              )
-             ((string-match "irc\\.swamp\\.ru" server)
-              (erc-message "PRIVMSG" "NickServ identify *****")
-              (erc-send-command "oper sprinter ******")))))
-
-;; Выставляет cp1251 для определённых irc-серверов
-(defun choose-irc-coding (target)
-  (let ((name (buffer-name (erc-server-buffer))))
-    (cond
-     ((string-list-match '(".*irc\\.nov\\.ru.*"
-                           ".*irc\\.ircnet\\.su.*"
-                           ".*irc\\.ptlink\\.ru.*")
-                         name)
-      'cp1251)
-     (t 'utf-8))))
-(setq erc-server-coding-system 'choose-irc-coding)
-
-(defun erc-cmd-BAN (nick)
-  (let* ((chan (erc-default-target))
-         (who (erc-get-server-user nick))
-         (host (erc-server-user-host who))
-         (user (erc-server-user-login who)))
-    (erc-send-command (format "MODE %s +b *!%s@%s" chan user host))))
-
-(defun erc-cmd-KICKBAN (nick &rest reason)
-  (let ((reason (if reason
-                    (mapconcat #'identity reason " ")
-                  "Kicked (kickban)")))
-    (erc-cmd-BAN nick)
-    (erc-send-command (format "KICK %s %s %s"
-                              (erc-default-target)
-                              nick
-                              reason))))
-
-;; Игнорирование определённых сообщений
-(defun y-erc-ignore-hook (msg)
-  (cond
-   ((string-list-match
-     '("blahblahblah (.....) has \\(joined\\|left\\) channel"
-       "^\\* nick_of_stupid_user .*")
-     msg)
-    (setq erc-insert-this nil))))
-(add-hook 'erc-insert-pre-hook (lambda (m) (y-erc-ignore-hook m)))
-
-
-
 ;; JABBER
 (add-to-list 'load-path "~/.emacs.d/emacs-jabber")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/emacs-jabber")
@@ -933,55 +817,6 @@ to the previously saved position"
 ;;           (wl-summary-mode (decrypt . mc-wl-decrypt-message)
 ;;             (verify . mc-wl-verify-signature))))
 ;;         mc-modes-alist)))
-
-
-;; ;; Load CEDET.
-;; ;; See cedet/common/cedet.info for configuration details.
-;; (load-file "~/.emacs.d/cedet/common/cedet.el")
-;; ;; Enable EDE (Project Management) features
-;; (global-ede-mode 1)
-;; ;; Enable EDE for a pre-existing C++ project
-;; ;; (ede-cpp-root-project "NAME" :file "~/myproject/Makefile")
-;; ;; Enabling Semantic (code-parsing, smart completion) features
-;; ;; Select one of the following:
-;; ;; * This enables the database and idle reparse engines
-;; (semantic-load-enable-minimum-features)
-;; ;; * This enables some tools useful for coding, such as summary mode
-;; ;;   imenu support, and the semantic navigator
-;; (semantic-load-enable-code-helpers)
-;; ;; * This enables even more coding tools such as intellisense mode
-;; ;;   decoration mode, and stickyfunc mode (plus regular code helpers)
-;; ;; (semantic-load-enable-gaudy-code-helpers)
-;; ;; * This enables the use of Exuberent ctags if you have it installed.
-;; ;;   If you use C++ templates or boost, you should NOT enable it.
-;; ;; (semantic-load-enable-all-exuberent-ctags-support)
-;; ;;   Or, use one of these two types of support.
-;; ;;   Add support for new languges only via ctags.
-;; ;; (semantic-load-enable-primary-exuberent-ctags-support)
-;; ;;   Add support for using ctags as a backup parser.
-;; ;; (semantic-load-enable-secondary-exuberent-ctags-support)
-;; ;; Enable SRecode (Template management) minor-mode.
-;; ;; (global-srecode-minor-mode 1)
-;; ;; from yakor_spb@emacs.conference.jabber.ru
-;; (semantic-load-enable-excessive-code-helpers)
-;; ;; Code Folding ; http://alexott-ru.blogspot.com/2009/01/blog-post.html
-;; (defun my-semantic-hook ()
-;;   (semantic-tag-folding-mode 1))
-;; (add-hook 'semantic-init-hooks 'my-semantic-hook)
-
-;; (global-set-key (kbd "C-x +") 'semantic-tag-folding-show-block)
-;; (global-set-key (kbd "C-x -") 'semantic-tag-folding-fold-block)
-
-;; Load ECB
-(add-to-list 'load-path "~/.emacs.d/ecb")
-(require 'ecb-autoloads)
-(global-set-key (kbd "C-x p") 'ecb-activate)
-(global-set-key (kbd "C-x j") 'ecb-deactivate)
-(global-set-key (kbd "C-x ,") 'ecb-toggle-ecb-windows)
-(define-key global-map (kbd "C-<tab>") 'workspace-controller)
-(setq ecb-tip-of-the-day nil)
-(setq ecb-prescan-directories-for-emptyness nil)
-
 
 ;; GOTOLINE
 (global-set-key [?\M-g] 'goto-line)
@@ -1493,6 +1328,48 @@ to the previously saved position"
 ;; Minors
 (which-function-mode)
 ;; (hs-minor-mode)
+
+
+;; Load CEDET.
+;; See cedet/common/cedet.info for configuration details.
+;; IMPORTANT: For Emacs >= 23.2, you must place this *before* any
+;; CEDET component (including EIEIO) gets activated by another
+;; package (Gnus, auth-source, ...).
+(load-file "~/.emacs.d/cedet-1.1/common/cedet.el")
+
+;; Enable EDE (Project Management) features
+(global-ede-mode 1)
+
+;; Enable EDE for a pre-existing C++ project
+;; (ede-cpp-root-project "NAME" :file "~/myproject/Makefile")
+
+
+;; Enabling Semantic (code-parsing, smart completion) features
+;; Select one of the following:
+
+;; * This enables the database and idle reparse engines
+(semantic-load-enable-minimum-features)
+
+;; * This enables some tools useful for coding, such as summary mode,
+;;   imenu support, and the semantic navigator
+(semantic-load-enable-code-helpers)
+
+;; * This enables even more coding tools such as intellisense mode,
+;;   decoration mode, and stickyfunc mode (plus regular code helpers)
+;; (semantic-load-enable-gaudy-code-helpers)
+
+;; * This enables the use of Exuberant ctags if you have it installed.
+;;   If you use C++ templates or boost, you should NOT enable it.
+;; (semantic-load-enable-all-exuberent-ctags-support)
+;;   Or, use one of these two types of support.
+;;   Add support for new languages only via ctags.
+;; (semantic-load-enable-primary-exuberent-ctags-support)
+;;   Add support for using ctags as a backup parser.
+;; (semantic-load-enable-secondary-exuberent-ctags-support)
+
+;; Enable SRecode (Template management) minor-mode.
+;; (global-srecode-minor-mode 1)
+
 
 ;; FORMATTING
 

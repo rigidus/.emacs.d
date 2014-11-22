@@ -655,7 +655,7 @@ Display weather report.
 ;;;;;;  "el-get/el-get-byte-compile.el" "el-get/el-get-core.el" "el-get/el-get-custom.el"
 ;;;;;;  "el-get/el-get-dependencies.el" "el-get/el-get-install.el"
 ;;;;;;  "el-get/el-get-methods.el" "el-get/el-get-notify.el" "el-get/el-get-recipes.el"
-;;;;;;  "el-get/el-get-status.el") (21339 5247 427157 276000))
+;;;;;;  "el-get/el-get-status.el") (21615 19254 767341 609000))
 
 ;;;***
 
