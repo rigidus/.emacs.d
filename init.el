@@ -1210,7 +1210,7 @@ to the previously saved position"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Специальные настройки jabber-аккаунтов
-;; (load-file "~/.emacs.d/jabber-account.el")
+(load-file "~/.emacs.d/jabber-account.el")
 
 
 (custom-set-faces
@@ -1450,3 +1450,15 @@ to the previously saved position"
 
 (setq c-default-style
       '((c-mode . "k&r") (other . "k&r")))
+
+;; GNUPLOT
+
+(add-to-list 'load-path "gnuplot-el")
+
+(autoload 'gnuplot-mode "gnuplot" "gnuplot major mode" t)
+(autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot mode" t)
+
+(unless (assoc "\\.gp\\'" auto-mode-alist)
+  (add-to-list 'auto-mode-alist '("\\.gp\\'" . gnuplot-mode)))
+
+(load-file "/home/rigidus/.emacs.d/gnuplot-el/gnuplot.el")
