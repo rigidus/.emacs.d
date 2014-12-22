@@ -396,24 +396,37 @@ to the previously saved position"
 ;; Сортировать буферы по теме
 (setq ibuffer-saved-filter-groups
       (quote (("default"
+               ("CHAT"      (or
+                             (name . "^\\*---.*")))
+               ("JABBER"    (or
+                             (name . "^\\*-jabber-roster.*")))
+               ("CONF"      (or
+                             (name . "^\\*===.*")))
+               ("ERLANG"    (or
+                             (mode . erlang-mode)))
                ("C/CPP"     (or
                               (mode . c-mode)
                               (mode . c++-mode)))
-               ("ERLANG"    (or
-                              (mode . erlang-mode)))
-               ("JS"        (or
-                              (mode . espresso-mode)))
                ("CSS"       (or
                               (mode . css-mode)))
                ("HTML"      (or
                               (mode . html-mode)
                               (mode . closure-template-html-mode)))
-               ("CHAT"      (or
-                              (name . "^\\*---.*")))
-               ("CONF"      (or
-                              (name . "^\\*===.*")))
-               ("JABBER"    (or
-                              (name . "^\\*-jabber-roster.*")))
+               ("JS"        (or
+                             (mode . espresso-mode)))
+               ("ELISP"     (or
+                             (mode . elisp-mode)
+                             (mode . emacs-lisp-mode)))
+               ("REPL"      (or
+                             (name . "^\\*inferior-lisp.*")
+                             (name . "^\\*slime-events.*")
+                             (name . "^\\*slime-repl.*")
+                             (name . "^\\*Python.*")
+                             (name . "*\\*sldb.*")))
+               ("LISP"      (or
+                             (mode . lisp-mode)))
+               ("ORG"       (or
+                             (mode . org-mode)))
                ("SYS"       (or
                               (mode . dired-mode)
                               (name . "^\\*scratch\\*$")
@@ -421,19 +434,7 @@ to the previously saved position"
                ("SHELL"     (or
                               (name . "^\\*Shell\\*$")
                               (name . "^\\*grep\\*$")))
-               ("REPL"      (or
-                              (name . "^\\*inferior-lisp.*")
-                              (name . "^\\*slime-events.*")
-                              (name . "^\\*slime-repl.*")
-                              (name . "^\\*Python.*")
-                              (name . "*\\*sldb.*")))
-               ("ORG"       (or
-                              (mode . org-mode)))
-               ("LISP"      (or
-                              (mode . lisp-mode)))
-               ("ELISP"     (or
-                              (mode . elisp-mode)
-                              (mode . emacs-lisp-mode)))))))
+               ))))
 
 (add-hook 'ibuffer-mode-hook
           (lambda ()
@@ -585,14 +586,14 @@ to the previously saved position"
 (setq espresso-indent-level 2)
 ;; If you prefer js2-mode, use this instead:
 ;; (add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
-(eval-after-load 'espresso
-  '(progn ;; fixes problem with pretty function font-lock
-          (define-key espresso-mode-map (kbd ",") 'self-insert-command)
-          (font-lock-add-keywords
-           'espresso-mode `(("\\(function *\\)("
-                             (0 (progn (compose-region (match-beginning 1)
-                                                       (match-end 1) "ƒ")
-                                       nil)))))))
+;; (eval-after-load 'espresso
+;;   '(progn ;; fixes problem with pretty function font-lock
+;;           (define-key espresso-mode-map (kbd ",") 'self-insert-command)
+;;           (font-lock-add-keywords
+;;            'espresso-mode `(("\\(function *\\)("
+;;                              (0 (progn (compose-region (match-beginning 1)
+;;                                                        (match-end 1) "ƒ")
+;;                                        nil)))))))
 
 
 ;; SGML-MODE
