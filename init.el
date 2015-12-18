@@ -129,7 +129,7 @@
 
 ;; Удаляем оконечные пробелы перед сохранением файлов
 (add-hook 'before-save-hook '(lambda ()
-(delete-trailing-whitespace)))
+                               (delete-trailing-whitespace)))
 
 ;; Режим по умолчанию c переносом строк по ширине 130
 (setq default-major-mode 'text-mode)
@@ -216,11 +216,11 @@
 
 
 (show-paren-mode 1)                     ;; выделение парных скобок
-;(setq show-paren-style 'expression)    ;; выделять все выражение в скобках
-										;; отступ при переводе строки в lisp-mode
+                                        ;(setq show-paren-style 'expression)    ;; выделять все выражение в скобках
+;; отступ при переводе строки в lisp-mode
 (add-hook 'lisp-mode-hook
 		  '(lambda ()
-			(local-set-key (kbd "RET") 'newline-and-indent)))
+             (local-set-key (kbd "RET") 'newline-and-indent)))
 
 
 
@@ -247,7 +247,7 @@
   (global-set-key (kbd ".") (lambda()(interactive)(insert "?"))))
 
 (defun user-nil-redefinitions ()
- "Restoring global keys binding after user-cyrillic-redefinitions.
+  "Restoring global keys binding after user-cyrillic-redefinitions.
   This function is to be called from user-toggle-input-method"
   (global-set-key (kbd "?") (lambda()(interactive)(self-insert-command 1)))
   (global-set-key (kbd "/") (lambda()(interactive)(self-insert-command 1)))
@@ -273,14 +273,14 @@
    I bound this function with Alt-Shift-9, that is M-("
   (interactive)
   (when (string= current-input-method nil)
-      (user-toggle-input-method)))
+    (user-toggle-input-method)))
 
 (defun user-to-nil ()
   "Change input method to nil (generally to English),
    I bound this function with Alt-Sfift-0 that is M-)"
   (interactive)
   (when (string= current-input-method "cyrillic-jcuken")
-      (user-toggle-input-method)))
+    (user-toggle-input-method)))
 
 
 ;;(user-toggle-input-method)
@@ -291,18 +291,18 @@
 (defun save-point-and-switch ()
   "Save current point to register 0 and go
 to the previously saved position"
- (interactive)
- (let (temp)
-   (setq temp (point-marker))
-   (when (not (equal (get-register 0) nil))
-     (jump-to-register 0))
-   (set-register 0 temp)))
+  (interactive)
+  (let (temp)
+    (setq temp (point-marker))
+    (when (not (equal (get-register 0) nil))
+      (jump-to-register 0))
+    (set-register 0 temp)))
 
 ;;Save current position to register 0
 (defun save-point-only ()
- "Save current point to register 0"
- (interactive)
- (set-register 0 (point-marker)))
+  "Save current point to register 0"
+  (interactive)
+  (set-register 0 (point-marker)))
 
 (global-set-key (kbd "\e\e/") 'save-point-and-switch)
 (global-set-key (kbd "\e\e?") 'save-point-only)
@@ -314,10 +314,10 @@ to the previously saved position"
   (if mark-active
       (if (< (mark) (point))
           (comment-or-uncomment-region (mark) (point))
-          (comment-or-uncomment-region (point) (mark)))
-      (comment-or-uncomment-region
-       (line-beginning-position)
-       (line-end-position lines))))
+        (comment-or-uncomment-region (point) (mark)))
+    (comment-or-uncomment-region
+     (line-beginning-position)
+     (line-end-position lines))))
 ;; (global-set-key (kbd "C-;") ;; не работает в консольном режиме
 ;; 				'comment-or-uncomment-this)
 (global-set-key (kbd "C-x /")
@@ -405,13 +405,13 @@ to the previously saved position"
                ("ERLANG"    (or
                              (mode . erlang-mode)))
                ("C/CPP"     (or
-                              (mode . c-mode)
-                              (mode . c++-mode)))
+                             (mode . c-mode)
+                             (mode . c++-mode)))
                ("CSS"       (or
-                              (mode . css-mode)))
+                             (mode . css-mode)))
                ("HTML"      (or
-                              (mode . html-mode)
-                              (mode . closure-template-html-mode)))
+                             (mode . html-mode)
+                             (mode . closure-template-html-mode)))
                ("JS"        (or
                              (mode . espresso-mode)))
                ("ELISP"     (or
@@ -428,12 +428,12 @@ to the previously saved position"
                ("ORG"       (or
                              (mode . org-mode)))
                ("SYS"       (or
-                              (mode . dired-mode)
-                              (name . "^\\*scratch\\*$")
-                              (name . "^\\*Messages\\*$")))
+                             (mode . dired-mode)
+                             (name . "^\\*scratch\\*$")
+                             (name . "^\\*Messages\\*$")))
                ("SHELL"     (or
-                              (name . "^\\*Shell\\*$")
-                              (name . "^\\*grep\\*$")))
+                             (name . "^\\*Shell\\*$")
+                             (name . "^\\*grep\\*$")))
                ))))
 
 (add-hook 'ibuffer-mode-hook
@@ -556,9 +556,9 @@ to the previously saved position"
 (require 'highlight-parentheses)
 ;; (add-hook 'lisp-mode-hook (highlight-parentheses-mode))
 (define-globalized-minor-mode global-highlight-parentheses-mode
-	highlight-parentheses-mode highlight-parentheses-mode)
+  highlight-parentheses-mode highlight-parentheses-mode)
 (setq hl-paren-colors
-'("#FF0000" "#FFBF00" "#1FFF00" "#009EFF" "#2100FF" "gray10" "gray70" "gray90"))
+      '("#FF0000" "#FFBF00" "#1FFF00" "#009EFF" "#2100FF" "gray10" "gray70" "gray90"))
 (global-highlight-parentheses-mode)
 
 
@@ -626,21 +626,21 @@ to the previously saved position"
 (setq save-abbrevs nil) 					; не надо записывать в дефолтный каталог наши сокращения
 (setq msf-abbrev-root "~/.emacs.d/abb") 	; надо записывать их сюда
 (global-set-key 							; (Ctrl-c a) для создания нового сокращения
-	(kbd "C-c a")
-	'msf-abbrev-define-new-abbrev-this-mode)
+ (kbd "C-c a")
+ 'msf-abbrev-define-new-abbrev-this-mode)
 (msf-abbrev-load) 							; пусть этот режим будет всегда :)
 
 ;; JABBER
-(add-to-list 'load-path "~/.emacs.d/emacs-jabber")
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/emacs-jabber")
-(require 'jabber)
-(setq jabber-auto-reconnect t)
-(setq jabber-chat-buffer-format "*---%n-*")
-(setq jabber-groupchat-buffer-format "*===%n-*")
-(setq jabber-history-dir "~/.jabber-chatlogs")
-(setq jabber-history-enabled t)
-(setq jabber-history-muc-enabled t)
-(setq jabber-history-size-limit 1024000000)
+;; (add-to-list 'load-path "~/.emacs.d/emacs-jabber")
+;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/emacs-jabber")
+;; (require 'jabber)
+;; (setq jabber-auto-reconnect t)
+;; (setq jabber-chat-buffer-format "*---%n-*")
+;; (setq jabber-groupchat-buffer-format "*===%n-*")
+;; (setq jabber-history-dir "~/.jabber-chatlogs")
+;; (setq jabber-history-enabled t)
+;; (setq jabber-history-muc-enabled t)
+;; (setq jabber-history-size-limit 1024000000)
 
 ;; ;; Не закрывать буфер ростера при активном подключении
 ;; (my-hook-for (kill-buffer-query-functions)
@@ -662,122 +662,122 @@ to the previously saved position"
 ;; http://box.matto.nl/emacsgmail.html
 ;; http://www.emacswiki.org/emacs/hgw-init-wl.el
 
-(add-to-list 'load-path "~/.emacs.d/el-get/wanderlust/site-lisp/wl")
+;; (add-to-list 'load-path "~/.emacs.d/el-get/wanderlust/site-lisp/wl")
 
-(autoload 'wl "wl" "Wanderlust" t)
-(autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
-(autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
+;; (autoload 'wl "wl" "Wanderlust" t)
+;; (autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
+;; (autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
 
-(setq mime-edit-split-message nil)
+;; (setq mime-edit-split-message nil)
 
-(setq wl-from "rigidus <i.am.rigidus@gmail.com>")
-(setq elmo-imap4-default-user "i.am.rigidus"
-      elmo-imap4-default-server "imap.gmail.com"
-      elmo-imap4-default-port 993
-      elmo-imap4-default-authenticate-type 'clear
-      elmo-imap4-default-stream-type 'ssl
-      elmo-imap4-use-modified-utf7 t
+;; (setq wl-from "rigidus <i.am.rigidus@gmail.com>")
+;; (setq elmo-imap4-default-user "i.am.rigidus"
+;;       elmo-imap4-default-server "imap.gmail.com"
+;;       elmo-imap4-default-port 993
+;;       elmo-imap4-default-authenticate-type 'clear
+;;       elmo-imap4-default-stream-type 'ssl
+;;       elmo-imap4-use-modified-utf7 t
 
-      wl-message-id-domain "i.am.rigidus@gmail.com"
-      wl-from "i.am.rigidus <i.am.rigidus@gmail.com>"
-      wl-smtp-posting-server "smtp.gmail.com"
-      wl-smtp-connection-type 'starttls
-      wl-smtp-posting-port 587
-      wl-smtp-authenticate-type "plain"
-      wl-smtp-posting-user "i.am.rigidus"
-      wl-local-domain "gmail.com"
+;;       wl-message-id-domain "i.am.rigidus@gmail.com"
+;;       wl-from "i.am.rigidus <i.am.rigidus@gmail.com>"
+;;       wl-smtp-posting-server "smtp.gmail.com"
+;;       wl-smtp-connection-type 'starttls
+;;       wl-smtp-posting-port 587
+;;       wl-smtp-authenticate-type "plain"
+;;       wl-smtp-posting-user "i.am.rigidus"
+;;       wl-local-domain "gmail.com"
 
-      elmo-pop3-debug t
-      ssl-certificate-verification-policy 1
-      wl-default-folder "%inbox"
-      wl-default-spec "%"
-      wl-folder-check-async t
-      wl-thread-indent-level 4
-      wl-thread-have-younger-brother-str "+"
-      wl-thread-youngest-child-str       "+"
-      wl-thread-vertical-str             "|"
-      wl-thread-horizontal-str           "-"
-      wl-thread-space-str                " "
-      wl-summary-width	nil
-      wl-summary-line-format "%n%T%P %W %D-%M-%Y %h:%m %t%[%c %f% %] %s"
-      wl-message-buffer-prefetch-folder-type-list nil
-      mime-transfer-level 8
-      mime-edit-split-message nil
-      mime-edit-message-max-length 32768
-      mime-header-accept-quoted-encoded-words t
-      ;; mime-browse-url-function 'browse-url-conkeror
-      pgg-passphrase-cache-expiry 300
-      pgg-decrypt-automatically t
-      wl-message-ignored-field-list '("^.*")
-      wl-message-visible-field-list '("^From:" "^To:" "^Cc:" "^Date:" "^Subject:" "^User-Agent:" "^X-Mailer:")
-      wl-message-sort-field-list    wl-message-visible-field-list
-      wl-message-window-size '(1 . 3)
-      wl-folder-window-width 40
-      wl-draft-preview-attributes-buffer-lines 7
-      wl-draft-config-alist
-      '(
-        ((string-match "avenger" wl-draft-parent-folder)
-         (wl-message-id-domain . "avenger-f@yandex.ru")
-         (wl-from . "rigidus <avenger-f@yandex.ru>")
-         ("From" . "avenger-f@yandex.ru")
-         ;; ("Fcc" . "%Sent:avenger-f@yandex.ru:993")
-         (wl-smtp-posting-server . "smtp.yandex.ru")
-         ;; (wl-smtp-connection-type . nil)
-         (wl-smtp-connection-type . 'starttls)
-         ;; (wl-smtp-connection-type . 'ssl)
-         ;; (wl-smtp-posting-port . 25)
-         ;; (wl-smtp-posting-port . 465)
-         (wl-smtp-posting-port . 587)
-         (wl-smtp-authenticate-type . "plain")
-         (wl-smtp-posting-user . "avenger-f")
-         (wl-local-domain . "yandex.ru")
-         )
-        ((string-match "content3208080" wl-draft-parent-folder)
-         (wl-message-id-domain . "content3208080@yandex.ru")
-         (wl-from . "content3208080 <content3208080@yandex.ru>")
-         ("From" . "content3208080@yandex.ru")
-         (wl-smtp-posting-server . "smtp.yandex.ru")
-         (wl-smtp-connection-type . 'starttls)
-         (wl-smtp-posting-port . 587)
-         (wl-smtp-authenticate-type . "plain")
-         (wl-smtp-posting-user . "content3208080")
-         (wl-local-domain . "yandex.ru")
-         )
-        ((string-match "i.am.rigidus" wl-draft-parent-folder)
-         (wl-message-id-domain . "i.am.rigidus@gmail.com")
-         (wl-from . "i.am.rigidus <i.am.rigidus@gmail.com>")
-         ("From" . "i.am.rigidus@gmail.com")
-         (wl-smtp-posting-server . "smtp.gmail.com")
-         (wl-smtp-connection-type . 'starttls)
-         (wl-smtp-posting-port . 587)
-         (wl-smtp-authenticate-type . "plain")
-         (wl-smtp-posting-user . "i.am.rigidus")
-         (wl-local-domain . "gmail.com")
-         )
-        ((string-match "avenger.rigidus" wl-draft-parent-folder)
-         (wl-message-id-domain . "avenger.rigidus@gmail.com")
-         (wl-from . "avenger.rigidus <avenger.rigidus@gmail.com>")
-         ("From" . "avenger.rigidus@gmail.com")
-         (wl-smtp-posting-server . "smtp.gmail.com")
-         (wl-smtp-connection-type . 'starttls)
-         (wl-smtp-posting-port . 587)
-         (wl-smtp-authenticate-type . "plain")
-         (wl-smtp-posting-user . "avenger.rigidus")
-         (wl-local-domain . "gmail.com")
-         )
-        )
-      )
+;;       elmo-pop3-debug t
+;;       ssl-certificate-verification-policy 1
+;;       wl-default-folder "%inbox"
+;;       wl-default-spec "%"
+;;       wl-folder-check-async t
+;;       wl-thread-indent-level 4
+;;       wl-thread-have-younger-brother-str "+"
+;;       wl-thread-youngest-child-str       "+"
+;;       wl-thread-vertical-str             "|"
+;;       wl-thread-horizontal-str           "-"
+;;       wl-thread-space-str                " "
+;;       wl-summary-width	nil
+;;       wl-summary-line-format "%n%T%P %W %D-%M-%Y %h:%m %t%[%c %f% %] %s"
+;;       wl-message-buffer-prefetch-folder-type-list nil
+;;       mime-transfer-level 8
+;;       mime-edit-split-message nil
+;;       mime-edit-message-max-length 32768
+;;       mime-header-accept-quoted-encoded-words t
+;;       ;; mime-browse-url-function 'browse-url-conkeror
+;;       pgg-passphrase-cache-expiry 300
+;;       pgg-decrypt-automatically t
+;;       wl-message-ignored-field-list '("^.*")
+;;       wl-message-visible-field-list '("^From:" "^To:" "^Cc:" "^Date:" "^Subject:" "^User-Agent:" "^X-Mailer:")
+;;       wl-message-sort-field-list    wl-message-visible-field-list
+;;       wl-message-window-size '(1 . 3)
+;;       wl-folder-window-width 40
+;;       wl-draft-preview-attributes-buffer-lines 7
+;;       wl-draft-config-alist
+;;       '(
+;;         ((string-match "avenger" wl-draft-parent-folder)
+;;          (wl-message-id-domain . "avenger-f@yandex.ru")
+;;          (wl-from . "rigidus <avenger-f@yandex.ru>")
+;;          ("From" . "avenger-f@yandex.ru")
+;;          ;; ("Fcc" . "%Sent:avenger-f@yandex.ru:993")
+;;          (wl-smtp-posting-server . "smtp.yandex.ru")
+;;          ;; (wl-smtp-connection-type . nil)
+;;          (wl-smtp-connection-type . 'starttls)
+;;          ;; (wl-smtp-connection-type . 'ssl)
+;;          ;; (wl-smtp-posting-port . 25)
+;;          ;; (wl-smtp-posting-port . 465)
+;;          (wl-smtp-posting-port . 587)
+;;          (wl-smtp-authenticate-type . "plain")
+;;          (wl-smtp-posting-user . "avenger-f")
+;;          (wl-local-domain . "yandex.ru")
+;;          )
+;;         ((string-match "content3208080" wl-draft-parent-folder)
+;;          (wl-message-id-domain . "content3208080@yandex.ru")
+;;          (wl-from . "content3208080 <content3208080@yandex.ru>")
+;;          ("From" . "content3208080@yandex.ru")
+;;          (wl-smtp-posting-server . "smtp.yandex.ru")
+;;          (wl-smtp-connection-type . 'starttls)
+;;          (wl-smtp-posting-port . 587)
+;;          (wl-smtp-authenticate-type . "plain")
+;;          (wl-smtp-posting-user . "content3208080")
+;;          (wl-local-domain . "yandex.ru")
+;;          )
+;;         ((string-match "i.am.rigidus" wl-draft-parent-folder)
+;;          (wl-message-id-domain . "i.am.rigidus@gmail.com")
+;;          (wl-from . "i.am.rigidus <i.am.rigidus@gmail.com>")
+;;          ("From" . "i.am.rigidus@gmail.com")
+;;          (wl-smtp-posting-server . "smtp.gmail.com")
+;;          (wl-smtp-connection-type . 'starttls)
+;;          (wl-smtp-posting-port . 587)
+;;          (wl-smtp-authenticate-type . "plain")
+;;          (wl-smtp-posting-user . "i.am.rigidus")
+;;          (wl-local-domain . "gmail.com")
+;;          )
+;;         ((string-match "avenger.rigidus" wl-draft-parent-folder)
+;;          (wl-message-id-domain . "avenger.rigidus@gmail.com")
+;;          (wl-from . "avenger.rigidus <avenger.rigidus@gmail.com>")
+;;          ("From" . "avenger.rigidus@gmail.com")
+;;          (wl-smtp-posting-server . "smtp.gmail.com")
+;;          (wl-smtp-connection-type . 'starttls)
+;;          (wl-smtp-posting-port . 587)
+;;          (wl-smtp-authenticate-type . "plain")
+;;          (wl-smtp-posting-user . "avenger.rigidus")
+;;          (wl-local-domain . "gmail.com")
+;;          )
+;;         )
+;;       )
 
-(autoload 'wl-user-agent-compose "wl-draft" nil t)
-(if (boundp 'mail-user-agent)
-    (setq mail-user-agent 'wl-user-agent))
-(if (fboundp 'define-mail-user-agent)
-    (define-mail-user-agent
-      'wl-user-agent
-      'wl-user-agent-compose
-      'wl-draft-send
-      'wl-draft-kill
-      'mail-send-hook))
+;; (autoload 'wl-user-agent-compose "wl-draft" nil t)
+;; (if (boundp 'mail-user-agent)
+;;     (setq mail-user-agent 'wl-user-agent))
+;; (if (fboundp 'define-mail-user-agent)
+;;     (define-mail-user-agent
+;;       'wl-user-agent
+;;       'wl-user-agent-compose
+;;       'wl-draft-send
+;;       'wl-draft-kill
+;;       'mail-send-hook))
 
 
 ;; MAILCRYPT
@@ -833,112 +833,112 @@ to the previously saved position"
 ;; слове. Переместились к следующему непонятному слову, нажали C-c
 ;; d, и в уже открытом окне с буфером появится перевод нового слова.
 
-(add-to-list 'load-path "~/.emacs.d/dictem-1.0.2")
-(require 'dictem)
+;; (add-to-list 'load-path "~/.emacs.d/dictem-1.0.2")
+;; (require 'dictem)
 
-(setq dictem-use-existing-buffer t)
+;; (setq dictem-use-existing-buffer t)
 
-(setq dictem-use-user-databases-only t)
+;; (setq dictem-use-user-databases-only t)
 
-;;; redefined function
-(defun dictem-ensure-buffer ()
-  "If current buffer is not a dictem buffer, create a new one."
-  (let* ((dictem-buffer (get-buffer-create dictem-buffer-name))
-         (dictem-window (get-buffer-window dictem-buffer))
-         (window-configuration (current-window-configuration))
-         (selected-window (frame-selected-window)))
-    (if (window-live-p dictem-window)
-        (select-window dictem-window)
-      (switch-to-buffer-other-window dictem-buffer))
+;; ;;; redefined function
+;; (defun dictem-ensure-buffer ()
+;;   "If current buffer is not a dictem buffer, create a new one."
+;;   (let* ((dictem-buffer (get-buffer-create dictem-buffer-name))
+;;          (dictem-window (get-buffer-window dictem-buffer))
+;;          (window-configuration (current-window-configuration))
+;;          (selected-window (frame-selected-window)))
+;;     (if (window-live-p dictem-window)
+;;         (select-window dictem-window)
+;;       (switch-to-buffer-other-window dictem-buffer))
 
-    (if (dictem-mode-p)
-        (progn
-          (if dictem-use-content-history
-              (setq dictem-content-history
-                    (cons (list (buffer-substring
-                                 (point-min) (point-max))
-                                (point)) dictem-content-history)))
-          (setq buffer-read-only nil)
-          (erase-buffer))
-      (progn
-        (dictem-mode)
+;;     (if (dictem-mode-p)
+;;         (progn
+;;           (if dictem-use-content-history
+;;               (setq dictem-content-history
+;;                     (cons (list (buffer-substring
+;;                                  (point-min) (point-max))
+;;                                 (point)) dictem-content-history)))
+;;           (setq buffer-read-only nil)
+;;           (erase-buffer))
+;;       (progn
+;;         (dictem-mode)
 
-        (make-local-variable 'dictem-window-configuration)
-        (make-local-variable 'dictem-selected-window)
-        (make-local-variable 'dictem-content-history)
-        (setq dictem-window-configuration window-configuration)
-        (setq dictem-selected-window selected-window)))))
+;;         (make-local-variable 'dictem-window-configuration)
+;;         (make-local-variable 'dictem-selected-window)
+;;         (make-local-variable 'dictem-content-history)
+;;         (setq dictem-window-configuration window-configuration)
+;;         (setq dictem-selected-window selected-window)))))
 
-(setq dictem-server "dictd.xdsl.by")
-(setq dictem-exclude-databases '("ger-" "-ger" "fra-" "-fra"))
+;; (setq dictem-server "dictd.xdsl.by")
+;; (setq dictem-exclude-databases '("ger-" "-ger" "fra-" "-fra"))
 
-(dictem-initialize)
+;; (dictem-initialize)
 
-(add-hook 'dictem-postprocess-match-hook
-          'dictem-postprocess-match)
+;; (add-hook 'dictem-postprocess-match-hook
+;;           'dictem-postprocess-match)
 
-(add-hook 'dictem-postprocess-definition-hook
-          'dictem-postprocess-definition-separator)
+;; (add-hook 'dictem-postprocess-definition-hook
+;;           'dictem-postprocess-definition-separator)
 
-(add-hook 'dictem-postprocess-definition-hook
-          'dictem-postprocess-definition-hyperlinks)
+;; (add-hook 'dictem-postprocess-definition-hook
+;;           'dictem-postprocess-definition-hyperlinks)
 
-(add-hook 'dictem-postprocess-show-info-hook
-          'dictem-postprocess-definition-hyperlinks)
+;; (add-hook 'dictem-postprocess-show-info-hook
+;;           'dictem-postprocess-definition-hyperlinks)
 
-(add-hook 'dictem-postprocess-definition-hook
-          'dictem-postprocess-each-definition)
+;; (add-hook 'dictem-postprocess-definition-hook
+;;           'dictem-postprocess-each-definition)
 
-(setq dictem-user-databases-alist
-      '(("_en-ru"  . ("mueller7" "korolew_en-ru" "en-ru")); "dict://dict.org:2628/web1913"))
-        ("_en-en"  . ("foldoc" "gcide" "wn"))
-        ("_ru-ru"  . ("beslov" "ushakov" "ozhegov" "brok_and_efr"))
-        ("_ru-en" . ("ru-en"))
-        ("_unidoc" . ("susv3" "man" "info" "howto" "rfc"))
-        ))
+;; (setq dictem-user-databases-alist
+;;       '(("_en-ru"  . ("mueller7" "korolew_en-ru" "en-ru")); "dict://dict.org:2628/web1913"))
+;;         ("_en-en"  . ("foldoc" "gcide" "wn"))
+;;         ("_ru-ru"  . ("beslov" "ushakov" "ozhegov" "brok_and_efr"))
+;;         ("_ru-en" . ("ru-en"))
+;;         ("_unidoc" . ("susv3" "man" "info" "howto" "rfc"))
+;;         ))
 
-(define-key dictem-mode-map [tab] 'dictem-next-link)
-(define-key dictem-mode-map [(backtab)] 'dictem-previous-link)
+;; (define-key dictem-mode-map [tab] 'dictem-next-link)
+;; (define-key dictem-mode-map [(backtab)] 'dictem-previous-link)
 
-;;; http://paste.lisp.org/display/89086
-(defun dictem-run-define-at-point-with-query ()
-  "Query the default dict server with the word read in within this function."
-  (interactive)
-  (let* ((default-word (thing-at-point 'symbol))
-         (default-prompt (concat "Lookup Word "
-                                 (if default-word
-                                     (concat "(" default-word ")") nil)
-                                 ": "))
-         (dictem-query
-          (funcall #'(lambda (str)
-                       "Remove Whitespace from beginning and end of a string."
-                       (replace-regexp-in-string "^[ \n\t]*\\(.*?\\)[ \n\t]*$"
-                                                 "\\1"
-                                                 str))
-                   (read-string default-prompt nil nil default-word))))
-    (if (= (length dictem-query) 0) nil
-      (dictem-run 'dictem-base-search "_en-ru" dictem-query "."))))
+;; ;;; http://paste.lisp.org/display/89086
+;; (defun dictem-run-define-at-point-with-query ()
+;;   "Query the default dict server with the word read in within this function."
+;;   (interactive)
+;;   (let* ((default-word (thing-at-point 'symbol))
+;;          (default-prompt (concat "Lookup Word "
+;;                                  (if default-word
+;;                                      (concat "(" default-word ")") nil)
+;;                                  ": "))
+;;          (dictem-query
+;;           (funcall #'(lambda (str)
+;;                        "Remove Whitespace from beginning and end of a string."
+;;                        (replace-regexp-in-string "^[ \n\t]*\\(.*?\\)[ \n\t]*$"
+;;                                                  "\\1"
+;;                                                  str))
+;;                    (read-string default-prompt nil nil default-word))))
+;;     (if (= (length dictem-query) 0) nil
+;;       (dictem-run 'dictem-base-search "_en-ru" dictem-query "."))))
 
-(defun dictem-run-define-at-point ()
-  "dictem look up for thing at point"
-  (interactive)
-  (let* ((default-word (thing-at-point 'symbol))
-         (selected-window (frame-selected-window))
-         (dictem-query
-          (funcall #'(lambda (str)
-                       "Remove Whitespace from beginning and end of a string."
-                       (replace-regexp-in-string "^[ \n\t]*\\(.*?\\)[ \n\t]*$"
-                                                 "\\1"
-                                                 str))
-                   default-word)))
-    (if (= (length dictem-query) 0)
-        nil
-      (progn
-        (dictem-run 'dictem-base-search "_en-ru" dictem-query ".")
-        (select-window selected-window)))))
+;; (defun dictem-run-define-at-point ()
+;;   "dictem look up for thing at point"
+;;   (interactive)
+;;   (let* ((default-word (thing-at-point 'symbol))
+;;          (selected-window (frame-selected-window))
+;;          (dictem-query
+;;           (funcall #'(lambda (str)
+;;                        "Remove Whitespace from beginning and end of a string."
+;;                        (replace-regexp-in-string "^[ \n\t]*\\(.*?\\)[ \n\t]*$"
+;;                                                  "\\1"
+;;                                                  str))
+;;                    default-word)))
+;;     (if (= (length dictem-query) 0)
+;;         nil
+;;       (progn
+;;         (dictem-run 'dictem-base-search "_en-ru" dictem-query ".")
+;;         (select-window selected-window)))))
 
-(global-set-key "\C-cd" 'dictem-run-define-at-point)
-(global-set-key "\C-cz" 'dictem-run-define-at-point-with-query)
+;; (global-set-key "\C-cd" 'dictem-run-define-at-point)
+;; (global-set-key "\C-cz" 'dictem-run-define-at-point-with-query)
 
 
 
@@ -1066,10 +1066,10 @@ to the previously saved position"
 (global-font-lock-mode 1)
 ;; Настройка
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(Buffer-menu-use-frame-buffer-list nil)
  '(ecb-options-version "2.40")
  '(jabber-history-size-limit 49741824)
@@ -1211,14 +1211,14 @@ to the previously saved position"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Специальные настройки jabber-аккаунтов
-(load-file "~/.emacs.d/jabber-account.el")
+;;(load-file "~/.emacs.d/jabber-account.el")
 
 
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
 
 (put 'overwrite-mode 'disabled nil)
@@ -1239,52 +1239,52 @@ to the previously saved position"
 ;; ERLANG
 ;; http://juravskiy.ru/?p=1152
 
-;; Erlang mode
-(setq erlang-root-dir "/usr/lib/erlang")
-(setq load-path (cons "/usr/lib/erlang/lib/tools-2.6.7/emacs" load-path))
-(setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
-(setq erlang-man-root-dir "/usr/lib/erlang/man")
-(require 'erlang-start)
-;; Distel
-(add-to-list 'load-path "~/.emacs.d/share/distel/elisp")
-(require 'distel)
-(distel-setup)
-;; Some Erlang customizations
-(add-hook 'erlang-mode-hook
-(lambda ()
-    ;; when starting an Erlang shell in Emacs, with the node
- ;; short name set to vitaliy
-(setq inferior-erlang-machine-options '("-sname" "vitaliy"))
-;; add Erlang functions to an imenu menu
-(imenu-add-to-menubar "imenu")))
-;; A number of the erlang-extended-mode key bindings are useful in the
-;; shell too
-(defconst distel-shell-keys
-    '(("\C-\M-i"   erl-complete)
-    ("\M-?"      erl-complete)
-    ("\M-."      erl-find-source-under-point)
-    ("\M-,"      erl-find-source-unwind)
-    ("\M-*"      erl-find-source-unwind)
-  )
-    "Additional keys to bind when in Erlang shell.")
+;; ;; Erlang mode
+;; (setq erlang-root-dir "/usr/lib/erlang")
+;; (setq load-path (cons "/usr/lib/erlang/lib/tools-2.6.7/emacs" load-path))
+;; (setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
+;; (setq erlang-man-root-dir "/usr/lib/erlang/man")
+;; (require 'erlang-start)
+;; ;; Distel
+;; (add-to-list 'load-path "~/.emacs.d/share/distel/elisp")
+;; (require 'distel)
+;; (distel-setup)
+;; ;; Some Erlang customizations
+;; (add-hook 'erlang-mode-hook
+;; (lambda ()
+;;     ;; when starting an Erlang shell in Emacs, with the node
+;;  ;; short name set to vitaliy
+;; (setq inferior-erlang-machine-options '("-sname" "vitaliy"))
+;; ;; add Erlang functions to an imenu menu
+;; (imenu-add-to-menubar "imenu")))
+;; ;; A number of the erlang-extended-mode key bindings are useful in the
+;; ;; shell too
+;; (defconst distel-shell-keys
+;;     '(("\C-\M-i"   erl-complete)
+;;     ("\M-?"      erl-complete)
+;;     ("\M-."      erl-find-source-under-point)
+;;     ("\M-,"      erl-find-source-unwind)
+;;     ("\M-*"      erl-find-source-unwind)
+;;   )
+;;     "Additional keys to bind when in Erlang shell.")
 
-(add-hook 'erlang-shell-mode-hook
-	  (lambda ()
-	    ;; add some Distel bindings to the Erlang shell
-	    (dolist (spec distel-shell-keys)
-	      (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
+;; (add-hook 'erlang-shell-mode-hook
+;; 	  (lambda ()
+;; 	    ;; add some Distel bindings to the Erlang shell
+;; 	    (dolist (spec distel-shell-keys)
+;; 	      (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
 
 
-;; PARROT
+;; ;; PARROT
 
-(load "parrot")
-(load "pasm")
+;; (load "parrot")
+;; (load "pasm")
 
-(add-to-list 'auto-mode-alist (cons "\\.pasm\\'" 'pasm-mode))
+;; (add-to-list 'auto-mode-alist (cons "\\.pasm\\'" 'pasm-mode))
 
-(add-hook 'pasm-mode-hook
-          (function (lambda ()
-                      (setq indent-tabs-mode nil))))
+;; (add-hook 'pasm-mode-hook
+;;           (function (lambda ()
+;;                       (setq indent-tabs-mode nil))))
 
 
 ;;
@@ -1320,9 +1320,9 @@ to the previously saved position"
          (plantuml . t)
          (latex . t))))
 
-; Do not prompt to confirm evaluation
-; This may be dangerous - make sure you understand the consequences
-; of setting this -- see the docstring for details
+                                        ; Do not prompt to confirm evaluation
+                                        ; This may be dangerous - make sure you understand the consequences
+                                        ; of setting this -- see the docstring for details
 (setq org-confirm-babel-evaluate nil)
 
 
@@ -1389,10 +1389,10 @@ to the previously saved position"
 ;; - ширина табуляции - 4 символа.
 
 (custom-set-variables
-;; custom-set-variables was added by Custom.
-;; If you edit it by hand, you could mess it up, so be careful.
-;; Your init file should contain only one such instance.
-;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(c-tab-always-indent nil)
  '(column-number-mode t)
  '(size-indication-mode t)
@@ -1412,13 +1412,13 @@ to the previously saved position"
     (when (and current-input-method quail-keyboard-layout)
       (dolist (map (cdr (quail-map)))
         (let* ((to (car map))
-                      (from (quail-get-translation
-                                   (cadr map) (char-to-string to) 1)))
-            (when (and (characterp from) (characterp to))
-                  (dolist (mod modifiers)
-                          (define-key local-function-key-map
-                            (vector (append mod (list from)))
-                            (vector (append mod (list to)))))))))
+               (from (quail-get-translation
+                      (cadr map) (char-to-string to) 1)))
+          (when (and (characterp from) (characterp to))
+            (dolist (mod modifiers)
+              (define-key local-function-key-map
+                (vector (append mod (list from)))
+                (vector (append mod (list to)))))))))
     (when input-method
       (activate-input-method current))))
 
@@ -1454,17 +1454,17 @@ to the previously saved position"
 
 ;; GNUPLOT
 
-(add-to-list 'load-path "gnuplot-el")
+;; (add-to-list 'load-path "gnuplot-el")
 
-(autoload 'gnuplot-mode "gnuplot" "gnuplot major mode" t)
-(autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot mode" t)
+;; (autoload 'gnuplot-mode "gnuplot" "gnuplot major mode" t)
+;; (autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot mode" t)
 
-(unless (assoc "\\.gp\\'" auto-mode-alist)
-  (add-to-list 'auto-mode-alist '("\\.gp\\'" . gnuplot-mode)))
+;; (unless (assoc "\\.gp\\'" auto-mode-alist)
+;;   (add-to-list 'auto-mode-alist '("\\.gp\\'" . gnuplot-mode)))
 
-(load-file "/home/rigidus/.emacs.d/gnuplot-el/gnuplot.el")
+;; (load-file "/home/rigidus/.emacs.d/gnuplot-el/gnuplot.el")
 
 
-(require 'sql)
-(require 'ob-sql)
-(require 'mysql)
+;; (require 'sql)
+;; (require 'ob-sql)
+;; (require 'mysql)
