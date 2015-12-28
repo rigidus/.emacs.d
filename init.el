@@ -1066,20 +1066,25 @@ to the previously saved position"
 (global-font-lock-mode 1)
 ;; Настройка
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(Buffer-menu-use-frame-buffer-list nil)
+ '(c-tab-always-indent nil)
+ '(column-number-mode t)
  '(ecb-options-version "2.40")
  '(jabber-history-size-limit 49741824)
  '(jabber-use-global-history nil)
  '(lj-cache-login-information t)
  '(lj-default-username "rigidus")
  '(org-agenda-files (quote ("/home/rigidus/org/agenda.org")))
+ '(org-agenda-files (quote ("~/repo/asp/doc.org")))
  '(org-default-notes-file "/home/rigidus/org/notes.org")
  '(org-directory "/home/rigidus/org/")
- '(org-support-shift-select t))
+ '(org-support-shift-select t)
+ '(size-indication-mode t)
+ '(tab-width 4))
 
 
 (add-to-list 'load-path "~/.emacs.d/contrib/emacs") ;; Путь к git
@@ -1215,10 +1220,10 @@ to the previously saved position"
 
 
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
 
 (put 'overwrite-mode 'disabled nil)
@@ -1388,15 +1393,7 @@ to the previously saved position"
 ;; - отображение размера окна;
 ;; - ширина табуляции - 4 символа.
 
-(custom-set-variables
-;; custom-set-variables was added by Custom.
-;; If you edit it by hand, you could mess it up, so be careful.
-;; Your init file should contain only one such instance.
-;; If there is more than one, they won't work right.
- '(c-tab-always-indent nil)
- '(column-number-mode t)
- '(size-indication-mode t)
- '(tab-width 4))
+
 
 
 (defun reverse-input-method (input-method)
@@ -1468,3 +1465,5 @@ to the previously saved position"
 (require 'sql)
 (require 'ob-sql)
 (require 'mysql)
+
+(load "~/.emacs.d/fireplace")
