@@ -3,16 +3,30 @@
 ;;; Code:
 
 
-;;;### (autoloads (el-get-checksum el-get-make-recipes el-get-cd
-;;;;;;  el-get-self-update el-get-update-packages-of-type el-get-update-all
-;;;;;;  el-get-version) "el-get/el-get" "el-get/el-get.el" (21339
-;;;;;;  5245 913853 224000))
+;;;### (autoloads (el-get el-get-self-checksum el-get-checksum el-get-make-recipes
+;;;;;;  el-get-cd el-get-reinstall el-get-remove el-get-self-update
+;;;;;;  el-get-update-packages-of-type el-get-update-all el-get-update
+;;;;;;  el-get-install el-get-version) "el-get/el-get" "el-get/el-get.el"
+;;;;;;  (22093 49687 206076 844000))
 ;;; Generated autoloads from el-get/el-get.el
 
 (autoload 'el-get-version "el-get/el-get" "\
 Message the current el-get version
 
 \(fn)" t nil)
+
+(autoload 'el-get-install "el-get/el-get" "\
+Cause the named PACKAGE to be installed after all of its
+dependencies (if any).
+
+PACKAGE may be either a string or the corresponding symbol.
+
+\(fn PACKAGE)" t nil)
+
+(autoload 'el-get-update "el-get/el-get" "\
+Update PACKAGE.
+
+\(fn PACKAGE)" t nil)
 
 (autoload 'el-get-update-all "el-get/el-get" "\
 Performs update of all installed packages.
@@ -29,6 +43,16 @@ Update el-get itself.  The standard recipe takes care of reloading the code.
 
 \(fn)" t nil)
 
+(autoload 'el-get-remove "el-get/el-get" "\
+Remove any PACKAGE that is know to be installed or required.
+
+\(fn PACKAGE)" t nil)
+
+(autoload 'el-get-reinstall "el-get/el-get" "\
+Remove PACKAGE and then install it again.
+
+\(fn PACKAGE)" t nil)
+
 (autoload 'el-get-cd "el-get/el-get" "\
 Open dired in the package directory.
 
@@ -43,12 +67,117 @@ entry which is not a symbol and is not already a known recipe.
 (autoload 'el-get-checksum "el-get/el-get" "\
 Compute the checksum of the given package, and put it in the kill-ring
 
-\(fn PACKAGE &optional PACKAGE-STATUS-ALIST)" t nil)
+\(fn PACKAGE)" t nil)
+
+(autoload 'el-get-self-checksum "el-get/el-get" "\
+Compute the checksum of the running version of el-get itself.
+
+Also put the checksum in the kill-ring.
+
+\(fn)" t nil)
+
+(autoload 'el-get "el-get/el-get" "\
+Ensure that packages have been downloaded once and init them as needed.
+
+This will not update the sources by using `apt-get install' or
+`git pull', but it will ensure that:
+
+* the packages have been installed
+* load-path is set so their elisp files can be found
+* Info-directory-list is set so their info files can be found
+* Autoloads have been prepared and evaluated for each package
+* Any post-installation setup (e.g. `(require 'feature)') happens
+
+When SYNC is nil (the default), all installations run
+concurrently, in the background.
+
+When SYNC is 'sync, each package will be installed synchronously,
+and any error will stop it all.
+
+Please note that the `el-get-init' part of `el-get' is always
+done synchronously. There's `byte-compile' support though, and
+the packages you use are welcome to use `autoload' too.
+
+PACKAGES is expected to be a list of packages you want to install
+or init.  When PACKAGES is omited (the default), the list of
+already installed packages is considered.
+
+\(fn &optional SYNC &rest PACKAGES)" nil nil)
+
+;;;***
+
+;;;### (autoloads (el-get-bundle! el-get-bundle el-get-bundle-el-get)
+;;;;;;  "el-get/el-get-bundle" "el-get/el-get-bundle.el" (22093 49687
+;;;;;;  202076 844000))
+;;; Generated autoloads from el-get/el-get-bundle.el
+
+(autoload 'el-get-bundle-el-get "el-get/el-get-bundle" "\
+
+
+\(fn SRC)" nil nil)
+
+(autoload 'el-get-bundle "el-get/el-get-bundle" "\
+Install PACKAGE and run initialization FORM.
+
+PACKAGE can be either a simple package name or a package name
+with a modifier before the name to specify local recipe source
+information:
+
+* `<owner>/' : specifies a Github owner name
+* `gist:<id>' : specifies a Gist ID
+* `<type>:' : specifies a type of the package source
+
+If `FEATURE in PACKAGE' form is used instead of PACKAGE, then
+that FEATURE is `require'd after installing PACKAGE.  You can
+also use `el-get-bundle!' macro if FEATURE and PACKAGE are the
+same.  If you wish to `require' more than one feature, then use
+`:features' property in FORM.
+
+The initialization FORM may start with a property list that
+describes a local recipe.  The FORM after the property list is
+treated as initialization code, which is actually an `:after'
+property of the local recipe.
+
+A copy of the initialization code is stored in a directory
+specified by `el-get-bundle-init-directory' and its byte-compiled
+version is used if `el-get-bundle-byte-compile' is non-nil.
+
+\(fn PACKAGE &rest FORM)" nil t)
+
+(put 'el-get-bundle 'lisp-indent-function 'defun)
+
+(autoload 'el-get-bundle! "el-get/el-get-bundle" "\
+Install PACKAGE and run initialization form.
+It is the same as `el-get-bundle' except that PACKAGE is explicitly
+required.
+
+\(fn PACKAGE &rest ARGS)" nil t)
+
+(put 'el-get-bundle! 'lisp-indent-function 'defun)
+
+;;;***
+
+;;;### (autoloads (el-get-check-recipe) "el-get/el-get-check" "el-get/el-get-check.el"
+;;;;;;  (22093 49687 202076 844000))
+;;; Generated autoloads from el-get/el-get-check.el
+
+(autoload 'el-get-check-recipe "el-get/el-get-check" "\
+Check the format of the recipe.
+Please run this command before sending a pull request.
+Usage: M-x el-get-check-recipe RET
+
+You can run this function from checker script like this:
+    test/check-recipe.el PATH/TO/RECIPE.rcp
+
+When used as a lisp function, FILE-OR-BUFFER must be a buffer
+object or a file path.
+
+\(fn FILE-OR-BUFFER)" t nil)
 
 ;;;***
 
 ;;;### (autoloads (el-get-list-packages) "el-get/el-get-list-packages"
-;;;;;;  "el-get/el-get-list-packages.el" (21339 5245 913853 224000))
+;;;;;;  "el-get/el-get-list-packages.el" (22093 49687 206076 844000))
 ;;; Generated autoloads from el-get/el-get-list-packages.el
 
 (autoload 'el-get-list-packages "el-get/el-get-list-packages" "\
@@ -59,7 +188,7 @@ Display a list of packages.
 ;;;***
 
 ;;;### (autoloads (bookmark-w3m-bookmark-jump) "emacs-w3m/bookmark-w3m"
-;;;;;;  "emacs-w3m/bookmark-w3m.el" (21339 5227 765853 381000))
+;;;;;;  "emacs-w3m/bookmark-w3m.el" (22093 49675 134076 741000))
 ;;; Generated autoloads from emacs-w3m/bookmark-w3m.el
 
 (autoload 'bookmark-w3m-bookmark-jump "emacs-w3m/bookmark-w3m" "\
@@ -70,7 +199,7 @@ Default bookmark handler for w3m buffers.
 ;;;***
 
 ;;;### (autoloads (mime-w3m-preview-text/html) "emacs-w3m/mime-w3m"
-;;;;;;  "emacs-w3m/mime-w3m.el" (21339 5227 789853 380000))
+;;;;;;  "emacs-w3m/mime-w3m.el" (22093 49675 142076 742000))
 ;;; Generated autoloads from emacs-w3m/mime-w3m.el
 
 (autoload 'mime-w3m-preview-text/html "emacs-w3m/mime-w3m" "\
@@ -82,7 +211,7 @@ Default bookmark handler for w3m buffers.
 
 ;;;### (autoloads (octet-mime-setup mime-view-octet mime-preview-octet
 ;;;;;;  octet-find-file octet-buffer) "emacs-w3m/octet" "emacs-w3m/octet.el"
-;;;;;;  (21339 5227 789853 380000))
+;;;;;;  (22093 49675 142076 742000))
 ;;; Generated autoloads from emacs-w3m/octet.el
 
 (autoload 'octet-buffer "emacs-w3m/octet" "\
@@ -117,7 +246,7 @@ Octet setting for MIME module.
 ;;;### (autoloads (w3m-buffer w3m-region w3m-find-file w3m-browse-url
 ;;;;;;  w3m w3m-create-empty-session w3m-gohome w3m-goto-url-new-session
 ;;;;;;  w3m-goto-url w3m-download w3m-retrieve) "emacs-w3m/w3m" "emacs-w3m/w3m.el"
-;;;;;;  (21339 5227 845853 380000))
+;;;;;;  (22093 49675 174076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m.el
 
 (autoload 'w3m-retrieve "emacs-w3m/w3m" "\
@@ -274,7 +403,7 @@ See `w3m-region' for the optional arguments.
 ;;;***
 
 ;;;### (autoloads (w3m-antenna w3m-about-antenna) "emacs-w3m/w3m-antenna"
-;;;;;;  "emacs-w3m/w3m-antenna.el" (21339 5227 829853 380000))
+;;;;;;  "emacs-w3m/w3m-antenna.el" (22093 49675 170076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-antenna.el
 
 (autoload 'w3m-about-antenna "emacs-w3m/w3m-antenna" "\
@@ -292,7 +421,7 @@ Report changes of WEB sites, which is specified in `w3m-antenna-sites'.
 ;;;### (autoloads (w3m-setup-bookmark-menu w3m-about-bookmark w3m-bookmark-view-new-session
 ;;;;;;  w3m-bookmark-view w3m-bookmark-add-current-url-group w3m-bookmark-add-all-urls
 ;;;;;;  w3m-bookmark-add-current-url w3m-bookmark-add-this-url) "emacs-w3m/w3m-bookmark"
-;;;;;;  "emacs-w3m/w3m-bookmark.el" (21339 5227 829853 380000))
+;;;;;;  "emacs-w3m/w3m-bookmark.el" (22093 49675 170076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-bookmark.el
 
 (autoload 'w3m-bookmark-add-this-url "emacs-w3m/w3m-bookmark" "\
@@ -340,7 +469,7 @@ Setup w3m bookmark items in menubar.
 
 ;;;### (autoloads (w3m-about-cookie w3m-cookie w3m-cookie-get w3m-cookie-set
 ;;;;;;  w3m-cookie-shutdown) "emacs-w3m/w3m-cookie" "emacs-w3m/w3m-cookie.el"
-;;;;;;  (21339 5227 829853 380000))
+;;;;;;  (22093 49675 170076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-cookie.el
 
 (autoload 'w3m-cookie-shutdown "emacs-w3m/w3m-cookie" "\
@@ -372,7 +501,7 @@ Make the html contents to display and to enable you to manage cookies.
 ;;;***
 
 ;;;### (autoloads (w3m-dtree w3m-about-dtree) "emacs-w3m/w3m-dtree"
-;;;;;;  "emacs-w3m/w3m-dtree.el" (21339 5227 829853 380000))
+;;;;;;  "emacs-w3m/w3m-dtree.el" (22093 49675 170076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-dtree.el
 
 (autoload 'w3m-about-dtree "emacs-w3m/w3m-dtree" "\
@@ -389,7 +518,7 @@ If called with 'prefix argument', display all directorys and files.
 ;;;***
 
 ;;;### (autoloads (w3m-fb-mode) "emacs-w3m/w3m-fb" "emacs-w3m/w3m-fb.el"
-;;;;;;  (21339 5227 833853 380000))
+;;;;;;  (22093 49675 170076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-fb.el
 
 (defvar w3m-fb-mode nil "\
@@ -410,7 +539,7 @@ This allows frame-local lists of buffers (tabs).
 ;;;***
 
 ;;;### (autoloads (w3m-filter) "emacs-w3m/w3m-filter" "emacs-w3m/w3m-filter.el"
-;;;;;;  (21339 5227 833853 380000))
+;;;;;;  (22093 49675 170076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-filter.el
 
 (autoload 'w3m-filter "emacs-w3m/w3m-filter" "\
@@ -421,7 +550,7 @@ Apply filtering rule of URL against a content in this buffer.
 ;;;***
 
 ;;;### (autoloads (w3m-fontify-forms) "emacs-w3m/w3m-form" "emacs-w3m/w3m-form.el"
-;;;;;;  (21339 5227 833853 380000))
+;;;;;;  (22093 49675 170076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-form.el
 
 (autoload 'w3m-fontify-forms "emacs-w3m/w3m-form" "\
@@ -435,8 +564,8 @@ Process half-dumped data and fontify forms in this buffer.
 ;;;;;;  w3m-lnum-print-this-url w3m-lnum-edit-this-url w3m-lnum-external-view-this-url
 ;;;;;;  w3m-lnum-save-image w3m-lnum-view-image w3m-lnum-toggle-inline-image
 ;;;;;;  w3m-lnum-universal w3m-lnum-follow w3m-lnum-goto w3m-lnum-mode)
-;;;;;;  "emacs-w3m/w3m-lnum" "emacs-w3m/w3m-lnum.el" (21339 5227
-;;;;;;  837853 380000))
+;;;;;;  "emacs-w3m/w3m-lnum" "emacs-w3m/w3m-lnum.el" (22093 49675
+;;;;;;  170076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-lnum.el
 
 (autoload 'w3m-lnum-mode "emacs-w3m/w3m-lnum" "\
@@ -528,7 +657,7 @@ If no link under point, activate numbering and ask for one.
 ;;;***
 
 ;;;### (autoloads (w3m-namazu w3m-about-namazu) "emacs-w3m/w3m-namazu"
-;;;;;;  "emacs-w3m/w3m-namazu.el" (21339 5227 837853 380000))
+;;;;;;  "emacs-w3m/w3m-namazu.el" (22093 49675 174076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-namazu.el
 
 (autoload 'w3m-about-namazu "emacs-w3m/w3m-namazu" "\
@@ -544,7 +673,7 @@ Search indexed files with Namazu.
 ;;;***
 
 ;;;### (autoloads (w3m-perldoc w3m-about-perldoc) "emacs-w3m/w3m-perldoc"
-;;;;;;  "emacs-w3m/w3m-perldoc.el" (21339 5227 837853 380000))
+;;;;;;  "emacs-w3m/w3m-perldoc.el" (22093 49675 174076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-perldoc.el
 
 (autoload 'w3m-about-perldoc "emacs-w3m/w3m-perldoc" "\
@@ -561,7 +690,7 @@ View Perl documents.
 
 ;;;### (autoloads (w3m-search-uri-replace w3m-search-new-session
 ;;;;;;  w3m-search) "emacs-w3m/w3m-search" "emacs-w3m/w3m-search.el"
-;;;;;;  (21339 5227 837853 380000))
+;;;;;;  (22093 49675 174076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-search.el
 
 (autoload 'w3m-search "emacs-w3m/w3m-search" "\
@@ -589,7 +718,7 @@ Generate query string for ENGINE from URI matched by last search.
 ;;;### (autoloads (w3m-session-last-crashed-session w3m-session-last-autosave-session
 ;;;;;;  w3m-setup-session-menu w3m-session-select w3m-session-crash-recovery-remove
 ;;;;;;  w3m-session-save) "emacs-w3m/w3m-session" "emacs-w3m/w3m-session.el"
-;;;;;;  (21339 5227 837853 380000))
+;;;;;;  (22093 49675 174076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-session.el
 
 (autoload 'w3m-session-save "emacs-w3m/w3m-session" "\
@@ -625,7 +754,7 @@ Setup w3m session items in menubar.
 ;;;***
 
 ;;;### (autoloads (w3m-replace-symbol) "emacs-w3m/w3m-symbol" "emacs-w3m/w3m-symbol.el"
-;;;;;;  (21339 5227 841853 380000))
+;;;;;;  (22093 49675 174076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-symbol.el
 
 (autoload 'w3m-replace-symbol "emacs-w3m/w3m-symbol" "\
@@ -636,7 +765,7 @@ Setup w3m session items in menubar.
 ;;;***
 
 ;;;### (autoloads (w3m-about-weather w3m-weather) "emacs-w3m/w3m-weather"
-;;;;;;  "emacs-w3m/w3m-weather.el" (21339 5227 841853 380000))
+;;;;;;  "emacs-w3m/w3m-weather.el" (22093 49675 174076 742000))
 ;;; Generated autoloads from emacs-w3m/w3m-weather.el
 
 (autoload 'w3m-weather "emacs-w3m/w3m-weather" "\
@@ -651,11 +780,11 @@ Display weather report.
 
 ;;;***
 
-;;;### (autoloads nil nil ("el-get/el-get-autoloads.el" "el-get/el-get-build.el"
+;;;### (autoloads nil nil ("el-get/el-get-autoloading.el" "el-get/el-get-build.el"
 ;;;;;;  "el-get/el-get-byte-compile.el" "el-get/el-get-core.el" "el-get/el-get-custom.el"
 ;;;;;;  "el-get/el-get-dependencies.el" "el-get/el-get-install.el"
 ;;;;;;  "el-get/el-get-methods.el" "el-get/el-get-notify.el" "el-get/el-get-recipes.el"
-;;;;;;  "el-get/el-get-status.el") (21615 19254 767341 609000))
+;;;;;;  "el-get/el-get-status.el") (22093 49689 696505 580000))
 
 ;;;***
 
