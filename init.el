@@ -1481,10 +1481,4 @@ to the previously saved position"
 (require 'ob-sql)
 (require 'mysql)
 
-<<<<<<< HEAD
-
-(add-to-list 'org-emphasis-alist
-             '("[]" (:foreground "green")))
-=======
 (load "~/.emacs.d/fireplace")
->>>>>>> 22a643d049f02a2cfbac383c013e38917e4421fb
