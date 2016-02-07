@@ -4,6 +4,8 @@
 ;;                                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setq debug-on-error t)
+
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
 (add-to-list 'load-path "~/.emacs.d/")
@@ -1078,8 +1080,7 @@ to the previously saved position"
  '(jabber-use-global-history nil)
  '(lj-cache-login-information t)
  '(lj-default-username "rigidus")
- '(org-agenda-files (quote ("/home/rigidus/org/agenda.org")))
- '(org-agenda-files (quote ("~/repo/asp/doc.org")))
+ '(org-agenda-files nil)
  '(org-default-notes-file "/home/rigidus/org/notes.org")
  '(org-directory "/home/rigidus/org/")
  '(org-support-shift-select t)
