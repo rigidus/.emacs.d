@@ -597,6 +597,21 @@ to the previously saved position"
 ;;                                                        (match-end 1) "ƒ")
 ;;                                        nil)))))))
 
+;; ORG-MODE TODO|VRFY font-lock-faces
+(font-lock-add-keywords 'org-mode
+                        '(("\\(\\[TODO:.\\{3,\\}\\]\\)" . 'font-lock-warning-face)
+                          ("\\(\\[COMMENT:.\\{3,\\}\\]\\)" . 'font-lock-keyword-face)
+                          ;; ("\\(comment\\)" . 'font-lock-comment-face)
+                          ("\\(\\[VRFY:.\\{3,\\}\\]\\)" . 'font-lock-function-name-face)
+                          ;; ("\\(variable-name\\)" . 'font-lock-variable-name-face)
+                          ;; ("\\(keyword\\)" . 'font-lock-keyword-face)
+                          ;; ("\\(comment\\)" . 'font-lock-comment-face)
+                          ;; ("\\(type\\)" . 'font-lock-type-face)
+                          ;; ("\\(constant\\)" . 'font-lock-constant-face)
+                          ;; ("\\(builtin\\)" . 'font-lock-builtin-face)
+                          ;; ("\\(string\\)" . 'font-lock-string-face)
+                          ;; ("\\(function-name\\)" . 'font-lock-function-name-face)
+                          ))
 
 ;; SGML-MODE
 
@@ -1467,4 +1482,10 @@ to the previously saved position"
 (require 'ob-sql)
 (require 'mysql)
 
+<<<<<<< HEAD
+
+(add-to-list 'org-emphasis-alist
+             '("[]" (:foreground "green")))
+=======
 (load "~/.emacs.d/fireplace")
+>>>>>>> 22a643d049f02a2cfbac383c013e38917e4421fb
