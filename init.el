@@ -1,3 +1,14 @@
+(require 'package) ;; You might already have this line
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize) ;; You might already have this line
+
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                           ;;
 ;;    EMACS configuration file by Rigidus    ;;
@@ -1483,3 +1494,39 @@ to the previously saved position"
 (require 'mysql)
 
 (load "~/.emacs.d/fireplace")
+
+
+;; Водки найду
+
+(defun what-can-i-do ()
+  (interactive)
+  (let ((pattern "\\(\\[\\(TODO\\|VRFY\\):gmm\\]\\)") ;; "\\(\\[TODO:.\\{3,\\}\\]\\)"
+        (curbuff (current-buffer))
+        (newbuff (generate-new-buffer "*what-can-i-do*")))
+    (save-excursion
+      (goto-char (point-min))
+      (let ((cnt 0))
+        (with-output-to-temp-buffer newbuff
+          (while (re-search-forward pattern nil t)
+            (incf cnt)
+            (let ((buff  curbuff)
+                  (point (point))
+                  (line  (line-number-at-pos))
+                  (contents (thing-at-point 'line)))
+              (with-current-buffer newbuff
+                (insert-text-button (format "%d:" line)
+                                    'buff buff
+                                    'point point
+                                    'action (lambda (x)
+                                              (let* ((pos   (posn-point (event-end x)))
+                                                     (buff  (get-text-property pos 'buff))
+                                                     (point (get-text-property pos 'point)))
+                                                (with-current-buffer buff
+                                                  (goto-char point))
+                                                (switch-to-buffer buff))))
+                (princ contents))))
+          (goto-char (point-max))
+          (princ (format "\nDone. %s finded." cnt))
+          )))))
+
+(global-set-key (kbd "C-c m") 'what-can-i-do)
