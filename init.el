@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ;;
 ;;    ___ _ __ ___   __ _  ___ ___
 ;;   / _ \ '_ ` _ \ / _` |/ __/ __|
@@ -7,6 +8,26 @@
 ;; EMACS configuration file by Rigidus
 ;;
 
+=======
+(require 'package) ;; You might already have this line
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize) ;; You might already have this line
+
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                           ;;
+;;    EMACS configuration file by Rigidus    ;;
+;;                                           ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+>>>>>>> 4c69dd47b836b56a517cf4f9d66bd087f22728d7
+
+(setq debug-on-error t)
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
@@ -1098,8 +1119,7 @@ to the previously saved position"
  '(jabber-use-global-history nil)
  '(lj-cache-login-information t)
  '(lj-default-username "rigidus")
- '(org-agenda-files (quote ("/home/rigidus/org/agenda.org")))
- '(org-agenda-files (quote ("~/repo/asp/doc.org")))
+ '(org-agenda-files nil)
  '(org-default-notes-file "/home/rigidus/org/notes.org")
  '(org-directory "/home/rigidus/org/")
  '(org-support-shift-select t)
@@ -1487,6 +1507,41 @@ to the previously saved position"
 (require 'mysql)
 
 (load "~/.emacs.d/fireplace")
+
+
+;; Водки найду
+
+(defun what-can-i-do ()
+  (interactive)
+  (let ((pattern "\\(\\[\\(TODO\\|VRFY\\):gmm\\]\\)") ;; "\\(\\[TODO:.\\{3,\\}\\]\\)"
+        (curbuff (current-buffer))
+        (newbuff (generate-new-buffer "*what-can-i-do*")))
+    (save-excursion
+      (goto-char (point-min))
+      (let ((cnt 0))
+        (with-output-to-temp-buffer newbuff
+          (while (re-search-forward pattern nil t)
+            (incf cnt)
+            (let ((buff  curbuff)
+                  (point (point))
+                  (line  (line-number-at-pos))
+                  (contents (thing-at-point 'line)))
+              (with-current-buffer newbuff
+                (insert-text-button (format "%d:" line)
+                                    'buff buff
+                                    'point point
+                                    'action (lambda (x)
+                                              (let* ((pos   (posn-point (event-end x)))
+                                                     (buff  (get-text-property pos 'buff))
+                                                     (point (get-text-property pos 'point)))
+                                                (with-current-buffer buff
+                                                  (goto-char point))
+                                                (switch-to-buffer buff))))
+                (princ contents))))
+          (goto-char (point-max))
+          (princ (format "\nDone. %s finded." cnt))
+          )))))
+(global-set-key (kbd "C-c m") 'what-can-i-do)
 
 
 (add-hook 'lisp-mode-hook
