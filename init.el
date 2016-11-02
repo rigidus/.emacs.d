@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ;;
 ;;    ___ _ __ ___   __ _  ___ ___
 ;;   / _ \ '_ ` _ \ / _` |/ __/ __|
@@ -8,7 +7,6 @@
 ;; EMACS configuration file by Rigidus
 ;;
 
-=======
 (require 'package) ;; You might already have this line
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
@@ -19,13 +17,6 @@
 
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                           ;;
-;;    EMACS configuration file by Rigidus    ;;
-;;                                           ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
->>>>>>> 4c69dd47b836b56a517cf4f9d66bd087f22728d7
 
 (setq debug-on-error t)
 
