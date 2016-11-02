@@ -1,8 +1,12 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                           ;;
-;;    EMACS configuration file by Rigidus    ;;
-;;                                           ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;    ___ _ __ ___   __ _  ___ ___
+;;   / _ \ '_ ` _ \ / _` |/ __/ __|
+;;  |  __/ | | | | | (_| | (__\__ \
+;; (_)___|_| |_| |_|\__,_|\___|___/
+;;
+;; EMACS configuration file by Rigidus
+;;
+
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
@@ -88,7 +92,8 @@
 ;; SLIME
 ;; (add-to-list 'load-path "~/.emacs.d/slime-20110829-cvs") ;; Путь к slime
 ;; (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-20130720-cvs/") ;; Путь к slime
-(add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-2.4") ;; Путь к slime
+;; (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-2.4") ;; Путь к slime
+(add-to-list 'load-path "/home/rigidus/build/slime-2.17") ;; Путь к slime
 (require 'slime)
 ;;(setq slime-net-coding-system 'utf-8-unix)
 ;;(slime-setup '(slime-fancy))
@@ -597,10 +602,10 @@ to the previously saved position"
 
 ;; ORG-MODE TODO|VRFY font-lock-faces
 (font-lock-add-keywords 'org-mode
-                        '(("\\(\\[TODO:.\\{3,\\}\\]\\)" . 'font-lock-warning-face)
-                          ("\\(\\[COMMENT:.\\{3,\\}\\]\\)" . 'font-lock-keyword-face)
+                        '(("\\(\\[TODO:[a-z]\\{3,\\}\\]\\)" . 'font-lock-warning-face)
+                          ("\\(\\[COMMENT:[a-z]\\{3,\\}\\]\\)" . 'font-lock-keyword-face)
                           ;; ("\\(comment\\)" . 'font-lock-comment-face)
-                          ("\\(\\[VRFY:.\\{3,\\}\\]\\)" . 'font-lock-function-name-face)
+                          ("\\(\\[VRFY:[a-z]\\{3,\\}\\]\\)" . 'font-lock-function-name-face)
                           ;; ("\\(variable-name\\)" . 'font-lock-variable-name-face)
                           ;; ("\\(keyword\\)" . 'font-lock-keyword-face)
                           ;; ("\\(comment\\)" . 'font-lock-comment-face)
@@ -1482,3 +1487,80 @@ to the previously saved position"
 (require 'mysql)
 
 (load "~/.emacs.d/fireplace")
+
+
+(add-hook 'lisp-mode-hook
+          (lambda ()
+            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(получить-все\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
+            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(для-каждого\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
+            (font-lock-add-keywords 'lisp-mode '(("\\(\\(из\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
+            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(получить-значение\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
+            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(вычислить\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
+            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(если\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
+            (font-lock-add-keywords 'lisp-mode '(("\\(\\(то\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
+            (font-lock-add-keywords 'lisp-mode '(("\\(\\(иначе\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
+            (font-lock-add-keywords 'lisp-mode '(("\\(\\(=\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
+            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(сохранить\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
+            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(взять-гуид\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
+            (put 'получить-все 'common-lisp-indent-function (get 'when 'common-lisp-indent-function))
+            (put 'для-каждого 'common-lisp-indent-function (get 'when 'common-lisp-indent-function))
+            (put 'получить-значение 'common-lisp-indent-function (get 'when 'common-lisp-indent-function))
+            (put 'вычислить 'common-lisp-indent-function (get 'when 'common-lisp-indent-function))
+            (put 'если 'common-lisp-indent-function (get 'if 'common-lisp-indent-function))
+            (put 'сохранить 'common-lisp-indent-function (get 'when 'common-lisp-indent-function))))
+
+
+;; ORG-PUB
+;; http://danamlund.dk/emacs/orgsite.html
+(require 'org-publish)
+
+;; (defun my (todo todo-type priority text tags info)
+;;   "Default format function for a headline.
+;; See `org-html-format-headline-function' for details."
+;;   (let ((todo (org-html--todo todo info))
+;;         (tags (org-html--tags tags info)))
+;;     (concat "->" todo (and todo " ") text (and tags "&#xa0;&#xa0;&#xa0;") tags)))
+
+(setq org-publish-project-alist
+      '(
+        ("org-notes"
+         :base-directory "~/repo/rigidus.ru/org/"
+         :base-extension "org"
+         :publishing-directory "~/repo/rigidus.ru/public_html/"
+         :recursive t
+         :export-with-tags nil ;
+         :section-numbers nil ;
+         :sub-superscript nil ;
+         :todo-keywords nil ;
+         :html-preamble nil;
+         :html-postamble nil ;
+         :style "This is raw html for stylesheet <link>'s" ;
+         :timestamp t ;
+         :exclude-tags ("noexport" "todo") ;
+         :publishing-function org-html-publish-to-html
+         :headline-levels 999
+         :author "Rigidus"
+         :email "avenger-f@yandex.ru"
+         :auto-preamble t
+         :auto-sitemap t
+         :sitemap-filename "sitemap.org"
+         :sitemap-title "Sitemap"
+         :html-head "
+<link rel=\"stylesheet\" type=\"text/css\" href=\"css/htmlize.css\"/>
+<link rel=\"stylesheet\" type=\"text/css\" href=\"css/readtheorg.css\"/>
+<script src=\"js/jquery-2.1.3.min.js\"></script>
+<script src=\"js/bootstrap-3.3.4.min.js\"></script>
+<script type=\"text/javascript\" src=\"js/jquery.stickytableheaders.js\"></script>
+<script type=\"text/javascript\" src=\"js/readtheorg.js\"></script>"
+         :html-container "heading"
+         ;; :html-format-headline-function my
+         )
+        ("org-static"
+         :base-directory "~/repo/rigidus.ru/org/"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/repo/rigidus.ru/public_html/"
+         :recursive t
+         :publishing-function org-publish-attachment)
+        ("org"
+         :components ("org-notes" "org-static"))
+        ))

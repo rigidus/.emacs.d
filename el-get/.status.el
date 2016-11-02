@@ -9,6 +9,8 @@
                '("compile-apel" "install-apel"))
               :load-path
               ("site-lisp/apel" "site-lisp/emu")))
+ (dash status "installed" recipe
+       (:name dash :description "A modern list api for Emacs. No 'cl required." :type github :pkgname "magnars/dash.el"))
  (el-get status "installed" recipe
          (:name el-get :website "https://github.com/dimitri/el-get#readme" :description "Manage the external elisp bits and pieces you depend upon." :type github :branch "master" :pkgname "dimitri/el-get" :info "." :compile
                 ("el-get.*\\.el$" "methods/")
@@ -68,9 +70,25 @@
                '("compile-flim" "install-flim"))
               :load-path
               ("site-lisp/flim")))
- (gnuplot-mode status "required" recipe nil)
+ (gnuplot-mode status "installed" recipe
+               (:name gnuplot-mode :description "Drive gnuplot from within emacs" :type github :pkgname "bruceravel/gnuplot-mode" :build
+                      `(("autoreconf" "-f" "-i")
+                        ("./configure")
+                        ("make" ,(concat "EMACS=" el-get-emacs)
+                         "gnuplot.elc" "gnuplot-gui.elc"))
+                      :info "gnuplot.info"))
+ (ht status "installed" recipe
+     (:name ht :website "https://github.com/Wilfred/ht.el" :description "The missing hash table utility library for Emacs." :type github :pkgname "Wilfred/ht.el"))
+ (loop status "installed" recipe
+       (:name loop :website "https://github.com/Wilfred/loop.el" :description "friendly imperative loop structures for Emacs lisp." :type github :pkgname "Wilfred/loop.el"))
  (multiple-cursors status "installed" recipe
                    (:name multiple-cursors :description "An experiment in adding multiple cursors to emacs" :type github :pkgname "magnars/multiple-cursors.el" :features multiple-cursors))
+ (mustache status "installed" recipe
+           (:name mustache :website "https://github.com/Wilfred/mustache.el" :description "A mustache templating library for Emacs." :type github :depends
+                  (dash ht s)
+                  :pkgname "Wilfred/mustache.el"))
+ (s status "installed" recipe
+    (:name s :description "The long lost Emacs string manipulation library." :type github :pkgname "magnars/s.el"))
  (semi status "installed" recipe
        (:name semi :description "SEMI is a library to provide MIME feature for GNU Emacs." :depends flim :type github :branch "semi-1_14-wl" :pkgname "wanderlust/semi" :build
               (mapcar
@@ -122,4 +140,8 @@
                        ("compile-wl-package" "site-lisp" "icons")
                        ("install-wl-package" "site-lisp" "icons")))
                     :info "doc/wl.info" :load-path
-                    ("site-lisp/wl" "utils"))))
+                    ("site-lisp/wl" "utils")))
+ (with-namespace status "installed" recipe
+                 (:name with-namespace :website "https://github.com/Wilfred/with-namespace.el" :description "interoperable elisp namespaces." :type github :depends
+                        (dash loop)
+                        :pkgname "Wilfred/with-namespace.el")))
