@@ -1617,43 +1617,21 @@ to the previously saved position"
          :base-extension "org"
          :publishing-directory "~/repo/rigidus.ru/public_html/"
          :recursive t
-         :export-with-tags nil ;
-         :section-numbers nil ;
-         :sub-superscript nil ;
-         :todo-keywords nil ;
-         :style "This is raw html for stylesheet <link>'s" ;
-         :timestamp t ;
+         :export-with-tags nil
+         :section-numbers nil
+         :sub-superscript nil
+         :todo-keywords nil
+         :style "This is raw html for stylesheet <link>'s"
+         :timestamp t
          :exclude-tags ("noexport" "todo") ;
          :publishing-function org-html-publish-to-html
          :headline-levels 999
          :auto-sitemap t
          :sitemap-filename "sitemap.org"
          :sitemap-title "Sitemap"
-         :html-preamble "</div><div id=\"container\"><div>"
-         :html-postamble "</div>
-  <div id=\"sidebar\">
-    <section id=\"about\">
-      <h3>About me</h3>
-        <p class=\"paragraph\"> Меня зовут Михаил Rigidus Глухов и я системный архитектор. На этом сайте я собираю материалы по интересующим меня темам. </p>
-        <p class=\"paragraph\"> Мне интересна теория языков программирования, алгоритмика, робототехника и все что связано с интернетом вещей. </p>
-        <p class=\"paragraph\">
-           <a href=\"#\" class=\"bio\">&laquo; Биография</a>
-           <a href=\"#\" class=\"contacts\">Контакты &raquo;</a>
-        </p>
-    </section>
-  </div>
-
-    </div><!-- close container div -->
-    <div>
-"
-         :html-head "
-<link rel=\"stylesheet\" type=\"text/css\" href=\"http://rigidus.ru/css/style.css\"/>
-<link rel=\"stylesheet\" type=\"text/css\" href=\"http://rigidus.ru/css/htmlize.css\"/>
-<link rel=\"stylesheet\" type=\"text/css\" href=\"http://rigidus.ru/css/readtheorg.css\"/>
-<script src=\"http://rigidus.ru/js/jquery-2.1.3.min.js\"></script>
-<script src=\"http://rigidus.ru/js/bootstrap-3.3.4.min.js\"></script>
-<script type=\"text/javascript\" src=\"http://rigidus.ru/js/jquery.stickytableheaders.min.js\"></script>
-<script type=\"text/javascript\" src=\"http://rigidus.ru/js/readtheorg.js\"></script>"
+         :html-preamble nil
+         :html-postamble nil
+         :html-head ""
          :html-container "heading"
          ;; :html-format-headline-function my
          :body-only t
@@ -1666,5 +1644,4 @@ to the previously saved position"
          :publishing-function org-publish-attachment)
         ("org"
          :components ("org-notes" "org-static"))
-        )
-)
+        ))
