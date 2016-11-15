@@ -1567,6 +1567,49 @@ to the previously saved position"
 ;;         (tags (org-html--tags tags info)))
 ;;     (concat "->" todo (and todo " ") text (and tags "&#xa0;&#xa0;&#xa0;") tags)))
 
+;; put your css files there
+(defvar org-theme-css-dir "~/.emacs.d/org-css/")
+
+(defun toggle-org-custom-inline-style ()
+  (interactive)
+  (let ((hook 'org-export-before-parsing-hook)
+        (fun 'set-org-html-style))
+    (if (memq fun (eval hook))
+        (progn
+          (remove-hook hook fun 'buffer-local)
+          (message "Removed %s from %s" (symbol-name fun) (symbol-name hook)))
+      (add-hook hook fun nil 'buffer-local)
+      (message "Added %s to %s" (symbol-name fun) (symbol-name hook)))))
+
+(defun org-theme ()
+  (interactive)
+  (let* ((cssdir org-theme-css-dir)
+         (css-choices (directory-files cssdir nil ".css$"))
+         (css (completing-read "theme: " css-choices nil t)))
+    (concat cssdir css)))
+
+(defun set-org-html-style (&optional backend)
+  (interactive)
+  (when (or (null backend) (eq backend 'html))
+    (let ((f (or (and (boundp 'org-theme-css) org-theme-css) (org-theme))))
+      (if (file-exists-p f)
+          (progn
+            (set (make-local-variable 'org-theme-css) f)
+            (set (make-local-variable 'org-html-head)
+                 (with-temp-buffer
+                   (insert "<style type=\"text/css\">\n<!--/*--><![CDATA[/*><!--*/\n")
+                   (insett "1234")
+                   ;; (insert-file-contents f)
+                   ;; (goto-char (point-max))
+                   (insert "\n/*]]>*/-->\n</style>\n")
+                   (buffer-string)))
+            (set (make-local-variable 'org-html-head-include-default-style)
+                 nil)
+            (message "Set custom style from %s" f))
+        (message "Custom header file %s doesnt exist")))))
+
+
+
 (setq org-publish-project-alist
       '(
         ("org-notes"
@@ -1578,28 +1621,42 @@ to the previously saved position"
          :section-numbers nil ;
          :sub-superscript nil ;
          :todo-keywords nil ;
-         :html-preamble nil;
-         :html-postamble nil ;
          :style "This is raw html for stylesheet <link>'s" ;
          :timestamp t ;
          :exclude-tags ("noexport" "todo") ;
          :publishing-function org-html-publish-to-html
          :headline-levels 999
-         :author "Rigidus"
-         :email "avenger-f@yandex.ru"
-         :auto-preamble t
          :auto-sitemap t
          :sitemap-filename "sitemap.org"
          :sitemap-title "Sitemap"
+         :html-preamble "</div><div id=\"container\"><div>"
+         :html-postamble "</div>
+  <div id=\"sidebar\">
+    <section id=\"about\">
+      <h3>About me</h3>
+        <p class=\"paragraph\"> Меня зовут Михаил Rigidus Глухов и я системный архитектор. На этом сайте я собираю материалы по интересующим меня темам. </p>
+        <p class=\"paragraph\"> Мне интересна теория языков программирования, алгоритмика, робототехника и все что связано с интернетом вещей. </p>
+        <p class=\"paragraph\">
+           <a href=\"#\" class=\"bio\">&laquo; Биография</a>
+           <a href=\"#\" class=\"contacts\">Контакты &raquo;</a>
+        </p>
+    </section>
+  </div>
+
+    </div><!-- close container div -->
+    <div>
+"
          :html-head "
-<link rel=\"stylesheet\" type=\"text/css\" href=\"css/htmlize.css\"/>
-<link rel=\"stylesheet\" type=\"text/css\" href=\"css/readtheorg.css\"/>
-<script src=\"js/jquery-2.1.3.min.js\"></script>
-<script src=\"js/bootstrap-3.3.4.min.js\"></script>
-<script type=\"text/javascript\" src=\"js/jquery.stickytableheaders.js\"></script>
-<script type=\"text/javascript\" src=\"js/readtheorg.js\"></script>"
+<link rel=\"stylesheet\" type=\"text/css\" href=\"http://rigidus.ru/css/style.css\"/>
+<link rel=\"stylesheet\" type=\"text/css\" href=\"http://rigidus.ru/css/htmlize.css\"/>
+<link rel=\"stylesheet\" type=\"text/css\" href=\"http://rigidus.ru/css/readtheorg.css\"/>
+<script src=\"http://rigidus.ru/js/jquery-2.1.3.min.js\"></script>
+<script src=\"http://rigidus.ru/js/bootstrap-3.3.4.min.js\"></script>
+<script type=\"text/javascript\" src=\"http://rigidus.ru/js/jquery.stickytableheaders.min.js\"></script>
+<script type=\"text/javascript\" src=\"http://rigidus.ru/js/readtheorg.js\"></script>"
          :html-container "heading"
          ;; :html-format-headline-function my
+         :body-only t
          )
         ("org-static"
          :base-directory "~/repo/rigidus.ru/org/"
@@ -1609,4 +1666,5 @@ to the previously saved position"
          :publishing-function org-publish-attachment)
         ("org"
          :components ("org-notes" "org-static"))
-        ))
+        )
+)
