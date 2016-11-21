@@ -1008,69 +1008,6 @@ to the previously saved position"
                       (buffer-substring beg end))))
 
 
-
-;; (mapc #'(lambda (file)
-;;           (find-file file)
-;;           (slime-compile-region 1 (length (buffer-string)))
-;;           (read-char)
-;;           (kill-buffer (current-buffer))
-;;           )
-;;       '("~/320-8080.ru/htlisp/my.lisp"
-;;         "~/320-8080.ru/htlisp/option-class.lisp"
-;;         "~/320-8080.ru/htlisp/optgroup-class.lisp"
-;;         "~/320-8080.ru/htlisp/optlist-class.lisp"
-;;         "~/320-8080.ru/htlisp/product-class.lisp"
-;;         "~/320-8080.ru/htlisp/filter-class.lisp"
-;;         "~/320-8080.ru/htlisp/group-class.lisp"
-;;         "~/320-8080.ru/htlisp/wolfor-stuff.lisp"
-;;         "~/320-8080.ru/htlisp/xls.lisp"
-;;         "~/320-8080.ru/htlisp/trans.lisp"
-;;         "~/320-8080.ru/htlisp/service.lisp"
-;;         "~/320-8080.ru/htlisp/cart.lisp"
-;;         "~/320-8080.ru/htlisp/checkout.lisp"
-;;         "~/320-8080.ru/htlisp/gateway.lisp"
-;;         "~/320-8080.ru/htlisp/search.lisp"
-;;         "~/320-8080.ru/htlisp/html.lisp"
-;;         "~/320-8080.ru/htlisp/conditions.lisp"
-;;         "~/320-8080.ru/htlisp/actions.lisp"
-;;         "~/320-8080.ru/htlisp/rule-class.lisp"
-;;         "~/320-8080.ru/htlisp/agent-class.lisp"
-;;         "~/320-8080.ru/htlisp/parser.lisp"
-;;         "~/320-8080.ru/htlisp/data.lisp"
-;;         "~/320-8080.ru/htlisp/update.lisp"
-;;         "~/320-8080.ru/htlisp/outload.lisp"
-;;         "~/320-8080.ru/htlisp/admin.lisp"
-;;         ))
-
-
-;; (mapc #'(lambda (file)
-;;           (find-file file)
-;;           (slime-compile-region 1 (length (buffer-string)))
-;;           (read-char)
-;;           ;; (kill-buffer (current-buffer))
-;;           )
-;;       '("~/cl-eshop/my.lisp"
-;;         "~/cl-eshop/option-class.lisp"
-;;         "~/cl-eshop/optgroup-class.lisp"
-;;         "~/cl-eshop/optlist-class.lisp"
-;;         "~/cl-eshop/product-class.lisp"
-;;         "~/cl-eshop/filter-class.lisp"
-;;         "~/cl-eshop/group-class.lisp"
-;; ))
-
-;; (mapc #'(lambda (file)
-;;           (find-file file)
-;;           (slime-compile-region 1 (length (buffer-string)))
-;;           (read-char)
-;;           ;; (kill-buffer (current-buffer))
-;;           )
-;;       '("~/cl-eshop/cart.lisp"
-;;         "~/cl-eshop/gateway.lisp"
-;;         "~/cl-eshop/search.lisp"
-;;         "~/cl-eshop/wolfor-stuff.lisp"
-;;         ))
-
-
 ;; OrgMode
 ;; http://orgmode.org/manual/Installation.html
 (add-to-list 'load-path "/home/rigidus/repo/org-mode/lisp")
