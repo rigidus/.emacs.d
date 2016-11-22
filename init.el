@@ -1287,7 +1287,7 @@ to the previously saved position"
          (ruby . t)
          (gnuplot . t)
          (clojure . t)
-         (sh . t)
+         (shell . t)
          (ledger . t)
          (org . t)
          (plantuml . t)
@@ -1417,17 +1417,17 @@ to the previously saved position"
 (setq c-default-style
       '((c-mode . "k&r") (other . "k&r")))
 
-;; GNUPLOT
+;; ;; GNUPLOT
 
-(add-to-list 'load-path "gnuplot-el")
+;; (add-to-list 'load-path "gnuplot-el")
 
-(autoload 'gnuplot-mode "gnuplot" "gnuplot major mode" t)
-(autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot mode" t)
+;; (autoload 'gnuplot-mode "gnuplot" "gnuplot major mode" t)
+;; (autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot mode" t)
 
-(unless (assoc "\\.gp\\'" auto-mode-alist)
-  (add-to-list 'auto-mode-alist '("\\.gp\\'" . gnuplot-mode)))
+;; (unless (assoc "\\.gp\\'" auto-mode-alist)
+;;   (add-to-list 'auto-mode-alist '("\\.gp\\'" . gnuplot-mode)))
 
-(load-file "/home/rigidus/.emacs.d/gnuplot-el/gnuplot.el")
+;; (load-file "/home/rigidus/.emacs.d/gnuplot-el/gnuplot.el")
 
 
 (require 'sql)
@@ -1495,7 +1495,7 @@ to the previously saved position"
 
 ;; ORG-PUB
 ;; http://danamlund.dk/emacs/orgsite.html
-(require 'org-publish)
+;; (require 'org-publish)
 
 ;; (defun my (todo todo-type priority text tags info)
 ;;   "Default format function for a headline.
