@@ -1287,7 +1287,7 @@ to the previously saved position"
          (ruby . t)
          (gnuplot . t)
          (clojure . t)
-         (shell . t)
+         (sh . t)
          (ledger . t)
          (org . t)
          (plantuml . t)
