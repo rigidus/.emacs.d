@@ -1,3 +1,14 @@
+(defun plist-to-alist (the-plist)
+  (defun get-tuple-from-plist (the-plist)
+    (when the-plist
+      (cons (car the-plist) (cadr the-plist))))
+
+  (let ((alist '()))
+    (while the-plist
+      (add-to-list 'alist (get-tuple-from-plist the-plist))
+      (setq the-plist (cddr the-plist)))
+      alist))
+
 ;;
 ;;    ___ _ __ ___   __ _  ___ ___
 ;;   / _ \ '_ ` _ \ / _` |/ __/ __|
@@ -1582,3 +1593,13 @@ to the previously saved position"
         ("org"
          :components ("org-notes" "org-static"))
         ))
+
+
+;; (setq-default fill-column 820)
+
+
+;; /usr/bin/plantuml
+;; (load-file "~/.emacs.d/plantuml_helpers.el")
+
+
+(setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
