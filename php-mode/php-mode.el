@@ -1403,7 +1403,7 @@ The output will appear in the buffer *PHP*."
 (define-key php-mode-map "\C-c\C-r" 'php-send-region)
 
 
-(defface php-annotations-annotation-face '((t . (:inherit 'font-lock-constant-face)))
+(defface php-annotations-annotation-face '((t . (:inherit font-lock-constant-face)))
   "Face used to highlight annotations.")
 
 (defconst php-annotations-re "\\(\\s-\\|{\\)\\(@[[:alpha:]]+\\)")
