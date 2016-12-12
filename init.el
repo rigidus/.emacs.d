@@ -1603,3 +1603,5 @@ to the previously saved position"
 
 
 (setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+
+(setq org-startup-with-inline-images t)
