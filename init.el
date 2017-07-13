@@ -116,7 +116,7 @@
 ;; (add-to-list 'load-path "~/.emacs.d/slime-20110829-cvs") ;; Путь к slime
 ;; (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-20130720-cvs/") ;; Путь к slime
 ;; (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-2.4") ;; Путь к slime
-(add-to-list 'load-path "/home/rigidus/build/slime-2.17") ;; Путь к slime
+(add-to-list 'load-path "~/build/slime-2.17") ;; Путь к slime
 (require 'slime)
 ;;(setq slime-net-coding-system 'utf-8-unix)
 ;;(slime-setup '(slime-fancy))
@@ -1021,7 +1021,7 @@ to the previously saved position"
 
 ;; OrgMode
 ;; http://orgmode.org/manual/Installation.html
-(add-to-list 'load-path "/home/rigidus/repo/org-mode/lisp")
+(add-to-list 'load-path "~/repo/org-mode/lisp")
 (require 'org-install)
 ;; Включение автоматического переключения в Org Mode при открытии файла с расширением .org:
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
@@ -1059,8 +1059,8 @@ to the previously saved position"
  '(lj-cache-login-information t)
  '(lj-default-username "rigidus")
  '(org-agenda-files nil)
- '(org-default-notes-file "/home/rigidus/org/notes.org")
- '(org-directory "/home/rigidus/org/")
+ '(org-default-notes-file "~/org/notes.org")
+ '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(size-indication-mode t)
  '(tab-width 4))
@@ -1438,7 +1438,7 @@ to the previously saved position"
 ;; (unless (assoc "\\.gp\\'" auto-mode-alist)
 ;;   (add-to-list 'auto-mode-alist '("\\.gp\\'" . gnuplot-mode)))
 
-;; (load-file "/home/rigidus/.emacs.d/gnuplot-el/gnuplot.el")
+;; (load-file "~/.emacs.d/gnuplot-el/gnuplot.el")
 
 
 (require 'sql)
@@ -1603,3 +1603,5 @@ to the previously saved position"
 
 
 (setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+
+(setq org-startup-with-inline-images t)
