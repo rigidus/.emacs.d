@@ -1574,7 +1574,7 @@ to the previously saved position"
          :exclude-tags ("noexport" "todo") ;
          :publishing-function org-html-publish-to-html
          :headline-levels 999
-         :auto-sitemap t
+         :auto-sitemap nil ;;t
          :sitemap-filename "sitemap.org"
          :sitemap-title "Sitemap"
          :html-preamble nil
