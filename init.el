@@ -608,9 +608,9 @@ to the previously saved position"
 (autoload #'espresso-mode "espresso" "Start espresso-mode" t)
 (add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
-(add-hook 'espresso-mode-hook 'moz-minor-mode)
-(add-hook 'espresso-mode-hook 'esk-paredit-nonlisp)
-(add-hook 'espresso-mode-hook 'run-coding-hook)
+;; (add-hook 'espresso-mode-hook 'moz-minor-mode)
+;; (add-hook 'espresso-mode-hook 'esk-paredit-nonlisp)
+;; (add-hook 'espresso-mode-hook 'run-coding-hook)
 (setq espresso-indent-level 2)
 ;; If you prefer js2-mode, use this instead:
 ;; (add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
@@ -1605,3 +1605,14 @@ to the previously saved position"
 (setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
 
 (setq org-startup-with-inline-images t)
+
+
+(add-to-list 'load-path "~/.emacs.d/csharp-mode/")
+(require 'csharp-mode)
+
+(defun my-csharp-mode-hook ()
+  ;; enable the stuff you want for C# here
+  (electric-pair-mode 1)       ;; Emacs 24
+  ;; (electric-pair-local-mode 1) ;; Emacs 25
+  )
+(add-hook 'csharp-mode-hook 'my-csharp-mode-hook)
