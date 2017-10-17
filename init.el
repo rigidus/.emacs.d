@@ -432,6 +432,8 @@ to the previously saved position"
                              (name . "^\\*===.*")))
                ("ERLANG"    (or
                              (mode . erlang-mode)))
+               ("ASM"       (or
+                             (mode . asm-mode)))
                ("C/CPP"     (or
                               (mode . c-mode)
                               (mode . c++-mode)))
@@ -1565,28 +1567,27 @@ to the previously saved position"
          :base-extension "org"
          :publishing-directory "~/repo/rigidus.ru/public_html/"
          :recursive t
-         :export-with-tags nil
-         :section-numbers nil
-         :sub-superscript nil
-         :todo-keywords nil
-         :style "This is raw html for stylesheet <link>'s"
-         :timestamp t
-         :exclude-tags ("noexport" "todo") ;
          :publishing-function org-html-publish-to-html
-         :headline-levels 999
-         :auto-sitemap nil ;;t
-         :sitemap-filename "sitemap.org"
-         :sitemap-title "Sitemap"
-         :html-preamble nil
-         :html-postamble nil
-         :html-head ""
-         :html-container "heading"
-         ;; :html-format-headline-function my
-         :body-only t
+         ;; :export-with-tags nil
+         ;; :section-numbers nil
+         ;; :sub-superscript nil
+         ;; :todo-keywords nil
+         ;; :timestamp t
+         ;; :exclude-tags ("noexport" "todo") ;
+         ;; :headline-levels 999
+         ;; :auto-sitemap nil ;;t
+         ;; :sitemap-filename "sitemap.org"
+         ;; :sitemap-title "Sitemap"
+         ;; :html-preamble nil
+         ;; :html-postamble nil
+         ;; :html-head ""
+         ;; :html-container "heading"
+         ;; ;; :html-format-headline-function my
+         ;; :body-only t
          )
         ("org-static"
          :base-directory "~/repo/rigidus.ru/org/"
-         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|djvu"
          :publishing-directory "~/repo/rigidus.ru/public_html/"
          :recursive t
          :publishing-function org-publish-attachment)
