@@ -1028,6 +1028,8 @@ to the previously saved position"
 ;; Включение автоматического переключения в Org Mode при открытии файла с расширением .org:
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
+;; Включение fill-column для org-mode
+(add-hook 'org-mode-hook (lambda () (setq fill-column 87)))
 ;; Задание цепочек ключевых слов (переключение между словами клавишами Shift + Right или + Left с курсором на заголовке). "|" отмечает границу, если заголовок в статусе после этого разделителя, то он "выполнен", это влияет на планирование и отображение в Agenda Views:
 (setq org-todo-keywords '((sequence "TODO(t)" "START(s)" "MEET(m)" "CALL(c)" "DELEGATED(d)" "WAIT(w)" "|" "CANCEL(r)"  "DONE(f)")))
 (global-set-key "\C-cl" 'org-store-link)
@@ -1559,44 +1561,45 @@ to the previously saved position"
         (message "Custom header file %s doesnt exist")))))
 
 
+(defun org-custom-link-img-follow (path)
+  (org-open-file-with-emacs
+   (format "../img/%s" path)))
 
+(defun org-custom-link-img-export (path desc format)
+  (cond
+   ((eq format 'html)
+    (format "<div class=\"figure\"><img src=\"/img/%s\" alt=\"%s\"/><p>%s</p></div>"
+            path desc (if desc desc "")))))
+
+(org-add-link-type "img" 'org-custom-link-img-follow 'org-custom-link-img-export)
+
+(setq org-export-time-stamp-file nil)
 (setq org-publish-project-alist
-      '(
-        ("org-notes"
+      '(("org-notes"
          :base-directory "~/repo/rigidus.ru/org/"
          :base-extension "org"
-         :publishing-directory "~/repo/rigidus.ru/public_html/"
+         :publishing-directory "~/repo/rigidus.ru/www/"
          :recursive t
          :publishing-function org-html-publish-to-html
-         ;; :export-with-tags nil
-         ;; :section-numbers nil
-         ;; :sub-superscript nil
-         ;; :todo-keywords nil
-         ;; :timestamp t
-         ;; :exclude-tags ("noexport" "todo") ;
-         ;; :headline-levels 999
-         ;; :auto-sitemap nil ;;t
-         ;; :sitemap-filename "sitemap.org"
-         ;; :sitemap-title "Sitemap"
-         ;; :html-preamble nil
-         ;; :html-postamble nil
-         ;; :html-head ""
-         ;; :html-container "heading"
-         ;; ;; :html-format-headline-function my
-         ;; :body-only t
-         )
+         :timestamp nil
+         :html-doctype "html5"
+         :section-numbers nil
+         :html-postamble nil
+         :html-preamble nil
+         :with-timestamps nil
+         :timestamp nil
+         :with-date nil
+         :html-head-extra "<link href=\"/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />"
+         :html-head-include-default-style nil
+         :html-head-include-scripts nil)
         ("org-static"
          :base-directory "~/repo/rigidus.ru/org/"
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|djvu"
-         :publishing-directory "~/repo/rigidus.ru/public_html/"
+         :publishing-directory "~/repo/rigidus.ru/www/"
          :recursive t
          :publishing-function org-publish-attachment)
         ("org"
-         :components ("org-notes" "org-static"))
-        ))
-
-
-;; (setq-default fill-column 820)
+         :components ("org-notes" "org-static"))))
 
 
 ;; /usr/bin/plantuml
