@@ -1,0 +1,5 @@
+(define-package
+    "csharp-mode"
+    "VERSION"
+    "C# mode derived mode"
+    '((cl-lib "0.5")))

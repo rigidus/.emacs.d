@@ -414,6 +414,10 @@ to the previously saved position"
 (setq uniquify-ignore-buffers-re "^\\*")
 (setq post-forward-angle-brackets 'post-forward-angle-brackets)
 
+(autoload 'forth-mode "gforth.el")
+(autoload 'forth-block-mode "gforth.el")
+(add-to-list 'auto-mode-alist '("\\.fs$" . forth-mode))
+
 
 ;; IBUFFER - Более удобный переключатель буферов
 (require 'ibuffer)
@@ -434,6 +438,8 @@ to the previously saved position"
                              (mode . erlang-mode)))
                ("ASM"       (or
                              (mode . asm-mode)))
+               ("FORTH"     (or
+                             (mode . forth-mode)))
                ("C/CPP"     (or
                               (mode . c-mode)
                               (mode . c++-mode)))
