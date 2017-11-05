@@ -417,7 +417,7 @@ to the previously saved position"
 (autoload 'forth-mode "gforth.el")
 (autoload 'forth-block-mode "gforth.el")
 (add-to-list 'auto-mode-alist '("\\.fs$" . forth-mode))
-
+(add-to-list 'auto-mode-alist '("\\.f$" . forth-mode))
 
 ;; IBUFFER - Более удобный переключатель буферов
 (require 'ibuffer)
