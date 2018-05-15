@@ -1,147 +1,147 @@
 ((apel status "installed" recipe
        (:name apel :website "http://www.kanji.zinbun.kyoto-u.ac.jp/~tomo/elisp/APEL/" :description "APEL (A Portable Emacs Library) is a library to support to write portable Emacs Lisp programs." :type github :pkgname "wanderlust/apel" :build
-              (mapcar
-               (lambda
-                 (target)
-                 (list el-get-emacs
-                       (split-string "-batch -q -no-site-file -l APEL-MK -f")
-                       target "prefix" "site-lisp" "site-lisp"))
-               '("compile-apel" "install-apel"))
-              :load-path
-              ("site-lisp/apel" "site-lisp/emu")))
+	      (mapcar
+	       (lambda
+		 (target)
+		 (list el-get-emacs
+		       (split-string "-batch -q -no-site-file -l APEL-MK -f")
+		       target "prefix" "site-lisp" "site-lisp"))
+	       '("compile-apel" "install-apel"))
+	      :load-path
+	      ("site-lisp/apel" "site-lisp/emu")))
  (dash status "installed" recipe
        (:name dash :description "A modern list api for Emacs. No 'cl required." :type github :pkgname "magnars/dash.el"))
  (el-get status "installed" recipe
-         (:name el-get :website "https://github.com/dimitri/el-get#readme" :description "Manage the external elisp bits and pieces you depend upon." :type github :branch "master" :pkgname "dimitri/el-get" :info "." :compile
-                ("el-get.*\\.el$" "methods/")
-                :features el-get :post-init
-                (when
-                    (memq 'el-get
-                          (bound-and-true-p package-activated-list))
-                  (message "Deleting melpa bootstrap el-get")
-                  (unless package--initialized
-                    (package-initialize t))
-                  (when
-                      (package-installed-p 'el-get)
-                    (let
-                        ((feats
-                          (delete-dups
-                           (el-get-package-features
-                            (el-get-elpa-package-directory 'el-get)))))
-                      (el-get-elpa-delete-package 'el-get)
-                      (dolist
-                          (feat feats)
-                        (unload-feature feat t))))
-                  (require 'el-get))))
+	 (:name el-get :website "https://github.com/dimitri/el-get#readme" :description "Manage the external elisp bits and pieces you depend upon." :type github :branch "master" :pkgname "dimitri/el-get" :info "." :compile
+		("el-get.*\\.el$" "methods/")
+		:features el-get :post-init
+		(when
+		    (memq 'el-get
+			  (bound-and-true-p package-activated-list))
+		  (message "Deleting melpa bootstrap el-get")
+		  (unless package--initialized
+		    (package-initialize t))
+		  (when
+		      (package-installed-p 'el-get)
+		    (let
+			((feats
+			  (delete-dups
+			   (el-get-package-features
+			    (el-get-elpa-package-directory 'el-get)))))
+		      (el-get-elpa-delete-package 'el-get)
+		      (dolist
+			  (feat feats)
+			(unload-feature feat t))))
+		  (require 'el-get))))
  (emacs-w3m status "installed" recipe
-            (:name emacs-w3m :description "A simple Emacs interface to w3m" :type cvs :module "emacs-w3m" :url ":pserver:anonymous@cvs.namazu.org:/storage/cvsroot" :build
-                   `("autoconf"
-                     ("./configure" ,(concat "--with-emacs=" el-get-emacs))
-                     "make")
-                   :build/windows-nt
-                   ("sh /usr/bin/autoconf" "sh ./configure" "make")
-                   :info "doc"))
+	    (:name emacs-w3m :description "A simple Emacs interface to w3m" :type cvs :module "emacs-w3m" :url ":pserver:anonymous@cvs.namazu.org:/storage/cvsroot" :build
+		   `("autoconf"
+		     ("./configure" ,(concat "--with-emacs=" el-get-emacs))
+		     "make")
+		   :build/windows-nt
+		   ("sh /usr/bin/autoconf" "sh ./configure" "make")
+		   :info "doc"))
  (emms status "installed" recipe
        (:name emms :description "The Emacs Multimedia System" :type git :url "git://git.sv.gnu.org/emms.git" :info "doc" :load-path
-              ("./lisp")
-              :features emms-setup :build
-              `(,(format "mkdir -p %s/emms " user-emacs-directory)
-                ,(concat "make EMACS=" el-get-emacs " SITEFLAG=\"--no-site-file -L " el-get-dir "/emacs-w3m/ \"" " autoloads lisp docs"))
-              :depends emacs-w3m))
+	      ("./lisp")
+	      :features emms-setup :build
+	      `(,(format "mkdir -p %s/emms " user-emacs-directory)
+		,(concat "make EMACS=" el-get-emacs " SITEFLAG=\"--no-site-file -L " el-get-dir "/emacs-w3m/ \"" " autoloads lisp docs"))
+	      :depends emacs-w3m))
  (expand-region status "installed" recipe
-                (:name expand-region :type github :pkgname "magnars/expand-region.el" :description "Expand region increases the selected region by semantic units. Just keep pressing the key until it selects what you want." :website "https://github.com/magnars/expand-region.el#readme" :features expand-region))
+		(:name expand-region :type github :pkgname "magnars/expand-region.el" :description "Expand region increases the selected region by semantic units. Just keep pressing the key until it selects what you want." :website "https://github.com/magnars/expand-region.el#readme" :features expand-region))
  (flim status "installed" recipe
        (:name flim :description "A library to provide basic features about message representation or encoding" :depends apel :type github :branch "flim-1_14-wl" :pkgname "wanderlust/flim" :build
-              (mapcar
-               (lambda
-                 (target)
-                 (list el-get-emacs
-                       (mapcar
-                        (lambda
-                          (pkg)
-                          (mapcar
-                           (lambda
-                             (d)
-                             `("-L" ,d))
-                           (el-get-load-path pkg)))
-                        '("apel"))
-                       (split-string "-batch -q -no-site-file -l FLIM-MK -f")
-                       target "prefix" "site-lisp" "site-lisp"))
-               '("compile-flim" "install-flim"))
-              :load-path
-              ("site-lisp/flim")))
+	      (mapcar
+	       (lambda
+		 (target)
+		 (list el-get-emacs
+		       (mapcar
+			(lambda
+			  (pkg)
+			  (mapcar
+			   (lambda
+			     (d)
+			     `("-L" ,d))
+			   (el-get-load-path pkg)))
+			'("apel"))
+		       (split-string "-batch -q -no-site-file -l FLIM-MK -f")
+		       target "prefix" "site-lisp" "site-lisp"))
+	       '("compile-flim" "install-flim"))
+	      :load-path
+	      ("site-lisp/flim")))
  (gnuplot-mode status "installed" recipe
-               (:name gnuplot-mode :description "Drive gnuplot from within emacs" :type github :pkgname "bruceravel/gnuplot-mode" :build
-                      `(("autoreconf" "-f" "-i")
-                        ("./configure")
-                        ("make" ,(concat "EMACS=" el-get-emacs)
-                         "gnuplot.elc" "gnuplot-gui.elc"))
-                      :info "gnuplot.info"))
+	       (:name gnuplot-mode :description "Drive gnuplot from within emacs" :type github :pkgname "bruceravel/gnuplot-mode" :build
+		      `(("autoreconf" "-f" "-i")
+			("./configure")
+			("make" ,(concat "EMACS=" el-get-emacs)
+			 "gnuplot.elc" "gnuplot-gui.elc"))
+		      :info "gnuplot.info"))
  (ht status "installed" recipe
      (:name ht :website "https://github.com/Wilfred/ht.el" :description "The missing hash table utility library for Emacs." :type github :pkgname "Wilfred/ht.el"))
  (loop status "installed" recipe
        (:name loop :website "https://github.com/Wilfred/loop.el" :description "friendly imperative loop structures for Emacs lisp." :type github :pkgname "Wilfred/loop.el"))
  (multiple-cursors status "installed" recipe
-                   (:name multiple-cursors :description "An experiment in adding multiple cursors to emacs" :type github :pkgname "magnars/multiple-cursors.el" :features multiple-cursors))
+		   (:name multiple-cursors :description "An experiment in adding multiple cursors to emacs" :type github :pkgname "magnars/multiple-cursors.el" :features multiple-cursors))
  (mustache status "installed" recipe
-           (:name mustache :website "https://github.com/Wilfred/mustache.el" :description "A mustache templating library for Emacs." :type github :depends
-                  (dash ht s)
-                  :pkgname "Wilfred/mustache.el"))
+	   (:name mustache :website "https://github.com/Wilfred/mustache.el" :description "A mustache templating library for Emacs." :type github :depends
+		  (dash ht s)
+		  :pkgname "Wilfred/mustache.el"))
  (s status "installed" recipe
     (:name s :description "The long lost Emacs string manipulation library." :type github :pkgname "magnars/s.el"))
  (semi status "installed" recipe
        (:name semi :description "SEMI is a library to provide MIME feature for GNU Emacs." :depends flim :type github :branch "semi-1_14-wl" :pkgname "wanderlust/semi" :build
-              (mapcar
-               (lambda
-                 (target)
-                 (list el-get-emacs
-                       (mapcar
-                        (lambda
-                          (pkg)
-                          (mapcar
-                           (lambda
-                             (d)
-                             `("-L" ,d))
-                           (el-get-load-path pkg)))
-                        '("apel" "flim"))
-                       (split-string "-batch -q -no-site-file -l SEMI-MK -f")
-                       target "prefix" "site-lisp" "site-lisp"))
-               '("compile-semi" "install-semi"))
-              :load-path
-              ("site-lisp/semi/")))
+	      (mapcar
+	       (lambda
+		 (target)
+		 (list el-get-emacs
+		       (mapcar
+			(lambda
+			  (pkg)
+			  (mapcar
+			   (lambda
+			     (d)
+			     `("-L" ,d))
+			   (el-get-load-path pkg)))
+			'("apel" "flim"))
+		       (split-string "-batch -q -no-site-file -l SEMI-MK -f")
+		       target "prefix" "site-lisp" "site-lisp"))
+	       '("compile-semi" "install-semi"))
+	      :load-path
+	      ("site-lisp/semi/")))
  (wanderlust status "installed" recipe
-             (:name wanderlust :description "Wanderlust bootstrap." :depends semi :type github :pkgname "wanderlust/wanderlust" :build
-                    (mapcar
-                     (lambda
-                       (target-and-dirs)
-                       (list el-get-emacs
-                             (mapcar
-                              (lambda
-                                (pkg)
-                                (mapcar
-                                 (lambda
-                                   (d)
-                                   `("-L" ,d))
-                                 (el-get-load-path pkg)))
-                              (append
-                               '("apel" "flim" "semi")
-                               (when
-                                   (el-get-package-exists-p "bbdb")
-                                 (list "bbdb"))))
-                             "--eval"
-                             (el-get-print-to-string
-                              '(progn
-                                 (setq wl-install-utils t)
-                                 (setq wl-info-lang "en")
-                                 (setq wl-news-lang "en")))
-                             (split-string "-batch -q -no-site-file -l WL-MK -f")
-                             target-and-dirs))
-                     '(("wl-texinfo-format" "doc")
-                       ("compile-wl-package" "site-lisp" "icons")
-                       ("install-wl-package" "site-lisp" "icons")))
-                    :info "doc/wl.info" :load-path
-                    ("site-lisp/wl" "utils")))
+	     (:name wanderlust :description "Wanderlust bootstrap." :depends semi :type github :pkgname "wanderlust/wanderlust" :build
+		    (mapcar
+		     (lambda
+		       (target-and-dirs)
+		       (list el-get-emacs
+			     (mapcar
+			      (lambda
+				(pkg)
+				(mapcar
+				 (lambda
+				   (d)
+				   `("-L" ,d))
+				 (el-get-load-path pkg)))
+			      (append
+			       '("apel" "flim" "semi")
+			       (when
+				   (el-get-package-exists-p "bbdb")
+				 (list "bbdb"))))
+			     "--eval"
+			     (el-get-print-to-string
+			      '(progn
+				 (setq wl-install-utils t)
+				 (setq wl-info-lang "en")
+				 (setq wl-news-lang "en")))
+			     (split-string "-batch -q -no-site-file -l WL-MK -f")
+			     target-and-dirs))
+		     '(("wl-texinfo-format" "doc")
+		       ("compile-wl-package" "site-lisp" "icons")
+		       ("install-wl-package" "site-lisp" "icons")))
+		    :info "doc/wl.info" :load-path
+		    ("site-lisp/wl" "utils")))
  (with-namespace status "installed" recipe
-                 (:name with-namespace :website "https://github.com/Wilfred/with-namespace.el" :description "interoperable elisp namespaces." :type github :depends
-                        (dash loop)
-                        :pkgname "Wilfred/with-namespace.el")))
+		 (:name with-namespace :website "https://github.com/Wilfred/with-namespace.el" :description "interoperable elisp namespaces." :type github :depends
+			(dash loop)
+			:pkgname "Wilfred/with-namespace.el")))
