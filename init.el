@@ -1288,6 +1288,8 @@ to the previously saved position"
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 ;; (setq org-plantuml-jar-path "~/java/plantuml.jar")
 
+;; gnuplot
+(el-get 'sync 'gnuplot-mode)
 
 (defun bh/display-inline-images ()
   (condition-case nil
