@@ -365,20 +365,6 @@ to the previously saved position"
       (indent-region (region-beginning) (region-end) nil)))
 
 
-;; Поиск от kostafey C-f|C-r C-v
-(global-unset-key "\C-f")
-(global-set-key "\C-f" 'isearch-forward)
-(global-set-key "\C-r" 'isearch-backward)
-(add-hook 'isearch-mode-hook
-		  '(lambda ()
-			 (define-key isearch-mode-map "\C-f"
-			   'isearch-repeat-forward)
-			 (define-key isearch-mode-map "\C-r"
-			   'isearch-repeat-backward)
-			 (define-key isearch-mode-map "\C-v"
-			   'isearch-yank-kill)))
-
-
 ;; ;; conkeror-browser
 ;; (eval-after-load "browse-url"
 ;;   '(defun browse-url-conkeror (url &optional new-window)
@@ -1648,3 +1634,19 @@ to the previously saved position"
                  (org-remove-inline-images)
                  (org-present-show-cursor)
                                   (org-present-read-write)))))
+
+(defun xah-show-kill-ring ()
+    "Insert all `kill-ring' content in a new buffer named *copy history*.
+URL `http://ergoemacs.org/emacs/emacs_show_kill_ring.html'
+Version 2018-10-05"
+    (interactive)
+    (let (($buf (generate-new-buffer "*copy history*")))
+      (progn
+        (switch-to-buffer $buf)
+        (funcall 'fundamental-mode)
+        (setq buffer-offer-save t)
+        (dolist (x kill-ring )
+          (insert x "\n\u000cttt\n\n"))
+        (goto-char (point-min)))
+      (when (fboundp 'xah-show-formfeed-as-line)
+              (xah-show-formfeed-as-line))))
