@@ -192,7 +192,7 @@
 ;; Делаем емакс аскетичным
 (menu-bar-mode -1)
 (tool-bar-mode -1)
-(toggle-scroll-bar -1)
+;; (toggle-scroll-bar -1)
 ;; (scroll-bar-mode nil)
 (setq column-number-mode t)                  ;; Показывать номер текущей колонки
 (setq line-number-mode t)                    ;; Показывать номер текущей строки
