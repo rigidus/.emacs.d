@@ -3,6 +3,45 @@
 ;;; Code:
 
 
+;;;### (autoloads nil "cmake-ide/cmake-ide" "cmake-ide/cmake-ide.el"
+;;;;;;  (23920 58347 473996 367000))
+;;; Generated autoloads from cmake-ide/cmake-ide.el
+
+(autoload 'cmake-ide-setup "cmake-ide/cmake-ide" "\
+Set up the Emacs hooks for working with CMake projects.
+
+\(fn)" nil nil)
+
+(autoload 'cmake-ide-maybe-run-cmake "cmake-ide/cmake-ide" "\
+Run CMake if the compilation database JSON file is not found.
+
+\(fn)" t nil)
+
+(autoload 'cmake-ide-run-cmake "cmake-ide/cmake-ide" "\
+Run CMake and set compiler flags for auto-completion and flycheck.
+This works by calling cmake in a temporary directory (or `cmake-ide-build-dir')
+ and parsing the JSON file deposited there with the compiler
+ flags.
+
+\(fn)" t nil)
+
+(autoload 'cmake-ide-load-db "cmake-ide/cmake-ide" "\
+Load compilation DB and set flags for current buffer.
+
+\(fn)" t nil)
+
+(autoload 'cmake-ide-compile "cmake-ide/cmake-ide" "\
+Compile the project.
+
+\(fn)" t nil)
+
+(autoload 'cmake-ide-maybe-start-rdm "cmake-ide/cmake-ide" "\
+Start the rdm (rtags) server.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil "el-get/el-get" "el-get/el-get.el" (23716 11740
 ;;;;;;  593502 379000))
 ;;; Generated autoloads from el-get/el-get.el
@@ -852,7 +891,9 @@ Run an inferior Gnuplot process.
 ;;;;;;  "el-get/el-get-byte-compile.el" "el-get/el-get-core.el" "el-get/el-get-custom.el"
 ;;;;;;  "el-get/el-get-dependencies.el" "el-get/el-get-install.el"
 ;;;;;;  "el-get/el-get-methods.el" "el-get/el-get-notify.el" "el-get/el-get-recipes.el"
-;;;;;;  "el-get/el-get-status.el") (23716 11741 245587 901000))
+;;;;;;  "el-get/el-get-status.el" "levenshtein/levenshtein.el" "seq/seq-24.el"
+;;;;;;  "seq/seq-25.el" "seq/seq-autoloads.el" "seq/seq-pkg.el" "seq/seq.el")
+;;;;;;  (23920 58347 718210 150000))
 
 ;;;***
 
