@@ -1690,3 +1690,91 @@ Version 2018-10-05"
 (defun my-shell-hook ()
   (define-key shell-mode-map (kbd "C-c SPC") 'ace-jump-mode))
 (add-hook 'shell-mode-hook 'my-shell-hook)
+
+
+;; #+BEGIN_SRC #+END_SRC CODEBLOCK
+;; http://ergoemacs.org/emacs/emacs_macro_example.html
+;; http://ergoemacs.org/emacs/keyboard_shortcuts.html
+(fset 'codeblock
+   "#+BEGIN_SRC\C-m#+END_SRC\C-[OA\C-e ")
+
+(global-set-key (kbd "C-x p") 'codeblock)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; UNDEBUGGED
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; Load rtags and start the cmake-ide-setup process
+
+;; (require 'rtags)
+
+(add-to-list 'load-path "~/.emacs.d/el-get/company-irony/")
+(add-to-list 'load-path "~/.emacs.d/el-get/company-mode/")
+(add-to-list 'load-path "~/.emacs.d/el-get/epl/")
+(add-to-list 'load-path "~/.emacs.d/el-get/flycheck/")
+(add-to-list 'load-path "~/.emacs.d/el-get/irony-mode/")
+(add-to-list 'load-path "~/.emacs.d/el-get/let-alist")
+(add-to-list 'load-path "~/.emacs.d/el-get/pkg-info/")
+(add-to-list 'load-path "~/.emacs.d/el-get/rtags/")
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Setup cmake-ide
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-to-list 'load-path "~/.emacs.d/el-get/cmake-ide")
+(require 'cmake-ide)
+(cmake-ide-setup)
+;; Set cmake-ide-flags-c++ to use C++11
+(setq cmake-ide-flags-c++ (append '("-std=c++11")))
+;; We want to be able to compile with a keyboard shortcut
+(global-set-key (kbd "C-c m") 'cmake-ide-compile)
+
+;; Set rtags to enable completions and use the standard keybindings.
+;; A list of the keybindings can be found at:
+;; http://syamajala.github.io/c-ide.html
+(setq rtags-autostart-diagnostics t)
+(rtags-diagnostics)
+(setq rtags-completions-enabled t)
+(rtags-enable-standard-keybindings)
+
+;; ensure that we use only rtags checking
+;; https://github.com/Andersbakken/rtags#optional-1
+(defun setup-flycheck-rtags ()
+  (interactive)
+  (flycheck-select-checker 'rtags)
+  ;; RTags creates more accurate overlays.
+  (setq-local flycheck-highlighting-mode nil)
+  (setq-local flycheck-check-syntax-automatically nil))
+
+;; only run this if rtags is installed
+;; (when (require 'rtags nil :noerror)
+;;   ;; make sure you have company-mode installed
+;;   (require 'company)
+;;   (define-key c-mode-base-map (kbd "M-.")
+;;     (function rtags-find-symbol-at-point))
+;;   (define-key c-mode-base-map (kbd "M-,")
+;;     (function rtags-find-references-at-point))
+;;   ;; ;; disable prelud2's use of C-c r, as this is the rtags keyboard prefix
+;;   ;; (define-key prelude-mode-map (kbd "C-c r") nil)
+;;   ;; install standard rtags keybindings. Do M-. on the symbol below to
+;;   ;; jump to definition and see the keybindings.
+;;   (rtags-enable-standard-keybindings)
+;;   ;; comment this out if you don't have or don't use helm
+;;   (setq rtags-use-helm t)
+;;   ;; company completion setup
+;;   (setq rtags-autostart-diagnostics t)
+;;   (rtags-diagnostics)
+;;   (setq rtags-completions-enabled t)
+;;   (push 'company-rtags company-backends)
+;;   (global-company-mode)
+;;   (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
+;;   ;; use rtags flycheck mode -- clang warnings shown inline
+;;   (require 'flycheck-rtags)
+;;   ;; c-mode-common-hook is also called by c++-mode
+;;     (add-hook 'c-mode-common-hook #'setup-flycheck-rtags))
+
+;; Как то давно спрашивал на канале почему не работает параметр default-directory, когда я его явно указываю в init.el. Местные не смогли сходу помочь в ситуации и я остался с проблемой. Много часов гуглил и видимо не один я такой, многие писали на стеке и по форумам, недоумевая что же не так. Кто то даже лямбды кривые выписывал, дабы избавится от этого недуга. Оказывается все дело в стартапскрине. Как то он этот параметр переписывает укажите (setq inhibit-startup-screen t) и default-directory работает как надо. Чтобы понять уровень моего наряжения: за все время 3-4 часа ковыряния конфига, потуги чтобы пересесть на другой редактор и перед найденым решением я уже про себя начал говорить "Господи, лишь бы сработало" я аж сам с себя заорал и чуть не уверовал.
+(setq nhibit-startup-screen t)

@@ -14,6 +14,12 @@
  (cmake-ide status "installed" recipe
             (:name cmake-ide :description "Calls CMake to find out include paths and other compiler flags." :type github :pkgname "atilaneves/cmake-ide" :minimum-emacs-version "24.1" :depends
                    (cl-lib seq levenshtein)))
+ (company-irony status "installed" recipe
+                (:name company-irony :description "company-mode completion back-end for irony-mode" :type github :depends
+                       (company-mode irony-mode cl-lib)
+                       :pkgname "Sarcasm/company-irony"))
+ (company-mode status "installed" recipe
+               (:name company-mode :website "http://company-mode.github.io/" :description "Modular in-buffer completion framework for Emacs" :type github :pkgname "company-mode/company-mode"))
  (dash status "installed" recipe
        (:name dash :description "A modern list api for Emacs. No 'cl required." :type github :pkgname "magnars/dash.el"))
  (el-get status "installed" recipe
@@ -53,6 +59,8 @@
               `(,(format "mkdir -p %s/emms " user-emacs-directory)
                 ,(concat "make EMACS=" el-get-emacs " SITEFLAG=\"--no-site-file -L " el-get-dir "/emacs-w3m/ \"" " autoloads lisp docs"))
               :depends emacs-w3m))
+ (epl status "installed" recipe
+      (:name epl :description "EPL provides a convenient high-level API for various package.el versions, and aims to overcome its most striking idiocies." :type github :pkgname "cask/epl"))
  (expand-region status "installed" recipe
                 (:name expand-region :type github :pkgname "magnars/expand-region.el" :description "Expand region increases the selected region by semantic units. Just keep pressing the key until it selects what you want." :website "https://github.com/magnars/expand-region.el#readme" :features expand-region))
  (flim status "installed" recipe
@@ -75,6 +83,9 @@
                '("compile-flim" "install-flim"))
               :load-path
               ("site-lisp/flim")))
+ (flycheck status "installed" recipe
+           (:name flycheck :type github :pkgname "flycheck/flycheck" :minimum-emacs-version "24.3" :description "On-the-fly syntax checking extension" :depends
+                  (dash pkg-info let-alist seq)))
  (gnuplot-mode status "installed" recipe
                (:name gnuplot-mode :description "Drive gnuplot from within emacs" :type github :pkgname "bruceravel/gnuplot-mode" :build
                       `(("autoreconf" "-f" "-i")
@@ -84,6 +95,12 @@
                       :info "gnuplot.info"))
  (ht status "installed" recipe
      (:name ht :website "https://github.com/Wilfred/ht.el" :description "The missing hash table utility library for Emacs." :type github :pkgname "Wilfred/ht.el"))
+ (irony-mode status "installed" recipe
+             (:name irony-mode :description "A C/C++ minor mode for Emacs powered by libclang" :type github :pkgname "Sarcasm/irony-mode" :depends
+                    (cl-lib)
+                    :compile "\\.el$"))
+ (let-alist status "installed" recipe
+            (:name let-alist :description "Easily let-bind values of an assoc-list by their names." :builtin "25.0.50" :type elpa :website "https://elpa.gnu.org/packages/let-alist.html"))
  (levenshtein status "installed" recipe
               (:name levenshtein :description "Edit distance between two strings." :type emacswiki :features levenshtein))
  (loop status "installed" recipe
@@ -134,6 +151,19 @@
                                      (car archive)
                                      (concat protocol
                                              (cdr archive)))))))))
+ (pkg-info status "installed" recipe
+           (:name pkg-info :description "Provide information about Emacs packages." :type github :pkgname "lunaryorn/pkg-info.el" :depends
+                  (dash epl)))
+ (rtags status "installed" recipe
+        (:name rtags :description "Client/server application that indexes C/C++ code and keeps a persistent in-memory database of references, declarations, definitions, symbolnames\n\nSet `el-get-rtags-no-build-clang' to non-nil before\ninstall/update in order to avoid building clang.\n" :type github :website "https://github.com/Andersbakken/rtags" :pkgname "Andersbakken/rtags" :build
+               `(("cmake" ,@(if
+                                (bound-and-true-p el-get-rtags-no-build-clang)
+                                '("-DRTAGS_NO_BUILD_CLANG=1"))
+                  ".")
+                 ("make" ,@el-get-parallel-make-args))
+               :compile "src" :load-path "src" :post-init
+               (setq rtags-path
+                     (concat default-directory "/bin/"))))
  (s status "installed" recipe
     (:name s :description "The long lost Emacs string manipulation library." :type github :pkgname "magnars/s.el"))
  (semi status "installed" recipe
