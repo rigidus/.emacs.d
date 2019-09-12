@@ -1,14 +1,3 @@
-(defun plist-to-alist (the-plist)
-  (defun get-tuple-from-plist (the-plist)
-    (when the-plist
-      (cons (car the-plist) (cadr the-plist))))
-
-  (let ((alist '()))
-    (while the-plist
-      (add-to-list 'alist (get-tuple-from-plist the-plist))
-      (setq the-plist (cddr the-plist)))
-      alist))
-
 ;;
 ;;    ___ _ __ ___   __ _  ___ ___
 ;;   / _ \ '_ ` _ \ / _` |/ __/ __|
@@ -18,22 +7,41 @@
 ;; EMACS configuration file by Rigidus
 ;;
 
-(require 'package) ;; You might already have this line
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-(package-initialize) ;; You might already have this line
+(defun plist-to-alist (the-plist)
+  (defun get-tuple-from-plist (the-plist)
+    (when the-plist
+      (cons (car the-plist) (cadr the-plist))))
 
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+  (let ((alist '()))
+    (while the-plist
+      (add-to-list 'alist (get-tuple-from-plist the-plist))
+      (setq the-plist (cddr the-plist)))
+    alist))
+
+;; For important compatibility libraries like cl-lib
+(when (< emacs-major-version 24)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+  (package-initialize) ;; You might already have this line
+  (add-to-list 'package-archives
+               '("melpa-stable" . "https://stable.melpa.org/packages/") t))
+
+;; load emacs 24's package system. Add MELPA repository.
+(when (>= emacs-major-version 24)
+  (require 'package)
+  ;; (add-to-list 'package-archives
+  ;;              '("melpa" . "https://melpa.org/packages/"))
+  (add-to-list
+   'package-archives
+   ;; many packages won't show if using stable
+   ;; '("melpa" . "http://stable.melpa.org/packages/")
+   '("melpa" . "http://melpa.milkbox.net/packages/")
+   t))
 
 (setq debug-on-error t)
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 (require 'cl)
 
@@ -503,9 +511,6 @@ to the previously saved position"
   (iswitchb-make-buflist iswitchb-default)
   (setq iswitchb-rescan t))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-to-list 'load-path "~/.emacs.d/") 		; указываем где будут лежать файлы расширений
-;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;; HTMLIZE
@@ -1706,75 +1711,75 @@ Version 2018-10-05"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; Load rtags and start the cmake-ide-setup process
+;; ;; Load rtags and start the cmake-ide-setup process
 
-;; (require 'rtags)
+;; ;; (require 'rtags)
 
-(add-to-list 'load-path "~/.emacs.d/el-get/company-irony/")
-(add-to-list 'load-path "~/.emacs.d/el-get/company-mode/")
-(add-to-list 'load-path "~/.emacs.d/el-get/epl/")
-(add-to-list 'load-path "~/.emacs.d/el-get/flycheck/")
-(add-to-list 'load-path "~/.emacs.d/el-get/irony-mode/")
-(add-to-list 'load-path "~/.emacs.d/el-get/let-alist")
-(add-to-list 'load-path "~/.emacs.d/el-get/pkg-info/")
-(add-to-list 'load-path "~/.emacs.d/el-get/rtags/")
+;; (add-to-list 'load-path "~/.emacs.d/el-get/company-irony/")
+;; (add-to-list 'load-path "~/.emacs.d/el-get/company-mode/")
+;; (add-to-list 'load-path "~/.emacs.d/el-get/epl/")
+;; (add-to-list 'load-path "~/.emacs.d/el-get/flycheck/")
+;; (add-to-list 'load-path "~/.emacs.d/el-get/irony-mode/")
+;; (add-to-list 'load-path "~/.emacs.d/el-get/let-alist")
+;; (add-to-list 'load-path "~/.emacs.d/el-get/pkg-info/")
+;; (add-to-list 'load-path "~/.emacs.d/el-get/rtags/")
 
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Setup cmake-ide
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-to-list 'load-path "~/.emacs.d/el-get/cmake-ide")
-(require 'cmake-ide)
-(cmake-ide-setup)
-;; Set cmake-ide-flags-c++ to use C++11
-(setq cmake-ide-flags-c++ (append '("-std=c++11")))
-;; We want to be able to compile with a keyboard shortcut
-(global-set-key (kbd "C-c m") 'cmake-ide-compile)
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; Setup cmake-ide
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (add-to-list 'load-path "~/.emacs.d/el-get/cmake-ide")
+;; (require 'cmake-ide)
+;; (cmake-ide-setup)
+;; ;; Set cmake-ide-flags-c++ to use C++11
+;; (setq cmake-ide-flags-c++ (append '("-std=c++11")))
+;; ;; We want to be able to compile with a keyboard shortcut
+;; (global-set-key (kbd "C-c m") 'cmake-ide-compile)
 
-;; Set rtags to enable completions and use the standard keybindings.
-;; A list of the keybindings can be found at:
-;; http://syamajala.github.io/c-ide.html
-(setq rtags-autostart-diagnostics t)
-(rtags-diagnostics)
-(setq rtags-completions-enabled t)
-(rtags-enable-standard-keybindings)
+;; ;; Set rtags to enable completions and use the standard keybindings.
+;; ;; A list of the keybindings can be found at:
+;; ;; http://syamajala.github.io/c-ide.html
+;; (setq rtags-autostart-diagnostics t)
+;; (rtags-diagnostics)
+;; (setq rtags-completions-enabled t)
+;; (rtags-enable-standard-keybindings)
 
-;; ensure that we use only rtags checking
-;; https://github.com/Andersbakken/rtags#optional-1
-(defun setup-flycheck-rtags ()
-  (interactive)
-  (flycheck-select-checker 'rtags)
-  ;; RTags creates more accurate overlays.
-  (setq-local flycheck-highlighting-mode nil)
-  (setq-local flycheck-check-syntax-automatically nil))
+;; ;; ensure that we use only rtags checking
+;; ;; https://github.com/Andersbakken/rtags#optional-1
+;; (defun setup-flycheck-rtags ()
+;;   (interactive)
+;;   (flycheck-select-checker 'rtags)
+;;   ;; RTags creates more accurate overlays.
+;;   (setq-local flycheck-highlighting-mode nil)
+;;   (setq-local flycheck-check-syntax-automatically nil))
 
-;; only run this if rtags is installed
-;; (when (require 'rtags nil :noerror)
-;;   ;; make sure you have company-mode installed
-;;   (require 'company)
-;;   (define-key c-mode-base-map (kbd "M-.")
-;;     (function rtags-find-symbol-at-point))
-;;   (define-key c-mode-base-map (kbd "M-,")
-;;     (function rtags-find-references-at-point))
-;;   ;; ;; disable prelud2's use of C-c r, as this is the rtags keyboard prefix
-;;   ;; (define-key prelude-mode-map (kbd "C-c r") nil)
-;;   ;; install standard rtags keybindings. Do M-. on the symbol below to
-;;   ;; jump to definition and see the keybindings.
-;;   (rtags-enable-standard-keybindings)
-;;   ;; comment this out if you don't have or don't use helm
-;;   (setq rtags-use-helm t)
-;;   ;; company completion setup
-;;   (setq rtags-autostart-diagnostics t)
-;;   (rtags-diagnostics)
-;;   (setq rtags-completions-enabled t)
-;;   (push 'company-rtags company-backends)
-;;   (global-company-mode)
-;;   (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
-;;   ;; use rtags flycheck mode -- clang warnings shown inline
-;;   (require 'flycheck-rtags)
-;;   ;; c-mode-common-hook is also called by c++-mode
-;;     (add-hook 'c-mode-common-hook #'setup-flycheck-rtags))
+;; ;; only run this if rtags is installed
+;; ;; (when (require 'rtags nil :noerror)
+;; ;;   ;; make sure you have company-mode installed
+;; ;;   (require 'company)
+;; ;;   (define-key c-mode-base-map (kbd "M-.")
+;; ;;     (function rtags-find-symbol-at-point))
+;; ;;   (define-key c-mode-base-map (kbd "M-,")
+;; ;;     (function rtags-find-references-at-point))
+;; ;;   ;; ;; disable prelud2's use of C-c r, as this is the rtags keyboard prefix
+;; ;;   ;; (define-key prelude-mode-map (kbd "C-c r") nil)
+;; ;;   ;; install standard rtags keybindings. Do M-. on the symbol below to
+;; ;;   ;; jump to definition and see the keybindings.
+;; ;;   (rtags-enable-standard-keybindings)
+;; ;;   ;; comment this out if you don't have or don't use helm
+;; ;;   (setq rtags-use-helm t)
+;; ;;   ;; company completion setup
+;; ;;   (setq rtags-autostart-diagnostics t)
+;; ;;   (rtags-diagnostics)
+;; ;;   (setq rtags-completions-enabled t)
+;; ;;   (push 'company-rtags company-backends)
+;; ;;   (global-company-mode)
+;; ;;   (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
+;; ;;   ;; use rtags flycheck mode -- clang warnings shown inline
+;; ;;   (require 'flycheck-rtags)
+;; ;;   ;; c-mode-common-hook is also called by c++-mode
+;; ;;     (add-hook 'c-mode-common-hook #'setup-flycheck-rtags))
 
-;; Как то давно спрашивал на канале почему не работает параметр default-directory, когда я его явно указываю в init.el. Местные не смогли сходу помочь в ситуации и я остался с проблемой. Много часов гуглил и видимо не один я такой, многие писали на стеке и по форумам, недоумевая что же не так. Кто то даже лямбды кривые выписывал, дабы избавится от этого недуга. Оказывается все дело в стартапскрине. Как то он этот параметр переписывает укажите (setq inhibit-startup-screen t) и default-directory работает как надо. Чтобы понять уровень моего наряжения: за все время 3-4 часа ковыряния конфига, потуги чтобы пересесть на другой редактор и перед найденым решением я уже про себя начал говорить "Господи, лишь бы сработало" я аж сам с себя заорал и чуть не уверовал.
-(setq nhibit-startup-screen t)
+;; ;; Как то давно спрашивал на канале почему не работает параметр default-directory, когда я его явно указываю в init.el. Местные не смогли сходу помочь в ситуации и я остался с проблемой. Много часов гуглил и видимо не один я такой, многие писали на стеке и по форумам, недоумевая что же не так. Кто то даже лямбды кривые выписывал, дабы избавится от этого недуга. Оказывается все дело в стартапскрине. Как то он этот параметр переписывает укажите (setq inhibit-startup-screen t) и default-directory работает как надо. Чтобы понять уровень моего наряжения: за все время 3-4 часа ковыряния конфига, потуги чтобы пересесть на другой редактор и перед найденым решением я уже про себя начал говорить "Господи, лишь бы сработало" я аж сам с себя заорал и чуть не уверовал.
+;; (setq nhibit-startup-screen t)
