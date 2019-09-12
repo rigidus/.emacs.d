@@ -121,33 +121,28 @@
 ;; при отсутсвии подключения к интернету
 
 ;; SLIME
-;; (add-to-list 'load-path "~/.emacs.d/slime-20110829-cvs") ;; Путь к slime
-;; (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-20130720-cvs/") ;; Путь к slime
-;; (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-2.4") ;; Путь к slime
-;; (add-to-list 'load-path "~/build/slime-2.17") ;; Путь к slime
+;; Путь к slime
+;; (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-2.4")
 (require 'slime)
 ;;(setq slime-net-coding-system 'utf-8-unix)
-;;(slime-setup '(slime-fancy))
-;;(setq slime-enable-evaluate-in-emacs t)
+
+;; SLIME-FANCY is a meta package which loads a combination
+;; of the most popular packages.
+(slime-setup '(slime-fancy))
+;; https://www.common-lisp.net/project/slime/doc/html/Contributed-Packages.html
+
+;; Эта настройка позволяет SWANK попросить SLIME выполнить код в контексте EMACS
+;; (setq slime-enable-evaluate-in-emacs t)
+;; например так:
 ;; swank:invoke-slime-debugger
 ;; (let ((*emacs-connection* ...)) (eval-in-emacs '(+ 1 2)))
 
-;; Установка режима CUA поддержка Ctr-c,v,x,d как в windows
-;; CUA mode: C-x, C-c, C-v for copying, pasting, C-z for undo
-;; (cua-mode t)
-;; (setq cua-keep-region-after-copy t) ;; Standard Windows behaviour
-;; Настройка поведения редактора "как в Windows":
-;; Delete (and its variants) delete forward instead of backward.
-;; C-Backspace kills backward a word (as C-Delete normally would).
-;; M-Backspace does undo.
-;; Home and End move to beginning and end of line
-;; C-Home and C-End move to beginning and end of buffer.
-;; C-Escape does list-buffers."
-;; (pc-bindings-mode)
-;; (pc-selection-mode)      ;; Настройка выделения "как в Windows"
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; COMMON SETTINGS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (delete-selection-mode 1)   ;; <del> и BackSpace удаляют выделенный текст
 (transient-mark-mode 1)     ;; Показывать выделенный текст
-
 
 ;; Makes clipboard work
 (setq x-select-enable-clipboard t)
@@ -175,14 +170,14 @@
 
 ;; Создание резервных копий редактируемых файлов (Backup)
 ;; (info "(emacs)Auto Save")
-(setq auto-save-interval 512)                ;; Количество нажатий до автосохранения
-(setq auto-save-timeout 20)                  ;; Автосохранение в перерыве между нажатиями (в секундах)
-(setq backup-directory-alist                 ;; Все временные копии в один каталог.
-      '((".*" . "~/.emacs.d/backups")))      ;; Каталог создаётся автоматически.
-(setq backup-by-copying t)                   ;; Режим сохранения копий
-(setq version-control t)                     ;; Создавать копии с номерами версий
-(setq delete-old-versions t)                 ;; Удалять старые версии без подтверждения
-(setq kept-new-versions 6)                   ;; нумерованный бэкап - 2 первых и 2 последних
+(setq auto-save-interval 512)            ;; Количество нажатий до автосохранения
+(setq auto-save-timeout 20)              ;; Автосохранение в перерыве между нажатиями (в секундах)
+(setq backup-directory-alist             ;; Все временные копии в один каталог.
+      '((".*" . "~/.emacs.d/backups")))  ;; Каталог создаётся автоматически.
+(setq backup-by-copying t)               ;; Режим сохранения копий
+(setq version-control t)                 ;; Создавать копии с номерами версий
+(setq delete-old-versions t)             ;; Удалять старые версии без подтверждения
+(setq kept-new-versions 6)               ;; нумерованный бэкап - 2 первых и 2 последних
 (setq kept-old-versions 2)
 
 
