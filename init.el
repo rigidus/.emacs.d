@@ -101,30 +101,30 @@
 ;;(define-key mc/keymap (kbd "C-c s") 'jc/mc-search-forward)
 ;;(define-key mc/keymap (kbd "C-c r") 'jc/mc-search-backward)
 
-;; C-x C-e eval-and-replace
-
-;; Evaluate the last sexp and replace it with the result. Get it here.
-;; M-x kmacro-name-last-macro
-
-;; Assign a name to the last keyboard macro defined.
-;; M-x insert-kbd-macro
-
-;; Insert in buffer the definition of kbd macro NAME, as Lisp code.
-
-
 ;; SBCL
 (setq inferior-lisp-program "sbcl --dynamic-space-size 2048")
 (setq slime-lisp-implementations '((sbcl ("sbcl"))))
 (setq slime-startup-animation nil)
 ;; Путь к локльной копии Common Lisp Hyper Specifications.
-;; Если его не задавать - справка по функциям будет загружать страницы из интернета
+;; Если его не задавать - справка по функциям будет ходить в интернет
 ;; (setq common-lisp-hyperspec-root "file:///Users/lisp/HyperSpec")
+;; Но есть способ оптимальнее:
+;; - загрузить CLHS через Quicklisp в repl: (ql:quickload "clhs")
+;; - запустить в repl: (clhs:print-emacs-setup-form):
+;;   Он попросит выполнить:
+;;   - (clhs:install-clhs-use-local)
+;;   - (clhs:print-emacs-setup-form)
+;;     И мы можем поместить сюда настройку:
+(load "/home/rigidus/quicklisp/clhs-use-local.el" t)
+;; Теперь "C-c C-d h" runs the command slime-documentation-lookup
+;; И будет ходить за этим в локальную копию CLHS, что очень помогает
+;; при отсутсвии подключения к интернету
 
 ;; SLIME
 ;; (add-to-list 'load-path "~/.emacs.d/slime-20110829-cvs") ;; Путь к slime
 ;; (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-20130720-cvs/") ;; Путь к slime
 ;; (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-2.4") ;; Путь к slime
-(add-to-list 'load-path "~/build/slime-2.17") ;; Путь к slime
+;; (add-to-list 'load-path "~/build/slime-2.17") ;; Путь к slime
 (require 'slime)
 ;;(setq slime-net-coding-system 'utf-8-unix)
 ;;(slime-setup '(slime-fancy))
