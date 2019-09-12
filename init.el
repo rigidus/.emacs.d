@@ -192,85 +192,71 @@
 
 ;; Интерфейс
 
-;; Делаем емакс аскетичным
-(menu-bar-mode -1)
+(menu-bar-mode -1)                 ;; Делаем емакс аскетичным
 (tool-bar-mode -1)
-;; (toggle-scroll-bar -1)
-;; (scroll-bar-mode nil)
-(setq column-number-mode t)                  ;; Показывать номер текущей колонки
-(setq line-number-mode t)                    ;; Показывать номер текущей строки
-;; (set-scroll-bar-mode 'right)                 ;; Полоса прокрутки справа
-(setq inhibit-startup-message t)             ;; Не показываем сообщение при старте
-(fset 'yes-or-no-p 'y-or-n-p)		         ;; не заставляйте меня печать "yes" целиком
-(setq echo-keystrokes 0.001)                 ;; Мгновенное отображение набранных сочетаний клавиш
-(setq use-dialog-boxes nil)                  ;; Не использовать диалоговые окна
-(setq cursor-in-non-selected-windows nil)    ;; Не показывать курсоры в неактивных окнах
-(setq default-tab-width 4)                   ;; размер табуляции
-(setq c-basic-offset 4)                      ;; табуляция для режимов, основанных на c-mode
+(setq column-number-mode t)        ;; Показывать номер текущей колонки
+(setq line-number-mode t)          ;; Показывать номер текущей строки
+(setq inhibit-startup-message t)   ;; Не показываем сообщение при старте
+(fset 'yes-or-no-p 'y-or-n-p)	   ;; не заставляйте меня печать "yes" целиком
+(setq echo-keystrokes 0.001)       ;; Мгновенное отображение набранных сочетаний клавиш
+(setq use-dialog-boxes nil)        ;; Не использовать диалоговые окна
+(setq cursor-in-non-selected-windows nil) ;; Не показывать курсоры в неактивных окнах
+(setq default-tab-width 4)         ;; размер табуляции
+(setq c-basic-offset 4)            ;; табуляция для режимов, основанных на c-mode
 (setq tab-width 4)
 (setq cperl-indent-level 4)
-(setq sgml-basic-offset 4)                   ;; для HTML и XML
-(setq-default indent-tabs-mode nil)          ;; отступ только пробелами
-(setq initial-scratch-message nil)           ;; Scratch buffer settings. Очищаем его.
-(setq case-fold-search t)                    ;; Поиск без учёта регистра
-(global-font-lock-mode t)                    ;; Поддержка различных начертаний шрифтов в буфере
-(setq font-lock-maximum-decoration t)        ;; Максимальное использование различных начертаний шрифтов
+(setq sgml-basic-offset 4)         ;; для HTML и XML
+(setq-default indent-tabs-mode nil);; отступ только пробелами
+(setq initial-scratch-message nil) ;; Scratch buffer settings. Очищаем его.
+(setq case-fold-search t)          ;; Поиск без учёта регистра
+(global-font-lock-mode t)          ;; Поддержка различных начертаний шрифтов в буфере
+(setq font-lock-maximum-decoration t) ;; Максимальное использование различных начертаний шрифтов
 (if window-system (setq scalable-fonts-allowed t)) ;; Масштабируемые шрифты в графическом интерфейсе
 (setq read-file-name-completion-ignore-case t) ;; Дополнение имён файлов без учёта регистра
-(file-name-shadow-mode t)                    ;; Затенять игнорируемую часть имени файла
-(setq resize-mini-windows t)                 ;; Изменять при необходимости размер минибуфера по вертикали
-(auto-image-file-mode t)                     ;; Показывать картинки
-(setq read-quoted-char-radix 10)             ;; Ввод символов по коду в десятичном счислении `C-q'
-(put 'narrow-to-region 'disabled nil)        ;; Разрешить ограничение редактирования только в выделенном участке
-(put 'narrow-to-page 'disabled nil)          ;; Разрешить ограничение редактирования только на текущей странице
-(setq scroll-step 1)                         ;; Перематывать по одной строке
-(setq temp-buffer-max-height                 ;; Максимальная высота временного буфера
+(file-name-shadow-mode t)          ;; Затенять игнорируемую часть имени файла
+(setq resize-mini-windows t)       ;; Изменять при необходимости размер минибуфера по вертикали
+(auto-image-file-mode t)           ;; Показывать картинки
+(setq read-quoted-char-radix 10)   ;; Ввод символов по коду в десятичном счислении `C-q'
+(put 'narrow-to-region 'disabled nil) ;; Разрешить ограничение редактирования только в выделенном участке
+(put 'narrow-to-page 'disabled nil)   ;; Разрешить ограничение редактирования только на текущей странице
+(setq scroll-step 1)               ;; Перематывать по одной строке
+(setq temp-buffer-max-height       ;; Максимальная высота временного буфера
       (lambda (buffer)
         (/ (- (frame-height) 2) 3)))
-(temp-buffer-resize-mode t) ;; Высота временного буфера зависит от его содержимого
+(temp-buffer-resize-mode t)        ;; Высота временного буфера зависит от его содержимого
 (setq frame-title-format '("" "%b @ Emacs " emacs-version)) ;; Заголовок окна
 
-
-(setq scroll-conservatively 50)              ;; гладкий скроллинг с полями
+(setq scroll-conservatively 50)    ;; Гладкий скроллинг с полями
 (setq scroll-preserve-screen-position 't)
 (setq scroll-margin 10)
 
 (setq my-author-name (getenv "USER"))
 (setq user-full-name (getenv "USER"))
-(setq require-final-newline t)			     ;; always end a file with a newline
+(setq require-final-newline t)     ;; always end a file with a newline
 
-;; Красный не мигающий (!) курсор
-(set-cursor-color "red")
+(set-cursor-color "red")           ;; Красный не мигающий (!) курсор
 (blink-cursor-mode nil)
 ;; мышка...
 (global-set-key [vertical-scroll-bar down-mouse-1] 'scroll-bar-drag) ;; Scroll Bar gets dragged by mouse butn 1
-(setq mouse-yank-at-point 't) 		    ;; Paste at point NOT at cursor
+(setq mouse-yank-at-point 't)      ;; Paste at point NOT at cursor
 
 
-(show-paren-mode 1)                     ;; выделение парных скобок
-;(setq show-paren-style 'expression)    ;; выделять все выражение в скобках
-										;; отступ при переводе строки в lisp-mode
-(add-hook 'lisp-mode-hook
+(show-paren-mode 1)                ;; выделение парных скобок
+;(setq show-paren-style 'expression) ;; выделять все выражение в скобках
+
+(add-hook 'lisp-mode-hook          ;; отступ при переводе строки в lisp-mode
 		  '(lambda ()
-			(local-set-key (kbd "RET") 'newline-and-indent)))
+             (local-set-key (kbd "RET") 'newline-and-indent)))
 
 
-
-
-;; http://kulchitsky.org/rus/linux/dotemacs.html
-;; Установка раскладки как в виндовс при переключении по С-\
-
-(global-set-key (kbd "\C-\\") 'user-toggle-input-method)
-(global-set-key (kbd "\e(") 'user-to-cyr) ; Alt+Shift+9
-(global-set-key (kbd "\e)") 'user-to-nil) ; Alt+Shift+0
-
-
-;;(set-input-method "russian-computer")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ТОЧКИ ЕМАКС (Антон Кульчицкий)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun user-cyrillic-redefinitions ()
   "Set of global keys binding for cyrillic.
    This function is to be called from user-toggle-input-method"
-  (global-set-key (kbd "?") (lambda()(interactive)(insert ",")))
+  (global-set-key (kbd "?") (lambda()(interactive)(insert ","))),,.,ююю
   (global-set-key (kbd "/") (lambda()(interactive)(insert ".")))
   (global-set-key (kbd ",") (lambda()(interactive)(insert ":")))
   (global-set-key (kbd ":") (lambda()(interactive)(insert "%")))
@@ -279,7 +265,7 @@
   (global-set-key (kbd ".") (lambda()(interactive)(insert "?"))))
 
 (defun user-nil-redefinitions ()
- "Restoring global keys binding after user-cyrillic-redefinitions.
+  "Restoring global keys binding after user-cyrillic-redefinitions.
   This function is to be called from user-toggle-input-method"
   (global-set-key (kbd "?") (lambda()(interactive)(self-insert-command 1)))
   (global-set-key (kbd "/") (lambda()(interactive)(self-insert-command 1)))
@@ -305,24 +291,27 @@
    I bound this function with Alt-Shift-9, that is M-("
   (interactive)
   (when (string= current-input-method nil)
-      (user-toggle-input-method)))
+    (user-toggle-input-method)))
 
 (defun user-to-nil ()
   "Change input method to nil (generally to English),
    I bound this function with Alt-Sfift-0 that is M-)"
   (interactive)
   (when (string= current-input-method "cyrillic-jcuken")
-      (user-toggle-input-method)))
+    (user-toggle-input-method)))
 
+(set-input-method "russian-computer")
+(user-toggle-input-method)
+;; Установка раскладки при переключении по С-\
+(global-set-key (kbd "\C-\\") 'user-toggle-input-method)
 
-;;(user-toggle-input-method)
+;; Итак, я предлагаю команду 'Meta-Meta-Shift-/' для того, чтобы
+;; запомнить текущую позицию и команду 'Meta-Meta-/' для того, чтобы
+;; перейти на запомненную позицию, прежде запомнив текущую.
 
-;; Итак, я предлагаю команду 'Meta-Meta-Shift-/' для того, чтобы запомнить текущую позицию
-;; и команду 'Meta-Meta-/' для того, чтобы перейти на запомненную позицию, прежде запомнив текущую.
-;;Toggle between saved positions as in MIM editor
 (defun save-point-and-switch ()
-  "Save current point to register 0 and go
-to the previously saved position"
+  "Save current point to register 0 and go to the previously
+   saved position"
  (interactive)
  (let (temp)
    (setq temp (point-marker))
@@ -330,7 +319,6 @@ to the previously saved position"
      (jump-to-register 0))
    (set-register 0 temp)))
 
-;;Save current position to register 0
 (defun save-point-only ()
  "Save current point to register 0"
  (interactive)
@@ -362,6 +350,7 @@ to the previously saved position"
               '(emacs-lisp-mode scheme-mode lisp-mode c-mode c++-mode
                                 objc-mode latex-mode plain-tex-mode python-mode))
       (indent-region (region-beginning) (region-end) nil)))
+
 (defadvice yank-pop (after indent-region activate)
   (if (member major-mode
               '(emacs-lisp-mode scheme-mode lisp-mode c-mode c++-mode
