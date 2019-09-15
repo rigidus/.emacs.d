@@ -808,7 +808,6 @@ Version 2018-10-05"
 ;; (emms-default-players)
 
 
-
 ;; WANDERLUST
 ;; http://box.matto.nl/emacsgmail.html
 ;; http://www.emacswiki.org/emacs/hgw-init-wl.el
