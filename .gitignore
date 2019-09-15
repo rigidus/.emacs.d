@@ -1,5 +1,2 @@
-backups/*
-jabber-account.el
-sem1nucn3auduainrafr
-auto-save-list/*
-.#session.*
+.pass.el
+backups/

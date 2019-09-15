@@ -1,5 +1,0 @@
-(:name msearch
-:auto-generated t
-:type emacswiki
-:description "Search for mouse selection"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/msearch.el")

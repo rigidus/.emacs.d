@@ -1,5 +1,0 @@
-(:name cite
-:auto-generated t
-:type emacswiki
-:description "Citing engine for Gnus"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/cite.el")

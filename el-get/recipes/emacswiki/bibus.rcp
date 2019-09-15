@@ -1,5 +1,0 @@
-(:name bibus
-:auto-generated t
-:type emacswiki
-:description "Major mode for displaying and managing reference keys"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/bibus.el")

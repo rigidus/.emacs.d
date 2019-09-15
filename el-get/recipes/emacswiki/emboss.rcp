@@ -1,5 +1,0 @@
-(:name emboss
-:auto-generated t
-:type emacswiki
-:description "Commands to browse and write emboss code"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/emboss.el")

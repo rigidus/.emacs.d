@@ -1,5 +1,0 @@
-(:name elunit
-:auto-generated t
-:type emacswiki
-:description "Emacs Lisp Unit Testing framework"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/elunit.el")

@@ -1,5 +1,0 @@
-(:name sql
-:auto-generated t
-:type emacswiki
-:description "specialized comint.el for SQL interpreters"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/sql.el")

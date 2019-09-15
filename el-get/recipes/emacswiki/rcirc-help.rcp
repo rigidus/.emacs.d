@@ -1,5 +1,0 @@
-(:name rcirc-help
-:auto-generated t
-:type emacswiki
-:description "print doc strings of rcirc commands"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/rcirc-help.el")

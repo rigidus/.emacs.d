@@ -1,5 +1,0 @@
-(:name gitconfig-mode
-:auto-generated t
-:type emacswiki
-:description "Major mode for editing .gitconfig files"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/gitconfig-mode.el")

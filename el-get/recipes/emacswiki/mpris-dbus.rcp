@@ -1,5 +1,0 @@
-(:name mpris-dbus
-:auto-generated t
-:type emacswiki
-:description "MPRIS call via dbus"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/mpris-dbus.el")

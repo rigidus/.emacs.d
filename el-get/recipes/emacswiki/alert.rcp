@@ -1,5 +1,0 @@
-(:name alert
-:auto-generated t
-:type emacswiki
-:description "Alternatives to `message'"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/alert.el")

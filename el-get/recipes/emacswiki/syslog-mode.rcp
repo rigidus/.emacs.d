@@ -1,5 +1,0 @@
-(:name syslog-mode
-:auto-generated t
-:type emacswiki
-:description "Mode for viewing system logfiles"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/syslog-mode.el")

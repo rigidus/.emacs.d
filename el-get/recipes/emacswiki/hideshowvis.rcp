@@ -1,5 +1,0 @@
-(:name hideshowvis
-:auto-generated t
-:type emacswiki
-:description "Add markers to the fringe for regions foldable by hideshow.el"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/hideshowvis.el")

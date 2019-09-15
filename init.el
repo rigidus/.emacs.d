@@ -7,256 +7,40 @@
 ;; EMACS configuration file by Rigidus
 ;;
 
-(defun plist-to-alist (the-plist)
-  (defun get-tuple-from-plist (the-plist)
-    (when the-plist
-      (cons (car the-plist) (cadr the-plist))))
-
-  (let ((alist '()))
-    (while the-plist
-      (add-to-list 'alist (get-tuple-from-plist the-plist))
-      (setq the-plist (cddr the-plist)))
-    alist))
-
-;; For important compatibility libraries like cl-lib
-(when (< emacs-major-version 24)
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-  (package-initialize) ;; You might already have this line
-  (add-to-list 'package-archives
-               '("melpa-stable" . "https://stable.melpa.org/packages/") t))
-
-;; load emacs 24's package system. Add MELPA repository.
-(when (>= emacs-major-version 24)
-  (require 'package)
-  ;; (add-to-list 'package-archives
-  ;;              '("melpa" . "https://melpa.org/packages/"))
-  (add-to-list
-   'package-archives
-   ;; many packages won't show if using stable
-   ;; '("melpa" . "http://stable.melpa.org/packages/")
-   '("melpa" . "http://melpa.milkbox.net/packages/")
-   t))
+(require 'cl)
 
 (setq debug-on-error t)
 
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+;; Comment function
+(defun comment-or-uncomment-this (&optional lines)
+  (interactive "P")
+  (if mark-active
+      (if (< (mark) (point))
+          (comment-or-uncomment-region (mark) (point))
+	(comment-or-uncomment-region (point) (mark)))
+    (comment-or-uncomment-region
+     (line-beginning-position)
+     (line-end-position lines))))
 
-(add-to-list 'load-path "~/.emacs.d/lisp")
+(global-set-key (kbd "C-x /")
+		'comment-or-uncomment-this)
 
-(require 'cl)
+;; выделение парных скобок
+(show-paren-mode 1)
 
-;; pg.el (byte-compiled) v.0.12
-;; http://www.online-marketwatch.com/pgel/pg.el
-;; pg_hba: hostnossl all all 127.0.0.1/32 md5
-(require 'pg)
+;; выделять все выражение в скобках
+;; (setq show-paren-style 'expression)
 
-(unless (require 'el-get nil t)
-  (url-retrieve
-   "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
-   (lambda (s)
-     (end-of-buffer)
-     (eval-print-last-sexp))))
-
-;;(add-to-list 'load-path "~/.emacs.d/el-get/emms/")
-;;(require 'emms-setup)
-;;(emms-standard)
-;;(emms-default-players)
-
-
-;; EXPAND_REGION
-;;(add-to-list 'load-path "~/.emacs.d/expand-region")
-;;(require 'expand-region)
-;; (global-set-key (kbd "C-c =") 'er/expand-region)
-
-;; MULTIPLE_CURSORS
-;;(add-to-list 'load-path "~/.emacs.d/multiple-cursors")
-;;(require 'multiple-cursors)
-
-;;(global-set-key (kbd "C-c >") 'mc/mark-next-like-this)
-;;(global-set-key (kbd "C-c <") 'mc/mark-previous-like-this)
-;;(global-set-key (kbd "C-c C-c <") 'mc/mark-all-like-this)
-;;(global-set-key (kbd "C-c C-c >") 'mc/edit-lines)
+;; GOTOLINE
+(global-set-key [?\M-g] 'goto-line)
+(global-set-key (kbd "\e\eg") 'goto-line)
 
 
-;;(defvar jc/mc-search--last-term nil)
-
-;;(defun jc/mc-search (search-command)
-;;  ;; Read new search term when not repeated command or applying to fake cursors
-;;  (when (and (not mc--executing-command-for-fake-cursor)
-;;             (not (eq last-command 'jc/mc-search-forward))
-;;             (not (eq last-command 'jc/mc-search-backward)))
-;;    (setq jc/mc-search--last-term (read-from-minibuffer "Search: ")))
-;;  (funcall search-command jc/mc-search--last-term))
-
-;;(defun jc/mc-search-forward ()
-;;  "Simplified version of forward search that supports multiple cursors"
-;;  (interactive)
-;;  (jc/mc-search 'search-forward))
-
-;;(defun jc/mc-search-backward ()
-;;  "Simplified version of backward search that supports multiple cursors"
-;;  (interactive)
-;;  (jc/mc-search 'search-backward))
-
-;;(define-key mc/keymap (kbd "C-c s") 'jc/mc-search-forward)
-;;(define-key mc/keymap (kbd "C-c r") 'jc/mc-search-backward)
-
-;; SBCL
-(setq inferior-lisp-program "sbcl --dynamic-space-size 2048")
-(setq slime-lisp-implementations '((sbcl ("sbcl"))))
-(setq slime-startup-animation nil)
-;; Путь к локльной копии Common Lisp Hyper Specifications.
-;; Если его не задавать - справка по функциям будет ходить в интернет
-;; (setq common-lisp-hyperspec-root "file:///Users/lisp/HyperSpec")
-;; Но есть способ оптимальнее:
-;; - загрузить CLHS через Quicklisp в repl: (ql:quickload "clhs")
-;; - запустить в repl: (clhs:print-emacs-setup-form):
-;;   Он попросит выполнить:
-;;   - (clhs:install-clhs-use-local)
-;;   - (clhs:print-emacs-setup-form)
-;;     И мы можем поместить сюда настройку:
-(load "/home/rigidus/quicklisp/clhs-use-local.el" t)
-;; Теперь "C-c C-d h" runs the command slime-documentation-lookup
-;; И будет ходить за этим в локальную копию CLHS, что очень помогает
-;; при отсутсвии подключения к интернету
-
-;; SLIME
-;; Путь к slime
-;; (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-2.4")
-(require 'slime)
-;;(setq slime-net-coding-system 'utf-8-unix)
-
-;; SLIME-FANCY is a meta package which loads a combination
-;; of the most popular packages.
-(slime-setup '(slime-fancy))
-;; https://www.common-lisp.net/project/slime/doc/html/Contributed-Packages.html
-
-;; Эта настройка позволяет SWANK попросить SLIME выполнить код в контексте EMACS
-;; (setq slime-enable-evaluate-in-emacs t)
-;; например так:
-;; swank:invoke-slime-debugger
-;; (let ((*emacs-connection* ...)) (eval-in-emacs '(+ 1 2)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; COMMON SETTINGS
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(delete-selection-mode 1)   ;; <del> и BackSpace удаляют выделенный текст
-(transient-mark-mode 1)     ;; Показывать выделенный текст
-
-;; Makes clipboard work
-(setq x-select-enable-clipboard t)
-;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
-(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-
-;; для корректного выведения escape-последовательностей shell`a
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
-;; Установки автоопределения кодировок. Первой будет определяться utf-8-unix
-(prefer-coding-system 'cp866)
-(prefer-coding-system 'koi8-r-unix)
-(prefer-coding-system 'windows-1251-dos)
-(prefer-coding-system 'utf-8-unix)
-
-;; Удаляем оконечные пробелы перед сохранением файлов
-(add-hook 'before-save-hook '(lambda ()
-(delete-trailing-whitespace)))
-
-;; Режим по умолчанию c переносом строк по ширине 130
-(setq default-major-mode 'text-mode)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-(setq auto-fill-mode t)
-(setq fill-column 130)
-
-;; Создание резервных копий редактируемых файлов (Backup)
-;; (info "(emacs)Auto Save")
-(setq auto-save-interval 512)            ;; Количество нажатий до автосохранения
-(setq auto-save-timeout 20)              ;; Автосохранение в перерыве между нажатиями (в секундах)
-(setq backup-directory-alist             ;; Все временные копии в один каталог.
-      '((".*" . "~/.emacs.d/backups")))  ;; Каталог создаётся автоматически.
-(setq backup-by-copying t)               ;; Режим сохранения копий
-(setq version-control t)                 ;; Создавать копии с номерами версий
-(setq delete-old-versions t)             ;; Удалять старые версии без подтверждения
-(setq kept-new-versions 6)               ;; нумерованный бэкап - 2 первых и 2 последних
-(setq kept-old-versions 2)
-
-
-;; Оптимизация работы редактора
-;; limit on number of Lisp variable bindings & unwind-protects
-(setq max-specpdl-size (* 10 max-specpdl-size)) ; 10 * 1 M (default)
-;; limit serving to catch infinite recursions for you before they
-;; cause actual stack overflow in C, which would be fatal for Emacs
-(setq max-lisp-eval-depth (* 10 max-lisp-eval-depth)) ; 10 * 400 (default)
-;; speed up things by preventing garbage collections
-(setq gc-cons-threshold (* 10 gc-cons-threshold)) ; 10 * 400 KB (default)
-
-;; Интерфейс
-
-(menu-bar-mode -1)                 ;; Делаем емакс аскетичным
-(tool-bar-mode -1)
-(setq column-number-mode t)        ;; Показывать номер текущей колонки
-(setq line-number-mode t)          ;; Показывать номер текущей строки
-(setq inhibit-startup-message t)   ;; Не показываем сообщение при старте
-(fset 'yes-or-no-p 'y-or-n-p)	   ;; не заставляйте меня печать "yes" целиком
-(setq echo-keystrokes 0.001)       ;; Мгновенное отображение набранных сочетаний клавиш
-(setq use-dialog-boxes nil)        ;; Не использовать диалоговые окна
-(setq cursor-in-non-selected-windows nil) ;; Не показывать курсоры в неактивных окнах
-(setq default-tab-width 4)         ;; размер табуляции
-(setq c-basic-offset 4)            ;; табуляция для режимов, основанных на c-mode
-(setq tab-width 4)
-(setq cperl-indent-level 4)
-(setq sgml-basic-offset 4)         ;; для HTML и XML
-(setq-default indent-tabs-mode nil);; отступ только пробелами
-(setq initial-scratch-message nil) ;; Scratch buffer settings. Очищаем его.
-(setq case-fold-search t)          ;; Поиск без учёта регистра
-(global-font-lock-mode t)          ;; Поддержка различных начертаний шрифтов в буфере
-(setq font-lock-maximum-decoration t) ;; Максимальное использование различных начертаний шрифтов
-(if window-system (setq scalable-fonts-allowed t)) ;; Масштабируемые шрифты в графическом интерфейсе
-(setq read-file-name-completion-ignore-case t) ;; Дополнение имён файлов без учёта регистра
-(file-name-shadow-mode t)          ;; Затенять игнорируемую часть имени файла
-(setq resize-mini-windows t)       ;; Изменять при необходимости размер минибуфера по вертикали
-(auto-image-file-mode t)           ;; Показывать картинки
-(setq read-quoted-char-radix 10)   ;; Ввод символов по коду в десятичном счислении `C-q'
-(put 'narrow-to-region 'disabled nil) ;; Разрешить ограничение редактирования только в выделенном участке
-(put 'narrow-to-page 'disabled nil)   ;; Разрешить ограничение редактирования только на текущей странице
-(setq scroll-step 1)               ;; Перематывать по одной строке
-(setq temp-buffer-max-height       ;; Максимальная высота временного буфера
-      (lambda (buffer)
-        (/ (- (frame-height) 2) 3)))
-(temp-buffer-resize-mode t)        ;; Высота временного буфера зависит от его содержимого
-(setq frame-title-format '("" "%b @ Emacs " emacs-version)) ;; Заголовок окна
-
-(setq scroll-conservatively 50)    ;; Гладкий скроллинг с полями
-(setq scroll-preserve-screen-position 't)
-(setq scroll-margin 10)
-
-(setq my-author-name (getenv "USER"))
-(setq user-full-name (getenv "USER"))
-(setq require-final-newline t)     ;; always end a file with a newline
-
-(set-cursor-color "red")           ;; Красный не мигающий (!) курсор
-(blink-cursor-mode nil)
-;; мышка...
-(global-set-key [vertical-scroll-bar down-mouse-1] 'scroll-bar-drag) ;; Scroll Bar gets dragged by mouse butn 1
-(setq mouse-yank-at-point 't)      ;; Paste at point NOT at cursor
-
-
-(show-paren-mode 1)                ;; выделение парных скобок
-;(setq show-paren-style 'expression) ;; выделять все выражение в скобках
-
-(add-hook 'lisp-mode-hook          ;; отступ при переводе строки в lisp-mode
-		  '(lambda ()
-             (local-set-key (kbd "RET") 'newline-and-indent)))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ТОЧКИ ЕМАКС (Антон Кульчицкий)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (defun user-cyrillic-redefinitions ()
   "Set of global keys binding for cyrillic.
    This function is to be called from user-toggle-input-method"
-  (global-set-key (kbd "?") (lambda()(interactive)(insert ","))),,.,ююю
+  (global-set-key (kbd "?") (lambda()(interactive)(insert ",")))
   (global-set-key (kbd "/") (lambda()(interactive)(insert ".")))
   (global-set-key (kbd ",") (lambda()(interactive)(insert ":")))
   (global-set-key (kbd ":") (lambda()(interactive)(insert "%")))
@@ -302,13 +86,13 @@
 
 (set-input-method "russian-computer")
 (user-toggle-input-method)
+
 ;; Установка раскладки при переключении по С-\
 (global-set-key (kbd "\C-\\") 'user-toggle-input-method)
 
 ;; Итак, я предлагаю команду 'Meta-Meta-Shift-/' для того, чтобы
 ;; запомнить текущую позицию и команду 'Meta-Meta-/' для того, чтобы
 ;; перейти на запомненную позицию, прежде запомнив текущую.
-
 (defun save-point-and-switch ()
   "Save current point to register 0 and go to the previously
    saved position"
@@ -318,33 +102,175 @@
    (when (not (equal (get-register 0) nil))
      (jump-to-register 0))
    (set-register 0 temp)))
-
+;;
 (defun save-point-only ()
  "Save current point to register 0"
  (interactive)
  (set-register 0 (point-marker)))
-
+;;
 (global-set-key (kbd "\e\e/") 'save-point-and-switch)
 (global-set-key (kbd "\e\e?") 'save-point-only)
 
+;; Водки найду
 
-;; Comment function
-(defun comment-or-uncomment-this (&optional lines)
-  (interactive "P")
-  (if mark-active
-      (if (< (mark) (point))
-          (comment-or-uncomment-region (mark) (point))
-          (comment-or-uncomment-region (point) (mark)))
-      (comment-or-uncomment-region
-       (line-beginning-position)
-       (line-end-position lines))))
-;; (global-set-key (kbd "C-;") ;; не работает в консольном режиме
-;; 				'comment-or-uncomment-this)
-(global-set-key (kbd "C-x /")
-				'comment-or-uncomment-this)
+(defun what-can-i-do ()
+  (interactive)
+  (let ((pattern "\\(\\[\\(TODO\\|VRFY\\):gmm\\]\\)") ;; "\\(\\[TODO:.\\{3,\\}\\]\\)"
+        (curbuff (current-buffer))
+        (newbuff (generate-new-buffer "*what-can-i-do*")))
+    (save-excursion
+      (goto-char (point-min))
+      (let ((cnt 0))
+        (with-output-to-temp-buffer newbuff
+          (while (re-search-forward pattern nil t)
+            (incf cnt)
+            (let ((buff  curbuff)
+                  (point (point))
+                  (line  (line-number-at-pos))
+                  (contents (thing-at-point 'line)))
+              (with-current-buffer newbuff
+                (insert-text-button (format "%d:" line)
+                                    'buff buff
+                                    'point point
+                                    'action (lambda (x)
+                                              (let* ((pos   (posn-point (event-end x)))
+                                                     (buff  (get-text-property pos 'buff))
+                                                     (point (get-text-property pos 'point)))
+                                                (with-current-buffer buff
+                                                  (goto-char point))
+                                                (switch-to-buffer buff))))
+                (princ contents))))
+          (goto-char (point-max))
+          (princ (format "\nDone. %s finded." cnt))
+          )))))
+;;
+(global-set-key (kbd "C-c m") 'what-can-i-do)
+
+
+
+(defun xah-show-kill-ring ()
+  "Insert all `kill-ring' content in a new buffer named *copy history*.
+URL `http://ergoemacs.org/emacs/emacs_show_kill_ring.html'
+Version 2018-10-05"
+  (interactive)
+  (let (($buf (generate-new-buffer "*copy history*")))
+    (progn
+      (switch-to-buffer $buf)
+      (funcall 'fundamental-mode)
+      (setq buffer-offer-save t)
+      (dolist (x kill-ring )
+        (insert x "\n\u000cttt\n\n"))
+      (goto-char (point-min)))
+    (when (fboundp 'xah-show-formfeed-as-line)
+      (xah-show-formfeed-as-line))))
+
+;; COMMON SETTINGS
+
+
+(delete-selection-mode 1)   ;; <del> и BackSpace удаляют выделенный текст
+(transient-mark-mode 1)     ;; Показывать выделенный текст
+
+;; Makes clipboard work
+(setq x-select-enable-clipboard t)
+;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
+;; для корректного выведения escape-последовательностей shell`a
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; Установки автоопределения кодировок. Первой будет определяться utf-8-unix
+(prefer-coding-system 'cp866)
+(prefer-coding-system 'koi8-r-unix)
+(prefer-coding-system 'windows-1251-dos)
+(prefer-coding-system 'utf-8-unix)
+
+;; Удаляем оконечные пробелы перед сохранением файлов
+(add-hook 'before-save-hook '(lambda ()
+(delete-trailing-whitespace)))
+
+;; Режим по умолчанию c переносом строк по ширине 130
+(setq default-major-mode 'text-mode)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(setq auto-fill-mode t)
+(setq fill-column 130)
+
+;; Создание резервных копий редактируемых файлов (Backup)
+;; (info "(emacs)Auto Save")
+(setq auto-save-interval 512)            ;; Количество нажатий до автосохранения
+(setq auto-save-timeout 20)              ;; Автосохранение в перерыве между нажатиями (в секундах)
+(setq backup-directory-alist             ;; Все временные копии в один каталог.
+      '((".*" . "~/.emacs.d/backups")))  ;; Каталог создаётся автоматически.
+(setq backup-by-copying t)               ;; Режим сохранения копий
+(setq version-control t)                 ;; Создавать копии с номерами версий
+(setq delete-old-versions t)             ;; Удалять старые версии без подтверждения
+(setq kept-new-versions 6)               ;; нумерованный бэкап - 2 первых и 2 последних
+(setq kept-old-versions 2)
+
+;; Оптимизация работы редактора
+;; limit on number of Lisp variable bindings & unwind-protects
+(setq max-specpdl-size (* 10 max-specpdl-size)) ; 10 * 1 M (default)
+;; limit serving to catch infinite recursions for you before they
+;; cause actual stack overflow in C, which would be fatal for Emacs
+(setq max-lisp-eval-depth (* 10 max-lisp-eval-depth)) ; 10 * 400 (default)
+;; speed up things by preventing garbage collections
+(setq gc-cons-threshold (* 10 gc-cons-threshold)) ; 10 * 400 KB (default)
+
+;; Интерфейс
+
+(menu-bar-mode -1)                   ;; Делаем емакс аскетичным
+(tool-bar-mode -1)
+(setq column-number-mode t)          ;; Показывать номер текущей колонки
+(setq line-number-mode t)            ;; Показывать номер текущей строки
+(setq inhibit-startup-message t)     ;; Не показываем сообщение при старте
+(fset 'yes-or-no-p 'y-or-n-p)	     ;; не заставляйте меня печать "yes" целиком
+(setq echo-keystrokes 0.001)         ;; Мгновенное отображение набранных сочетаний клавиш
+(setq use-dialog-boxes nil)          ;; Не использовать диалоговые окна
+(setq cursor-in-non-selected-windows nil) ;; Не показывать курсоры в неактивных окнах
+(setq default-tab-width 4)           ;; размер табуляции
+(setq c-basic-offset 4)              ;; табуляция для режимов, основанных на c-mode
+(setq tab-width 4)
+(setq cperl-indent-level 4)
+(setq sgml-basic-offset 4)           ;; для HTML и XML
+(setq-default indent-tabs-mode nil)  ;; отступ только пробелами
+(setq initial-scratch-message nil)   ;; Scratch buffer settings. Очищаем его.
+(setq case-fold-search t)            ;; Поиск без учёта регистра
+(global-font-lock-mode t)            ;; Поддержка различных начертаний шрифтов в буфере
+(setq font-lock-maximum-decoration t);; Максимальное использование различных начертаний шрифтов
+(if window-system (setq scalable-fonts-allowed t)) ;; Масштабируемые шрифты в графическом интерфейсе
+(setq read-file-name-completion-ignore-case t) ;; Дополнение имён файлов без учёта регистра
+(file-name-shadow-mode t)            ;; Затенять игнорируемую часть имени файла
+(setq resize-mini-windows t)         ;; Изменять при необходимости размер минибуфера по вертикали
+(auto-image-file-mode t)             ;; Показывать картинки
+(setq read-quoted-char-radix 10)     ;; Ввод символов по коду в десятичном счислении `C-q'
+(put 'upcase-region 'disabled nil)   ;; Разрешить поднимать регистр символов
+(put 'downcase-region 'disabled nil) ;; Разрешить опускать регистр символов
+
+(put 'narrow-to-region 'disabled nil);; Разрешить ограничение редактирования только в выделенном участке
+(put 'narrow-to-page 'disabled nil)  ;; Разрешить ограничение редактирования только на текущей странице
+(setq scroll-step 1)                 ;; Перематывать по одной строке
+(setq temp-buffer-max-height         ;; Максимальная высота временного буфера
+      (lambda (buffer)
+        (/ (- (frame-height) 2) 3)))
+(temp-buffer-resize-mode t)          ;; Высота временного буфера зависит от его содержимого
+(setq frame-title-format '("" "%b @ Emacs " emacs-version)) ;; Заголовок окна
+
+(setq scroll-conservatively 50)      ;; Гладкий скроллинг с полями
+(setq scroll-preserve-screen-position 't)
+(setq scroll-margin 10)
+
+(setq my-author-name (getenv "USER"))
+(setq user-full-name (getenv "USER"))
+(setq require-final-newline t)       ;; always end a file with a newline
+
+(set-cursor-color "red")             ;; Красный не мигающий (!) курсор
+(blink-cursor-mode nil)
+;; мышка...
+(global-set-key [vertical-scroll-bar down-mouse-1] 'scroll-bar-drag) ;; Scroll Bar gets dragged by mouse butn 1
+(setq mouse-yank-at-point 't)        ;; Paste at point NOT at cursor
 
 
 ;; Автоматическое выравнивание вставляемого из буфера обмена кода
+
 (defadvice yank (after indent-region activate)
   (if (member major-mode
               '(emacs-lisp-mode scheme-mode lisp-mode c-mode c++-mode
@@ -358,12 +284,49 @@
       (indent-region (region-beginning) (region-end) nil)))
 
 
+;; Заменить окончания строк в формате DOS ^M на Unix
+(defun dos-to-unix ()
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (search-forward "\r" nil t)
+      (replace-match ""))))
+
+;; Удалить пробельные символы в конце строк
+(defun delete-trailing-whitespaces ()
+  (interactive "*")
+  (delete-trailing-whitespace))
+
+;; Поиск в Google по содержимому региона
+(defun google-region (beg end)
+  "Google the selected region."
+  (interactive "r")
+  (browse-url (concat "http://www.google.com/search?ie=utf-8&oe=utf-8&q="
+                      (buffer-substring beg end))))
+
+;; Поиск в Yandex по содержимому региона
+(defun yandex-region (beg end)
+  "Google the selected region."
+  (interactive "r")
+  (browse-url (concat "http://yandex.ru/yandsearch?text="
+                      (buffer-substring beg end))))
+
+
+;; #+BEGIN_SRC #+END_SRC CODEBLOCK
+;; http://ergoemacs.org/emacs/emacs_macro_example.html
+;; http://ergoemacs.org/emacs/keyboard_shortcuts.html
+(fset 'codeblock
+      "#+BEGIN_SRC\C-m#+END_SRC\C-[OA\C-e ")
+
+(global-set-key (kbd "C-x p") 'codeblock)
+
+
 ;; ;; conkeror-browser
 ;; (eval-after-load "browse-url"
 ;;   '(defun browse-url-conkeror (url &optional new-window)
-;;      "Ask the Conkeror WWW browser to load URL."
-;;      (interactive (browse-url-interactive-arg "URL: "))
-;;      ;; URL encode any `confusing' characters in the URL. This needs to
+;;      "ask the conkeror www browser to load url."
+;;      (interactive (browse-url-interactive-arg "url: "))
+;;      ;; url encode any `confusing' characters in the url. this needs to
 ;;      ;; include at least commas; presumably also close parens and dollars.
 ;;      (while (string-match "[,)$]" url)
 ;;        (setq url (replace-match
@@ -379,26 +342,105 @@
 ;; (setq browse-url-browser-function 'browse-url-conkeror)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;; EXTENSIONS ;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; UNIQUIFY
-;; http://emacswiki.org/emacs/uniquify
-(require 'uniquify)
-;; (setq uniquify-buffer-name-style t)
-(setq uniquify-buffer-name-style 'reverse)
-(setq uniquify-separator "/")
-(setq uniquify-after-kill-buffer-p t)
-(setq uniquify-ignore-buffers-re "^\\*")
-(setq post-forward-angle-brackets 'post-forward-angle-brackets)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; EXTENSIONS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(autoload 'forth-mode "gforth.el")
-(autoload 'forth-block-mode "gforth.el")
-(add-to-list 'auto-mode-alist '("\\.fs$" . forth-mode))
-(add-to-list 'auto-mode-alist '("\\.f$" . forth-mode))
+
+
+(add-to-list 'load-path "~/.emacs.d/lisp")
+
+
+;; MELPA
+;; Посмотреть установленные пакеты можно в переменной С-h v package-activated-list
+;; Или вызвав эту функцию:
+(defun list-packages-and-versions ()
+  "Returns a list of all installed packages and their versions"
+  (mapcar
+   (lambda (pkg)
+     `(,pkg ,(package-desc-version
+              (cadr (assq pkg package-alist)))))
+   package-activated-list))
+;; (list-packages-and-versions) =>
+;; ((ace-jump-mode (20140616 815))
+;;  (color-theme-modern (20161219 1144))
+;;  (gnuplot (20141231 2137))
+;;  (gnuplot-mode (20171013 1616))
+;;  (org-present (20180303 2330))
+;;  (org (9 2 6))
+;;  (unfill (20170723 146))
+;;  (wanderlust (20190812 818))
+;;  (semi (20190708 1302))
+;;  (flim (20190526 1034))
+;;  (apel (20190407 1056)))
+
+;; For important compatibility libraries like cl-lib
+(when (< emacs-major-version 24)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+  (package-initialize) ;; You might already have this line
+  (add-to-list 'package-archives
+               '("melpa-stable" . "https://stable.melpa.org/packages/") t))
+
+;; load emacs 24's package system. Add MELPA repository.
+(when (>= emacs-major-version 24)
+  (require 'package)
+  ;; (add-to-list 'package-archives
+  ;;              '("melpa" . "https://melpa.org/packages/"))
+  (add-to-list
+   'package-archives
+   ;; many packages won't show if using stable
+   ;; '("melpa" . "http://stable.melpa.org/packages/")
+   '("melpa" . "http://melpa.milkbox.net/packages/")
+   t))
+
+
+
+;; SBCL
+
+(setq inferior-lisp-program "sbcl --dynamic-space-size 2048")
+(setq slime-lisp-implementations '((sbcl ("sbcl"))))
+(setq slime-startup-animation nil)
+;; Путь к локльной копии Common Lisp Hyper Specifications.
+;; Если его не задавать - справка по функциям будет ходить в интернет
+;; (setq common-lisp-hyperspec-root "file:///Users/lisp/HyperSpec")
+;; Но есть способ оптимальнее:
+;; - загрузить CLHS через Quicklisp в repl: (ql:quickload "clhs")
+;; - запустить в repl: (clhs:print-emacs-setup-form):
+;;   Он попросит выполнить:
+;;   - (clhs:install-clhs-use-local)
+;;   - (clhs:print-emacs-setup-form)
+;;     И мы можем поместить сюда настройку:
+(load "/home/rigidus/quicklisp/clhs-use-local.el" t)
+;; Теперь "C-c C-d h" runs the command slime-documentation-lookup
+;; И будет ходить за этим в локальную копию CLHS, что очень помогает
+;; при отсутсвии подключения к интернету
+
+;; SLIME
+;; Путь к slime
+;; (add-to-list 'load-path "~/quicklisp/dists/quicklisp/software/slime-2.4")
+;; (require 'slime)
+;;(setq slime-net-coding-system 'utf-8-unix)
+
+;; SLIME-FANCY is a meta package which loads a combination
+;; of the most popular packages.
+(slime-setup '(slime-fancy slime-asdf))
+;; https://www.common-lisp.net/project/slime/doc/html/Contributed-Packages.html
+
+;; Эта настройка позволяет SWANK попросить SLIME выполнить код в контексте EMACS
+;; (setq slime-enable-evaluate-in-emacs t)
+;; например так:
+;; swank:invoke-slime-debugger
+;; (let ((*emacs-connection* ...)) (eval-in-emacs '(+ 1 2)))
+
+;; Отступ при переводе строки в lisp-mode
+(add-hook 'lisp-mode-hook
+		  '(lambda ()
+             (local-set-key (kbd "RET") 'newline-and-indent)))
+
 
 ;; IBUFFER - Более удобный переключатель буферов
+
 (require 'ibuffer)
 (global-set-key [?\C-x ?\C-b] 'ibuffer)
 ;; Пропускать буферы с именем, удовлетворяющим регулярному выражению
@@ -407,6 +449,9 @@
 ;; Сортировать буферы по теме
 (setq ibuffer-saved-filter-groups
       (quote (("default"
+               ("ERC"    (or
+                             (mode . ERC-List-mode)
+                             (mode . erc-mode)))
                ("CHAT"      (or
                              (name . "^\\*---.*")))
                ("JABBER"    (or
@@ -415,18 +460,21 @@
                              (name . "^\\*===.*")))
                ("ERLANG"    (or
                              (mode . erlang-mode)))
+               ("MAKEFILE"  (or
+                             (name . "^Makefile.*")
+                             (mode . GNUmakefile-mode)))
                ("ASM"       (or
                              (mode . asm-mode)))
                ("FORTH"     (or
                              (mode . forth-mode)))
                ("C/CPP"     (or
-                              (mode . c-mode)
-                              (mode . c++-mode)))
+                             (mode . c-mode)
+                             (mode . c++-mode)))
                ("CSS"       (or
-                              (mode . css-mode)))
+                             (mode . css-mode)))
                ("HTML"      (or
-                              (mode . html-mode)
-                              (mode . closure-template-html-mode)))
+                             (mode . html-mode)
+                             (mode . closure-template-html-mode)))
                ("JS"        (or
                              (mode . espresso-mode)))
                ("ELISP"     (or
@@ -443,12 +491,12 @@
                ("ORG"       (or
                              (mode . org-mode)))
                ("SYS"       (or
-                              (mode . dired-mode)
-                              (name . "^\\*scratch\\*$")
-                              (name . "^\\*Messages\\*$")))
+                             (mode . dired-mode)
+                             (name . "^\\*scratch\\*$")
+                             (name . "^\\*Messages\\*$")))
                ("SHELL"     (or
-                              (name . "^\\*Shell\\*$")
-                              (name . "^\\*grep\\*$")))
+                             (name . "^\\*Shell\\*$")
+                             (name . "^\\*grep\\*$")))
                ))))
 
 (add-hook 'ibuffer-mode-hook
@@ -463,201 +511,28 @@
               (mark " " (name 16 -1) " " filename))))
 
 
-;; ;; IDO-MODE
-;; ;; C-s/C-r перебирают варианты
-;; ;; M-p/M-n проходят по истории историю.
-;; (require 'ido)
-;; (ido-mode t)
-;; (setq ido-enable-flex-matching t)
-
-;; ISWITCHB http://www.emacswiki.org/emacs/IswitchBuffers
-(require 'iswitchb)
-(defun iswitchb-local-keys ()
-  (mapc (lambda (K)
-	      (let* ((key (car K)) (fun (cdr K)))
-            (define-key iswitchb-mode-map (edmacro-parse-keys key) fun)))
-	    '(("<right>" . iswitchb-next-match)
-	      ("<left>"  . iswitchb-prev-match)
-	      ("<up>"    . ignore             )
-	      ("<down>"  . ignore             ))))
-(add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
-;; http://www.emacswiki.org/emacs/IswitchBuffers
-(defadvice iswitchb-kill-buffer (after rescan-after-kill activate)
-  "*Regenerate the list of matching buffer names after a kill.
-    Necessary if using `uniquify' with `uniquify-after-kill-buffer-p'
-    set to non-nil."
-  (setq iswitchb-buflist iswitchb-matches)
-  (iswitchb-rescan))
-;; http://www.emacswiki.org/emacs/IswitchBuffers
-(defun iswitchb-rescan ()
-  "*Regenerate the list of matching buffer names."
-  (interactive)
-  (iswitchb-make-buflist iswitchb-default)
-  (setq iswitchb-rescan t))
-
-
-
-;; HTMLIZE
-(require 'htmlize)
-
-;; DIRED-SINGLE
-(require 'dired-single)
-
-(defun my-dired-init ()
-  "Bunch of stuff to run for dired, either immediately or when it's
-        loaded."
-  ;; <add other stuff here>
-  (define-key dired-mode-map [return] 'joc-dired-single-buffer)
-  (define-key dired-mode-map [mouse-1] 'joc-dired-single-buffer-mouse)
-  (define-key dired-mode-map "^"
-    (function
-     (lambda nil (interactive) (joc-dired-single-buffer "..")))))
-
-;; if dired's already loaded, then the keymap will be bound
-(if (boundp 'dired-mode-map)
-    ;; we're good to go; just add our bindings
-    (my-dired-init)
-  ;; it's not loaded yet, so add our bindings to the load-hook
-  (add-hook 'dired-load-hook 'my-dired-init))
-
-(global-set-key [(f5)] 'joc-dired-magic-buffer)
-(global-set-key [(control f5)] (function (lambda nil (interactive) (joc-dired-magic-buffer default-directory))))
-(global-set-key [(shift f5)] (function (lambda nil (interactive) (message "Current directory is: %s" default-directory))))
-(global-set-key [(meta f5)] 'joc-dired-toggle-buffer-name)
-
-;; http://www.emacswiki.org/emacs/DiredReuseDirectoryBuffer
-(put 'dired-find-alternate-file 'disabled nil)
-
-
-;; FULLSCREEN
-(require 'fullscreen)
-(global-set-key (kbd "C-c f") 'fullscreen-toggle)
-
-
-;; COLOR-THEME
-;; http://habrahabr.ru/blogs/emacs/25854/
-;; http://download.gna.org/color-theme/
-(require 'color-theme) 				; подгружаем "модуль раскраски"
-;; выбрать конкретную схему
-;; ;; universal
-;; (color-theme-tty-dark)
-;; (color-theme-ld-dark)
-;; ;; night
-;; (color-theme-charcoal-black)
-;; (color-theme-gray30)
-;; ;; evil night
-;; (color-theme-arjen)
-;; (color-theme-billw)
-;; (color-theme-clarity)
-;; (color-theme-dark-green)
-;; (color-theme-dark-info)
-;; (color-theme-clarity)
-;; (color-theme-dark-laptop)
-;; ;; sleep night (low contrast)
-;; (color-theme-calm-forest)
-;; (color-theme-euphoria)
-;; (color-theme-fischmeister)
-;; (color-theme-goldenrod)
-;; (color-theme-lawrence) ;; real matrix in gui
-;; ;; only gui
-;; (color-theme-shaman)
-
-
 ;; HL-P
+
 ;; http://nschum.de/src/emacs/highlight-parentheses/highlight-parentheses.el
 (require 'highlight-parentheses)
 ;; (add-hook 'lisp-mode-hook (highlight-parentheses-mode))
 (define-globalized-minor-mode global-highlight-parentheses-mode
-	highlight-parentheses-mode highlight-parentheses-mode)
+  highlight-parentheses-mode highlight-parentheses-mode)
 (setq hl-paren-colors
-'("#FF0000" "#FFBF00" "#1FFF00" "#009EFF" "#2100FF" "gray10" "gray70" "gray90"))
+      '("#FF0000" "#FFBF00" "#1FFF00" "#009EFF" "#2100FF" "gray10" "gray70" "gray90"))
 (global-highlight-parentheses-mode)
 
 
-;; LJ-UPDATE
-(add-to-list 'load-path "~/.emacs.d/ljupdate")
-(require 'ljupdate)
+;; FORTH
 
-;; CLOSURE-TEMPLATE-HTML-MODE
-;; http://github.com/archimag/cl-closure-template/raw/master/closure-template-html-mode.el
-(require 'closure-template-html-mode)
+(autoload 'forth-mode "gforth.el")
+(autoload 'forth-block-mode "gforth.el")
+(add-to-list 'auto-mode-alist '("\\.fs$" . forth-mode))
+(add-to-list 'auto-mode-alist '("\\.f$" . forth-mode))
 
-;; PHP - HTML - JAVASCRIPT
-;; http://php-mode.svn.sourceforge.net/svnroot/php-mode/tags/php-mode-1.5.0/php-mode.el
-(add-to-list 'load-path "~/.emacs.d/php-mode")
-(require 'php-mode) 						; подгружаем php режим
-;; http://www.stcamp.net/share/php-electric.el
-(require 'php-electric)						; режим autocompletion конструкций языка
-;; http://download-mirror.savannah.gnu.org/releases/espresso/espresso.el
-(autoload #'espresso-mode "espresso" "Start espresso-mode" t)
-(add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . espresso-mode))
-;; (add-hook 'espresso-mode-hook 'moz-minor-mode)
-;; (add-hook 'espresso-mode-hook 'esk-paredit-nonlisp)
-;; (add-hook 'espresso-mode-hook 'run-coding-hook)
-(setq espresso-indent-level 2)
-;; If you prefer js2-mode, use this instead:
-;; (add-to-list 'auto-mode-alist '("\\.js$" . espresso-mode))
-;; (eval-after-load 'espresso
-;;   '(progn ;; fixes problem with pretty function font-lock
-;;           (define-key espresso-mode-map (kbd ",") 'self-insert-command)
-;;           (font-lock-add-keywords
-;;            'espresso-mode `(("\\(function *\\)("
-;;                              (0 (progn (compose-region (match-beginning 1)
-;;                                                        (match-end 1) "ƒ")
-;;                                        nil)))))))
-
-;; ORG-MODE TODO|VRFY font-lock-faces
-(font-lock-add-keywords 'org-mode
-                        '(("\\(\\[TODO:[a-z]\\{3,\\}\\]\\)" . 'font-lock-warning-face)
-                          ("\\(\\[COMMENT:[a-z]\\{3,\\}\\]\\)" . 'font-lock-keyword-face)
-                          ;; ("\\(comment\\)" . 'font-lock-comment-face)
-                          ("\\(\\[VRFY:[a-z]\\{3,\\}\\]\\)" . 'font-lock-function-name-face)
-                          ;; ("\\(variable-name\\)" . 'font-lock-variable-name-face)
-                          ;; ("\\(keyword\\)" . 'font-lock-keyword-face)
-                          ;; ("\\(comment\\)" . 'font-lock-comment-face)
-                          ;; ("\\(type\\)" . 'font-lock-type-face)
-                          ;; ("\\(constant\\)" . 'font-lock-constant-face)
-                          ;; ("\\(builtin\\)" . 'font-lock-builtin-face)
-                          ;; ("\\(string\\)" . 'font-lock-string-face)
-                          ;; ("\\(function-name\\)" . 'font-lock-function-name-face)
-                          ))
-
-;; SGML-MODE
-
-(load "sgml-mode")
-(add-to-list 'auto-mode-alist '("\\.html$" . sgml-mode))
-(add-to-list 'auto-mode-alist '("\\.phtml$" . sgml-mode))
-(add-to-list 'auto-mode-alist '("\\.xml$" . sgml-mode))
-;;sgml vars
-(setq sgml-balanced-tag-edit t)
-(setq sgml-auto-insert-required-elements t)
-(setq sgml-insert-defaulted-attributes t)
-(setq sgml-tag-region-if-active t)
-(setq sgml-insert-element t)
-(setq sgml-set-face t)
-(setq sgml-live-element-indicator t)
-
-(setq case-fold-search t)
-(setq read-file-name-completion-ignore-case t)
-(show-paren-mode t)
-(put 'upcase-region 'disabled nil)
-
-
-
-;; Далее, мой любимый «режим сокращений». Возможно не поддерживается автором?
-;; С его помощью можно уменьшить количество ударов по кнопкам клавиатуры.
-;; http://www.bloomington.in.us/~brutt/msf-abbrev.html
-(require 'msf-abbrev) 						; подгружаем "режим сокращений"
-(setq-default abbrev-mode t) 				; ставим его по дефолту
-(setq save-abbrevs nil) 					; не надо записывать в дефолтный каталог наши сокращения
-(setq msf-abbrev-root "~/.emacs.d/abb") 	; надо записывать их сюда
-(global-set-key 							; (Ctrl-c a) для создания нового сокращения
-	(kbd "C-c a")
-	'msf-abbrev-define-new-abbrev-this-mode)
-(msf-abbrev-load) 							; пусть этот режим будет всегда :)
 
 ;; JABBER
+
 (add-to-list 'load-path "~/.emacs.d/emacs-jabber")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/emacs-jabber")
 (require 'jabber)
@@ -683,13 +558,260 @@
 
 ;; M-x jabber-edit-bookmarks - для редактирвания закладок
 
+;; Специальные настройки jabber-аккаунтов
+(load-file "~/.emacs.d/lisp/jabber-account.el")
+
+
+;; ACE-JUMP-MODE
+
+
+;; https://www.emacswiki.org/emacs/AceJump
+;; https://www.youtube.com/watch?v=UZkpmegySnc
+;; https://github.com/winterTTr/ace-jump-mode
+(autoload
+  'ace-jump-mode
+  "ace-jump-mode"
+  "Emacs quick move minor mode"
+  t)
+;; you can select the key you prefer to
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+;;
+;; enable a more powerful jump back function from ace jump mode
+;;
+(autoload
+  'ace-jump-mode-pop-mark
+  "ace-jump-mode"
+  "Ace jump back:-)"
+  t)
+(eval-after-load "ace-jump-mode"
+  '(ace-jump-mode-enable-mark-sync))
+(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
+
+;;If you use viper mode :
+;; (define-key viper-vi-global-user-map (kbd "SPC") 'ace-jump-mode)
+;;If you use evil
+;; (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
+
+;; https://emacs.stackexchange.com/questions/5749/using-ace-jump-mode-inside-shell-in-emacs
+(defun my-shell-hook ()
+  (define-key shell-mode-map (kbd "C-c SPC") 'ace-jump-mode))
+(add-hook 'shell-mode-hook 'my-shell-hook)
+(defun my-org-mode-hook ()
+  (define-key org-mode-map (kbd "C-c SPC") 'ace-jump-mode))
+(add-hook 'org-mode-hook 'my-org-mode-hook)
+
+
+
+;; ACE-MC (ace & multiple-cursors)
+
+;; ace-mc-add-multiple-cursors запрашивает «Query Char» для первого
+;; символа слова, почти так же, как это делает Ace Jump.  Фактически,
+;; ace-mc-add-multiple-cursors принимает аналогичные префиксные
+;; аргументы, что и ace-jump-mode. Поэтому, если вы передадите ему
+;; один префикс C-u, он активирует режим ace-jump-char-char,
+;; а с C-u C-u активирует режим ace-jump-line-mode.
+
+;; После того, как вы введете запрос char, вам будет предложено
+;; указать места для добавления курсоров в режиме нескольких
+;; курсоров. Если курсор уже находится в этом месте, он будет
+;; удален. Вам будет постоянно предлагаться добавлять или удалять
+;; курсоры в других местах, пока вы не выйдете из него нажатием
+;; клавиши «Ввод», «Esc» или чего-либо еще, кроме буквенных.
+
+;; Когда у вас есть активный регион, запрос «char char» не
+;; запрашивается. Вместо этого вы просто получаете список
+;; местоположений, которые соответствуют тексту в вашем регионе.
+
+;; ace-mc-add-single-cursor делает то же самое, что
+;; ace-mc-add-multiple-cursors, только без зацикливания.
+
+(global-set-key (kbd "M-]") 'ace-mc-add-multiple-cursors)
+(global-set-key (kbd "C-M-]") 'ace-mc-add-single-cursor)
+
+
+;; UNIQUIFY
+;; http://emacswiki.org/emacs/uniquify
+(require 'uniquify)
+;; (setq uniquify-buffer-name-style t)
+(setq uniquify-buffer-name-style 'reverse)
+(setq uniquify-separator "/")
+(setq uniquify-after-kill-buffer-p t)
+(setq uniquify-ignore-buffers-re "^\\*")
+(setq post-forward-angle-brackets 'post-forward-angle-brackets)
+
+
+;; FULLSCREEN
+(require 'fullscreen)
+
+;; COLOR-THEME-MODERN
+(add-to-list
+ 'custom-theme-load-path
+ (file-name-as-directory "~/.emacs.d/elpa/color-theme-modern-20161219.1144"))
+;;
+(load-theme 'comidia t t)
+(enable-theme 'comidia)
+;;
+;; (load-theme 'solarized t)
+
+
+
+;; DICTEM
+
+;; Бегаете по переводимому тексту. На незнакомом слове нажали C-c d
+;; и в отдельном буфере в отдельном окне отображается перевод. Между
+;; тем фокус остается там же где и был, но некотором
+;; слове. Переместились к следующему непонятному слову, нажали C-c
+;; d, и в уже открытом окне с буфером появится перевод нового слова.
+
+(when (executable-find "dictd")
+  ;; check dictd is available
+  (add-to-list 'load-path "~/.emacs.d/dictem-1.0.4")
+  (require 'dictem)
+
+  ;; (setq dictem-server "localhost")
+
+  (setq dictem-user-databases-alist
+        '(("_en-ru"  . ("mueller-base" "mueller-dict"
+                        "mueller-geo" "mueller-names"
+                        "mueller-abbrev"))
+          ))
+
+  (setq dictem-use-existing-buffer t)
+  (setq dictem-use-user-databases-only t)
+
+  (setq dictem-port "2628")
+  (dictem-initialize)
+
+  ;; redefined function
+  (defun dictem-ensure-buffer ()
+    "If current buffer is not a dictem buffer, create a new one."
+    (let* ((dictem-buffer (get-buffer-create dictem-buffer-name))
+           (dictem-window (get-buffer-window dictem-buffer))
+           (window-configuration (current-window-configuration))
+           (selected-window (frame-selected-window)))
+      (if (window-live-p dictem-window)
+          (select-window dictem-window)
+        (switch-to-buffer-other-window dictem-buffer))
+
+      (if (dictem-mode-p)
+          (progn
+            (if dictem-use-content-history
+                (setq dictem-content-history
+                      (cons (list (buffer-substring
+                                   (point-min) (point-max))
+                                  (point)) dictem-content-history)))
+            (setq buffer-read-only nil)
+            (erase-buffer))
+        (progn
+          (dictem-mode)
+
+          (make-local-variable 'dictem-window-configuration)
+          (make-local-variable 'dictem-selected-window)
+          (make-local-variable 'dictem-content-history)
+          (setq dictem-window-configuration window-configuration)
+          (setq dictem-selected-window selected-window)))))
+
+  (add-hook 'dictem-postprocess-match-hook
+            'dictem-postprocess-match)
+
+  (add-hook 'dictem-postprocess-definition-hook
+            'dictem-postprocess-definition-separator)
+
+  (add-hook 'dictem-postprocess-definition-hook
+            'dictem-postprocess-definition-hyperlinks)
+
+  (add-hook 'dictem-postprocess-show-info-hook
+            'dictem-postprocess-definition-hyperlinks)
+
+  (add-hook 'dictem-postprocess-definition-hook
+            'dictem-postprocess-each-definition)
+
+  (define-key dictem-mode-map [tab] 'dictem-next-link)
+  (define-key dictem-mode-map [(backtab)] 'dictem-previous-link)
+
+  ;; http://paste.lisp.org/display/89086
+  (defun dictem-run-define-at-point-with-query ()
+    "Query the default dict server with the word read in within this function."
+    (interactive)
+    (let* ((default-word (thing-at-point 'symbol))
+           (default-prompt (concat "Lookup Word "
+                                   (if default-word
+                                       (concat "(" default-word ")") nil)
+                                   ": "))
+           (dictem-query
+            (funcall #'(lambda (str)
+                         "Remove Whitespace from beginning and end of a string."
+                         (replace-regexp-in-string "^[ \n\t]*\\(.*?\\)[ \n\t]*$"
+                                                   "\\1"
+                                                   str))
+                     (read-string default-prompt nil nil default-word))))
+      (if (= (length dictem-query) 0) nil
+        (dictem-run 'dictem-base-search "_en-ru" dictem-query "."))))
+
+  (defun dictem-run-define-at-point ()
+    "dictem look up for thing at point"
+    (interactive)
+    (let* ((default-word (thing-at-point 'symbol))
+           (selected-window (frame-selected-window))
+           (dictem-query
+            (funcall #'(lambda (str)
+                         "Remove Whitespace from beginning and end of a string."
+                         (replace-regexp-in-string "^[ \n\t]*\\(.*?\\)[ \n\t]*$"
+                                                   "\\1"
+                                                   str))
+                     default-word)))
+      (if (= (length dictem-query) 0)
+          nil
+        (progn
+          (dictem-run 'dictem-base-search "_en-ru" dictem-query ".")
+          (select-window selected-window)))))
+
+  (global-set-key "\C-cd" 'dictem-run-define-at-point)
+  (global-set-key "\C-cz" 'dictem-run-define-at-point-with-query)
+
+  ) ; end of (when (executable-find "dictd") ...)
+
+
+;; UNFILL (from melpa - not need require, only for note)
+;; (require 'unfill)
+;; Usage
+;; M-x unfill-region
+;; M-x unfill-paragraph
+;; M-x unfill-toggle
+
+
+;; EMMC (not works from meplpa yet)
+;; http://www.gnu.org/software/emms/quickstart.html
+;; (require 'emms-setup)
+;; (emms-standard)
+;; (emms-default-players)
+;; (setq emms-player-list '(
+;;                          ;; emms-player-mpg321
+;;                          ;; emms-player-ogg123
+;;                          emms-player-mplayer))
+;; (emms-standard)
+;; (emms-default-players)
+;; (require 'emms-player-simple)
+;; (setq exec-path (append exec-path '("/usr/local/bin")))
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/emms/lisp")
+;; (require 'emms-setup)
+;; (require 'emms-player-mplayer)
+;; (emms-standard)
+;; (emms-default-players)
+;; (define-emms-simple-player mplayer '(file url)
+;;   (regexp-opt '(".ogg" ".mp3" ".wav" ".mpg" ".mpeg" ".wmv" ".wma"
+;;                 ".mov" ".avi" ".divx" ".ogm" ".asf" ".mkv" "http://" "mms://"
+;;                 ".rm" ".rmvb" ".mp4" ".flac" ".vob" ".m4a" ".flv" ".ogv" ".pls"))
+;;         "mplayer" "-slave" "-quiet" "-really-quiet" "-fullscreen")
+;; (require 'emms)
+;; (emms-all)
+;; (emms-default-players)
+
+
 
 ;; WANDERLUST
-;; http://www.gohome.org/wl/doc/wl_95.html#SEC95
 ;; http://box.matto.nl/emacsgmail.html
 ;; http://www.emacswiki.org/emacs/hgw-init-wl.el
-
-(add-to-list 'load-path "~/.emacs.d/el-get/wanderlust/site-lisp/wl")
 
 (autoload 'wl "wl" "Wanderlust" t)
 (autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
@@ -807,216 +929,68 @@
       'mail-send-hook))
 
 
-;; MAILCRYPT
-;; Commands:
-;;   M-x mc-encrypt.
-;;   M-x mc-wl-decrypt-message
-;; http://box.matto.nl/wanderlustgpg.html
-;; (load-library "mailcrypt") ; provides "mc-setversion"
-;; (mc-setversion "gpg")    ; for PGP 2.6 (default); also "5.0" and "gpg"
+;; ERC
+(require 'erc)
 
-;; (autoload 'mc-install-write-mode "mailcrypt" nil t)
-;; (autoload 'mc-install-read-mode "mailcrypt" nil t)
-;; (add-hook 'mail-mode-hook 'mc-install-write-mode)
+;; загружаем авто-подключение к каналам, и задаем список каналов для
+;; подключения
+(erc-autojoin-mode t)
 
-;; (require 'mailcrypt)
-;; (add-hook 'wl-summary-mode-hook 'mc-install-read-mode)
-;; (add-hook 'wl-mail-setup-hook 'mc-install-write-mode)
-
-;; (defun mc-wl-verify-signature ()
-;;   (interactive)
-;;   (save-window-excursion
-;;     (wl-summary-jump-to-current-message)
-;;     (mc-verify)))
-
-;; (defun mc-wl-decrypt-message ()
-;;   (interactive)
-;;   (save-window-excursion
-;;     (wl-summary-jump-to-current-message)
-;;     (let ((inhibit-read-only t))
-;;       (mc-decrypt))))
-
-;; (eval-after-load "mailcrypt"
-;;   '(setq mc-modes-alist
-;;        (append
-;;         (quote
-;;          ((wl-draft-mode (encrypt . mc-encrypt-message)
-;;             (sign . mc-sign-message))
-;;           (wl-summary-mode (decrypt . mc-wl-decrypt-message)
-;;             (verify . mc-wl-verify-signature))))
-;;         mc-modes-alist)))
-
-;; GOTOLINE
-(global-set-key [?\M-g] 'goto-line)
-(global-set-key (kbd "\e\eg") 'goto-line)
+(setq erc-autojoin-channels-alist
+      '(("irc.freenode.net" "#lisp" "#emacs")))
 
 
+(require 'erc-fill)
+(erc-fill-mode t)
 
-;; DICTEM
-;; http://filonenko-mikhail.blogspot.com/2012/02/emacs.html
-;; Бегаете по переводимому тексту. На незнакомом слове нажали C-c d
-;; и в отдельном буфере в отдельном окне отображается перевод. Между
-;; тем фокус остается там же где и был, но некотором
-;; слове. Переместились к следующему непонятному слову, нажали C-c
-;; d, и в уже открытом окне с буфером появится перевод нового слова.
+;; задаем персональные данные, хотя их можно задать и через
+;; M-x customize-group erc
+(setq erc-user-full-name "rigidus")
+(setq erc-email-userid "avenger-f@yandex.ru")
 
-(add-to-list 'load-path "~/.emacs.d/dictem-1.0.2")
-(require 'dictem)
+;; часть относящаяся к логированию переговоров на каналах
+;; нужно ли вставлять старый лог в окно канала?
+(setq erc-log-insert-log-on-open nil)
 
-(setq dictem-use-existing-buffer t)
+;; логировать переговоры на каналах?
+(setq erc-log-channels t)
 
-(setq dictem-use-user-databases-only t)
+;; где будут храниться логи
+(setq erc-log-channels-directory "~/.irclogs/")
 
-;;; redefined function
-(defun dictem-ensure-buffer ()
-  "If current buffer is not a dictem buffer, create a new one."
-  (let* ((dictem-buffer (get-buffer-create dictem-buffer-name))
-         (dictem-window (get-buffer-window dictem-buffer))
-         (window-configuration (current-window-configuration))
-         (selected-window (frame-selected-window)))
-    (if (window-live-p dictem-window)
-        (select-window dictem-window)
-      (switch-to-buffer-other-window dictem-buffer))
+;; сохранять ли логи при возникновении PART
+(setq erc-save-buffer-on-part t)
 
-    (if (dictem-mode-p)
-        (progn
-          (if dictem-use-content-history
-              (setq dictem-content-history
-                    (cons (list (buffer-substring
-                                 (point-min) (point-max))
-                                (point)) dictem-content-history)))
-          (setq buffer-read-only nil)
-          (erase-buffer))
-      (progn
-        (dictem-mode)
+;; убирать или нет временные отметки?
+(setq erc-hide-timestamps nil)
 
-        (make-local-variable 'dictem-window-configuration)
-        (make-local-variable 'dictem-selected-window)
-        (make-local-variable 'dictem-content-history)
-        (setq dictem-window-configuration window-configuration)
-        (setq dictem-selected-window selected-window)))))
-
-(setq dictem-server "dictd.xdsl.by")
-(setq dictem-exclude-databases '("ger-" "-ger" "fra-" "-fra"))
-
-(dictem-initialize)
-
-(add-hook 'dictem-postprocess-match-hook
-          'dictem-postprocess-match)
-
-(add-hook 'dictem-postprocess-definition-hook
-          'dictem-postprocess-definition-separator)
-
-(add-hook 'dictem-postprocess-definition-hook
-          'dictem-postprocess-definition-hyperlinks)
-
-(add-hook 'dictem-postprocess-show-info-hook
-          'dictem-postprocess-definition-hyperlinks)
-
-(add-hook 'dictem-postprocess-definition-hook
-          'dictem-postprocess-each-definition)
-
-(setq dictem-user-databases-alist
-      '(("_en-ru"  . ("mueller7" "korolew_en-ru" "en-ru")); "dict://dict.org:2628/web1913"))
-        ("_en-en"  . ("foldoc" "gcide" "wn"))
-        ("_ru-ru"  . ("beslov" "ushakov" "ozhegov" "brok_and_efr"))
-        ("_ru-en" . ("ru-en"))
-        ("_unidoc" . ("susv3" "man" "info" "howto" "rfc"))
-        ))
-
-(define-key dictem-mode-map [tab] 'dictem-next-link)
-(define-key dictem-mode-map [(backtab)] 'dictem-previous-link)
-
-;;; http://paste.lisp.org/display/89086
-(defun dictem-run-define-at-point-with-query ()
-  "Query the default dict server with the word read in within this function."
-  (interactive)
-  (let* ((default-word (thing-at-point 'symbol))
-         (default-prompt (concat "Lookup Word "
-                                 (if default-word
-                                     (concat "(" default-word ")") nil)
-                                 ": "))
-         (dictem-query
-          (funcall #'(lambda (str)
-                       "Remove Whitespace from beginning and end of a string."
-                       (replace-regexp-in-string "^[ \n\t]*\\(.*?\\)[ \n\t]*$"
-                                                 "\\1"
-                                                 str))
-                   (read-string default-prompt nil nil default-word))))
-    (if (= (length dictem-query) 0) nil
-      (dictem-run 'dictem-base-search "_en-ru" dictem-query "."))))
-
-(defun dictem-run-define-at-point ()
-  "dictem look up for thing at point"
-  (interactive)
-  (let* ((default-word (thing-at-point 'symbol))
-         (selected-window (frame-selected-window))
-         (dictem-query
-          (funcall #'(lambda (str)
-                       "Remove Whitespace from beginning and end of a string."
-                       (replace-regexp-in-string "^[ \n\t]*\\(.*?\\)[ \n\t]*$"
-                                                 "\\1"
-                                                 str))
-                   default-word)))
-    (if (= (length dictem-query) 0)
-        nil
-      (progn
-        (dictem-run 'dictem-base-search "_en-ru" dictem-query ".")
-        (select-window selected-window)))))
-
-(global-set-key "\C-cd" 'dictem-run-define-at-point)
-(global-set-key "\C-cz" 'dictem-run-define-at-point-with-query)
+;; максимальный размер буфера канала
+(setq erc-max-buffer-size 500000)
 
 
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;; UTILITES ;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;; Заменить окончания строк в формате DOS ^M на Unix
-(defun dos-to-unix ()
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (search-forward "\r" nil t)
-      (replace-match ""))))
-
-;; Удалить пробельные символы в конце строк
-(defun delete-trailing-whitespaces ()
-  (interactive "*")
-  (delete-trailing-whitespace))
-
-;; Поиск в Google по содержимому региона
-(defun google-region (beg end)
-  "Google the selected region."
-  (interactive "r")
-  (browse-url (concat "http://www.google.com/search?ie=utf-8&oe=utf-8&q="
-                      (buffer-substring beg end))))
-
-;; Поиск в Yandex по содержимому региона
-(defun yandex-region (beg end)
-  "Google the selected region."
-  (interactive "r")
-  (browse-url (concat "http://yandex.ru/yandsearch?text="
-                      (buffer-substring beg end))))
-
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; OrgMode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
 ;; http://orgmode.org/manual/Installation.html
-(add-to-list 'load-path "~/repo/org-mode/lisp")
-(require 'org-install)
-;; Включение автоматического переключения в Org Mode при открытии файла с расширением .org:
+(add-to-list 'load-path "~/src/org-mode/lisp")
+(add-to-list 'load-path "~/src/org-mode/contrib/lisp" t)
+
+;; Переключаться автоматически в org-mode при открытии файла с расширением .org:
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
+
 ;; Включение fill-column для org-mode
 (add-hook 'org-mode-hook (lambda () (setq fill-column 87)))
+
 ;; Задание цепочек ключевых слов (переключение между словами клавишами Shift + Right или + Left с курсором на заголовке). "|" отмечает границу, если заголовок в статусе после этого разделителя, то он "выполнен", это влияет на планирование и отображение в Agenda Views:
 (setq org-todo-keywords '((sequence "TODO(t)" "START(s)" "MEET(m)" "CALL(c)" "DELEGATED(d)" "WAIT(w)" "|" "CANCEL(r)"  "DONE(f)")))
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+
 ;; Задание произвольного начертания ключевым словам:
 (setq org-todo-keyword-faces
       '(("TODO" . (:foreground "red" :weight bold))
@@ -1026,35 +1000,29 @@
         ("DELEGATED" . (:foreground "white" :weight bold))
         ("WAIT" . (:foreground "black" :weight bold))
         ("CANCEL" . (:foreground "violet" :weight bold))
-        ("DONE" . (:foreground "green" :weight bold)))
-      )
+        ("DONE" . (:foreground "green" :weight bold))))
+
+;; ORG-MODE TODO|VRFY font-lock-faces
+(font-lock-add-keywords 'org-mode
+                        '(("\\(\\[TODO:[a-z]\\{3,\\}\\]\\)" . 'font-lock-warning-face)
+                          ("\\(\\[COMMENT:[a-z]\\{3,\\}\\]\\)" . 'font-lock-keyword-face)
+                          ;; ("\\(comment\\)" . 'font-lock-comment-face)
+                          ("\\(\\[VRFY:[a-z]\\{3,\\}\\]\\)" . 'font-lock-function-name-face)
+                          ;; ("\\(variable-name\\)" . 'font-lock-variable-name-face)
+                          ;; ("\\(keyword\\)" . 'font-lock-keyword-face)
+                          ;; ("\\(comment\\)" . 'font-lock-comment-face)
+                          ;; ("\\(type\\)" . 'font-lock-type-face)
+                          ;; ("\\(constant\\)" . 'font-lock-constant-face)
+                          ;; ("\\(builtin\\)" . 'font-lock-builtin-face)
+                          ;; ("\\(string\\)" . 'font-lock-string-face)
+                          ;; ("\\(function-name\\)" . 'font-lock-function-name-face)
+                          ))
+
 ;; Требуется для корректной работы Org Mode:
 (global-font-lock-mode 1)
-;; Настройка
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(Buffer-menu-use-frame-buffer-list nil)
- '(c-tab-always-indent nil)
- '(column-number-mode t)
- '(ecb-options-version "2.40")
- '(jabber-history-size-limit 49741824)
- '(jabber-use-global-history nil)
- '(lj-cache-login-information t)
- '(lj-default-username "rigidus")
- '(org-agenda-files nil)
- '(org-default-notes-file "~/org/notes.org")
- '(org-directory "~/org/")
- '(org-support-shift-select t)
- '(size-indication-mode t)
- '(tab-width 4))
 
-
-(add-to-list 'load-path "~/.emacs.d/contrib/emacs") ;; Путь к git
-(require 'git)
-(require 'git-blame)
+;; Показывать картинки при открытии org-файлов
+(setq org-startup-with-inline-images t)
 
 ;; (define-key mode-specific-map [?a] 'org-agenda)
 
@@ -1088,41 +1056,6 @@
 
 ;; (define-key global-map [(control meta ?r)] 'remember)
 
-;; (custom-set-variables
-;;  '(org-agenda-files (quote ("~/todo.org")))
-;;  '(org-default-notes-file "~/notes.org")
-;;  '(org-agenda-ndays 7)
-;;  '(org-deadline-warning-days 14)
-;;  '(org-agenda-show-all-dates t)
-;;  '(org-agenda-skip-deadline-if-done t)
-;;  '(org-agenda-skip-scheduled-if-done t)
-;;  '(org-agenda-start-on-weekday nil)
-;;  '(org-reverse-note-order t)
-;;  '(org-fast-tag-selection-single-key (quote expert))
-;;  '(org-agenda-custom-commands
-;;    (quote (("d" todo "DELEGATED" nil)
-;;            ("c" todo "DONE|DEFERRED|CANCELLED" nil)
-;;            ("w" todo "WAITING" nil)
-;;            ("W" agenda "" ((org-agenda-ndays 21)))
-;;            ("A" agenda ""
-;;             ((org-agenda-skip-function
-;;               (lambda nil
-;;                 (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]")))
-;;              (org-agenda-ndays 1)
-;;              (org-agenda-overriding-header "Today's Priority #A tasks: ")))
-;;            ("u" alltodo ""
-;;             ((org-agenda-skip-function
-;;               (lambda nil
-;;                 (org-agenda-skip-entry-if (quote scheduled) (quote deadline)
-;;                                           (quote regexp) "<[^>\n]+>")))
-;;              (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
-;;  '(org-remember-store-without-prompt t)
-;;  '(org-remember-templates
-;;    (quote ((116 "* TODO %?\n  %u" "~/todo.org" "Tasks")
-;;            (110 "* %u %?" "~/notes.org" "Notes"))))
-;;  '(remember-annotation-functions (quote (org-remember-annotation)))
-;;  '(remember-handler-functions (quote (org-remember-handler))))
-
 
 ;; ;; Bootstrap the Emacs environment to load literate Emacs initialization files.
 ;; ;; First, establish a root directory from which we can locate the org-mode files we need.
@@ -1140,132 +1073,25 @@
 ;; ;; Load all literate org-mode files in this directory (any org-mode files residing there)
 ;; (mapc #'org-babel-load-file (directory-files dotfiles-dir t "\\.org$"))
 
-;; (custom-set-variables
-;;  ;; custom-set-variables was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  )
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(hl-line ((t (:inherit highlight :background "khaki1")))))
-;; ;;; init.el ends here
-
-
-;; python
-;; (require 'pymacs)
-;; (pymacs-load "ropemacs" "rope-")
-
-;; python-flymake
-
-(when (load "flymake" t)
-  (defun flymake-pylint-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "epylint" (list local-file))))
-
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pylint-init)))
-
-(add-hook 'python-mode-hook 'flymake-mode)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;; CUSTOM ;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Специальные настройки jabber-аккаунтов
-(load-file "~/.emacs.d/jabber-account.el")
-
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-(put 'overwrite-mode 'disabled nil)
-
-;; http://www.emacswiki.org/emacs/MultipleModes
-(require 'multi-mode)
-
-(put 'downcase-region 'disabled nil)
-
-(put 'upcase-region 'disabled nil)
-
-;; Для широкоэкранных сплитов
-;; Split Window Preferred Function: Hide Value
-;; split-window-sensibly
-;; (setq split-width-threshold nil)
-
-
-;; ERLANG
-;; http://juravskiy.ru/?p=1152
-
-;; Erlang mode
-(setq erlang-root-dir "/usr/lib/erlang")
-(setq load-path (cons "/usr/lib/erlang/lib/tools-2.6.7/emacs" load-path))
-(setq exec-path (cons "/usr/lib/erlang/bin" exec-path))
-(setq erlang-man-root-dir "/usr/lib/erlang/man")
-(require 'erlang-start)
-;; Distel
-(add-to-list 'load-path "~/.emacs.d/share/distel/elisp")
-(require 'distel)
-(distel-setup)
-;; Some Erlang customizations
-(add-hook 'erlang-mode-hook
-(lambda ()
-    ;; when starting an Erlang shell in Emacs, with the node
- ;; short name set to vitaliy
-(setq inferior-erlang-machine-options '("-sname" "vitaliy"))
-;; add Erlang functions to an imenu menu
-(imenu-add-to-menubar "imenu")))
-;; A number of the erlang-extended-mode key bindings are useful in the
-;; shell too
-(defconst distel-shell-keys
-    '(("\C-\M-i"   erl-complete)
-    ("\M-?"      erl-complete)
-    ("\M-."      erl-find-source-under-point)
-    ("\M-,"      erl-find-source-unwind)
-    ("\M-*"      erl-find-source-unwind)
-  )
-    "Additional keys to bind when in Erlang shell.")
-
-(add-hook 'erlang-shell-mode-hook
-	  (lambda ()
-	    ;; add some Distel bindings to the Erlang shell
-	    (dolist (spec distel-shell-keys)
-	      (define-key erlang-shell-mode-map (car spec) (cadr spec)))))
-
-
-;; PARROT
-
-(load "parrot")
-(load "pasm")
-
-(add-to-list 'auto-mode-alist (cons "\\.pasm\\'" 'pasm-mode))
-
-(add-hook 'pasm-mode-hook
-          (function (lambda ()
-                      (setq indent-tabs-mode nil))))
-
 
 ;;
 ;; Org Babel
 ;;
+;; (require 'org-babel)
+;; (require 'org-babel-init)
+
+
 (require 'ob-tangle)
+
+;; ditaa
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
-;; (setq org-plantuml-jar-path "~/java/plantuml.jar")
 
 ;; gnuplot
-(el-get 'sync 'gnuplot-mode)
+;; (require 'org-babel-gnuplot)
+
+;; /usr/bin/plantuml
+(load-file "~/.emacs.d/lisp/plantuml_helpers.el")
+(setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
 
 (defun bh/display-inline-images ()
   (condition-case nil
@@ -1292,216 +1118,12 @@
          (plantuml . t)
          (latex . t))))
 
-; Do not prompt to confirm evaluation
-; This may be dangerous - make sure you understand the consequences
-; of setting this -- see the docstring for details
+;; Do not prompt to confirm evaluation
+;; This may be dangerous - make sure you understand the consequences
+;; of setting this -- see the docstring for details
 (setq org-confirm-babel-evaluate nil)
 
 
-;; Minors
-(which-function-mode)
-;; (hs-minor-mode)
-
-
-;; ;; Load CEDET.
-;; ;; See cedet/common/cedet.info for configuration details.
-;; ;; IMPORTANT: For Emacs >= 23.2, you must place this *before* any
-;; ;; CEDET component (including EIEIO) gets activated by another
-;; ;; package (Gnus, auth-source, ...).
-;; (load-file "~/.emacs.d/cedet-1.1/common/cedet.el")
-
-;; ;; Enable EDE (Project Management) features
-;; (global-ede-mode 1)
-
-;; ;; Enable EDE for a pre-existing C++ project
-;; ;; (ede-cpp-root-project "NAME" :file "~/myproject/Makefile")
-
-
-;; ;; Enabling Semantic (code-parsing, smart completion) features
-;; ;; Select one of the following:
-
-;; ;; * This enables the database and idle reparse engines
-;; (semantic-load-enable-minimum-features)
-
-;; ;; * This enables some tools useful for coding, such as summary mode,
-;; ;;   imenu support, and the semantic navigator
-;; (semantic-load-enable-code-helpers)
-
-;; ;; * This enables even more coding tools such as intellisense mode,
-;; ;;   decoration mode, and stickyfunc mode (plus regular code helpers)
-;; ;; (semantic-load-enable-gaudy-code-helpers)
-
-;; ;; * This enables the use of Exuberant ctags if you have it installed.
-;; ;;   If you use C++ templates or boost, you should NOT enable it.
-;; ;; (semantic-load-enable-all-exuberent-ctags-support)
-;; ;;   Or, use one of these two types of support.
-;; ;;   Add support for new languages only via ctags.
-;; ;; (semantic-load-enable-primary-exuberent-ctags-support)
-;; ;;   Add support for using ctags as a backup parser.
-;; ;; (semantic-load-enable-secondary-exuberent-ctags-support)
-
-;; ;; Enable SRecode (Template management) minor-mode.
-;; ;; (global-srecode-minor-mode 1)
-
-
-;; FORMATTING
-
-;; abbrev-mode
-;; (add-hook 'php-mode-hook
-;; '(lambda ()
-;; (define-abbrev php-mode-abbrev-table "ex" "extends")
-;; (c-set-style "cc-mode")
-;; (c-set-offset 'arglist-close 0)))
-
-;; А также небольшой набор моих предпочтений:
-;; - отступ по табулции только если курсор в начале строки;
-;; - отображение позиции курсора в строке;
-;; - отступ символами табуляции;
-;; - отображение размера окна;
-;; - ширина табуляции - 4 символа.
-
-
-
-
-(defun reverse-input-method (input-method)
-  "Build the reverse mapping of single letters from INPUT-METHOD."
-  (interactive
-   (list (read-input-method-name "Use input method (default current): ")))
-  (if (and input-method (symbolp input-method))
-      (setq input-method (symbol-name input-method)))
-  (let ((current current-input-method)
-        (modifiers '(nil (control) (meta) (control meta))))
-    (when input-method
-      (activate-input-method input-method))
-    (when (and current-input-method quail-keyboard-layout)
-      (dolist (map (cdr (quail-map)))
-        (let* ((to (car map))
-                      (from (quail-get-translation
-                                   (cadr map) (char-to-string to) 1)))
-            (when (and (characterp from) (characterp to))
-                  (dolist (mod modifiers)
-                          (define-key local-function-key-map
-                            (vector (append mod (list from)))
-                            (vector (append mod (list to)))))))))
-    (when input-method
-      (activate-input-method current))))
-
-(reverse-input-method 'russian-computer)
-
-;; hilighting for def~ and other constructions
-(font-lock-add-keywords 'lisp-mode
-                        '(("(\\(\\(define-\\|def~\\|do-\\|with-\\|when-\\|awhen-\\|loop-\\)\\(\\s_\\|\\w\\)*\\)"
-                           1 font-lock-keyword-face)))
-
-;; hilightining for def~daoclass-entity name-clasee
-(add-hook 'lisp-mode-hook
-          (lambda ()
-            (font-lock-add-keywords nil
-                                    '(("(\\(def~daoclass-entity\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
-                                       (1 font-lock-keyword-face)
-                                       (2 font-lock-type-face))))))
-
-;; indent for def~daoclass-entity as defclass
-(put 'def~daoclass-entity 'common-lisp-indent-function
-     (get 'defclass 'common-lisp-indent-function))
-
-(put 'when-file 'common-lisp-indent-function
-     (get 'when 'common-lisp-indent-function))
-
-(put 'awhen-file 'common-lisp-indent-function
-     (get 'when 'common-lisp-indent-function))
-
-(put 'loop-dir 'common-lisp-indent-function 3)
-
-(setq c-default-style
-      '((c-mode . "k&r") (other . "k&r")))
-
-;; ;; GNUPLOT
-
-;; (add-to-list 'load-path "gnuplot-el")
-
-;; (autoload 'gnuplot-mode "gnuplot" "gnuplot major mode" t)
-;; (autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot mode" t)
-
-;; (unless (assoc "\\.gp\\'" auto-mode-alist)
-;;   (add-to-list 'auto-mode-alist '("\\.gp\\'" . gnuplot-mode)))
-
-;; (load-file "~/.emacs.d/gnuplot-el/gnuplot.el")
-
-
-(require 'sql)
-(require 'ob-sql)
-(require 'mysql)
-
-(load "~/.emacs.d/fireplace")
-
-
-;; Водки найду
-
-(defun what-can-i-do ()
-  (interactive)
-  (let ((pattern "\\(\\[\\(TODO\\|VRFY\\):gmm\\]\\)") ;; "\\(\\[TODO:.\\{3,\\}\\]\\)"
-        (curbuff (current-buffer))
-        (newbuff (generate-new-buffer "*what-can-i-do*")))
-    (save-excursion
-      (goto-char (point-min))
-      (let ((cnt 0))
-        (with-output-to-temp-buffer newbuff
-          (while (re-search-forward pattern nil t)
-            (incf cnt)
-            (let ((buff  curbuff)
-                  (point (point))
-                  (line  (line-number-at-pos))
-                  (contents (thing-at-point 'line)))
-              (with-current-buffer newbuff
-                (insert-text-button (format "%d:" line)
-                                    'buff buff
-                                    'point point
-                                    'action (lambda (x)
-                                              (let* ((pos   (posn-point (event-end x)))
-                                                     (buff  (get-text-property pos 'buff))
-                                                     (point (get-text-property pos 'point)))
-                                                (with-current-buffer buff
-                                                  (goto-char point))
-                                                (switch-to-buffer buff))))
-                (princ contents))))
-          (goto-char (point-max))
-          (princ (format "\nDone. %s finded." cnt))
-          )))))
-(global-set-key (kbd "C-c m") 'what-can-i-do)
-
-
-(add-hook 'lisp-mode-hook
-          (lambda ()
-            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(получить-все\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
-            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(для-каждого\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
-            (font-lock-add-keywords 'lisp-mode '(("\\(\\(из\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
-            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(получить-значение\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
-            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(вычислить\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
-            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(если\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
-            (font-lock-add-keywords 'lisp-mode '(("\\(\\(то\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
-            (font-lock-add-keywords 'lisp-mode '(("\\(\\(иначе\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
-            (font-lock-add-keywords 'lisp-mode '(("\\(\\(=\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
-            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(сохранить\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
-            (font-lock-add-keywords 'lisp-mode '(("(\\(\\(взять-гуид\\)\\(\\s_\\|\\w\\)*\\)" 1 font-lock-keyword-face)))
-            (put 'получить-все 'common-lisp-indent-function (get 'when 'common-lisp-indent-function))
-            (put 'для-каждого 'common-lisp-indent-function (get 'when 'common-lisp-indent-function))
-            (put 'получить-значение 'common-lisp-indent-function (get 'when 'common-lisp-indent-function))
-            (put 'вычислить 'common-lisp-indent-function (get 'when 'common-lisp-indent-function))
-            (put 'если 'common-lisp-indent-function (get 'if 'common-lisp-indent-function))
-            (put 'сохранить 'common-lisp-indent-function (get 'when 'common-lisp-indent-function))))
-
-
-;; ORG-PUB
-;; http://danamlund.dk/emacs/orgsite.html
-;; (require 'org-publish)
-
-;; (defun my (todo todo-type priority text tags info)
-;;   "Default format function for a headline.
-;; See `org-html-format-headline-function' for details."
-;;   (let ((todo (org-html--todo todo info))
-;;         (tags (org-html--tags tags info)))
-;;     (concat "->" todo (and todo " ") text (and tags "&#xa0;&#xa0;&#xa0;") tags)))
 
 ;; put your css files there
 (defvar org-theme-css-dir "~/.emacs.d/org-css/")
@@ -1586,28 +1208,9 @@
          :components ("org-notes" "org-static"))))
 
 
-;; /usr/bin/plantuml
-;; (load-file "~/.emacs.d/plantuml_helpers.el")
 
+;; OrgPresent
 
-(setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
-
-(setq org-startup-with-inline-images t)
-
-
-(add-to-list 'load-path "~/.emacs.d/csharp-mode/")
-(require 'csharp-mode)
-
-(defun my-csharp-mode-hook ()
-  ;; enable the stuff you want for C# here
-  (electric-pair-mode 1)       ;; Emacs 24
-  ;; (electric-pair-local-mode 1) ;; Emacs 25
-  )
-(add-hook 'csharp-mode-hook 'my-csharp-mode-hook)
-
-
-;; Presentations
-(add-to-list 'load-path "~/.emacs.d/org-present")
 (autoload 'org-present "org-present" nil t)
 
 (eval-after-load "org-present"
@@ -1623,147 +1226,73 @@
                  (org-present-small)
                  (org-remove-inline-images)
                  (org-present-show-cursor)
-                                  (org-present-read-write)))))
-
-(defun xah-show-kill-ring ()
-    "Insert all `kill-ring' content in a new buffer named *copy history*.
-URL `http://ergoemacs.org/emacs/emacs_show_kill_ring.html'
-Version 2018-10-05"
-    (interactive)
-    (let (($buf (generate-new-buffer "*copy history*")))
-      (progn
-        (switch-to-buffer $buf)
-        (funcall 'fundamental-mode)
-        (setq buffer-offer-save t)
-        (dolist (x kill-ring )
-          (insert x "\n\u000cttt\n\n"))
-        (goto-char (point-min)))
-      (when (fboundp 'xah-show-formfeed-as-line)
-              (xah-show-formfeed-as-line))))
-
-
-;; https://www.emacswiki.org/emacs/AceJump
-;; https://www.youtube.com/watch?v=UZkpmegySnc
-;; https://github.com/winterTTr/ace-jump-mode
-
-;;
-;; ace jump mode major function
-;;
-(add-to-list 'load-path "~/.emacs.d/ace-jump-mode")
-(autoload
-  'ace-jump-mode
-  "ace-jump-mode"
-  "Emacs quick move minor mode"
-  t)
-;; you can select the key you prefer to
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-
-;;
-;; enable a more powerful jump back function from ace jump mode
-;;
-(autoload
-  'ace-jump-mode-pop-mark
-  "ace-jump-mode"
-  "Ace jump back:-)"
-  t)
-(eval-after-load "ace-jump-mode"
-  '(ace-jump-mode-enable-mark-sync))
-(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
-
-;;If you use viper mode :
-;; (define-key viper-vi-global-user-map (kbd "SPC") 'ace-jump-mode)
-;;If you use evil
-;; (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
-
-;; https://emacs.stackexchange.com/questions/5749/using-ace-jump-mode-inside-shell-in-emacs
-(defun my-shell-hook ()
-  (define-key shell-mode-map (kbd "C-c SPC") 'ace-jump-mode))
-(add-hook 'shell-mode-hook 'my-shell-hook)
-
-
-;; #+BEGIN_SRC #+END_SRC CODEBLOCK
-;; http://ergoemacs.org/emacs/emacs_macro_example.html
-;; http://ergoemacs.org/emacs/keyboard_shortcuts.html
-(fset 'codeblock
-   "#+BEGIN_SRC\C-m#+END_SRC\C-[OA\C-e ")
-
-(global-set-key (kbd "C-x p") 'codeblock)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; UNDEBUGGED
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;; ;; Load rtags and start the cmake-ide-setup process
-
-;; ;; (require 'rtags)
-
-;; (add-to-list 'load-path "~/.emacs.d/el-get/company-irony/")
-;; (add-to-list 'load-path "~/.emacs.d/el-get/company-mode/")
-;; (add-to-list 'load-path "~/.emacs.d/el-get/epl/")
-;; (add-to-list 'load-path "~/.emacs.d/el-get/flycheck/")
-;; (add-to-list 'load-path "~/.emacs.d/el-get/irony-mode/")
-;; (add-to-list 'load-path "~/.emacs.d/el-get/let-alist")
-;; (add-to-list 'load-path "~/.emacs.d/el-get/pkg-info/")
-;; (add-to-list 'load-path "~/.emacs.d/el-get/rtags/")
+                 (org-present-read-write)))))
 
 
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; Setup cmake-ide
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (add-to-list 'load-path "~/.emacs.d/el-get/cmake-ide")
-;; (require 'cmake-ide)
-;; (cmake-ide-setup)
-;; ;; Set cmake-ide-flags-c++ to use C++11
-;; (setq cmake-ide-flags-c++ (append '("-std=c++11")))
-;; ;; We want to be able to compile with a keyboard shortcut
-;; (global-set-key (kbd "C-c m") 'cmake-ide-compile)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CUSTOM
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; ;; Set rtags to enable completions and use the standard keybindings.
-;; ;; A list of the keybindings can be found at:
-;; ;; http://syamajala.github.io/c-ide.html
-;; (setq rtags-autostart-diagnostics t)
-;; (rtags-diagnostics)
-;; (setq rtags-completions-enabled t)
-;; (rtags-enable-standard-keybindings)
 
-;; ;; ensure that we use only rtags checking
-;; ;; https://github.com/Andersbakken/rtags#optional-1
-;; (defun setup-flycheck-rtags ()
-;;   (interactive)
-;;   (flycheck-select-checker 'rtags)
-;;   ;; RTags creates more accurate overlays.
-;;   (setq-local flycheck-highlighting-mode nil)
-;;   (setq-local flycheck-check-syntax-automatically nil))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(Buffer-menu-use-frame-buffer-list nil)
+ '(c-tab-always-indent nil)
+ '(column-number-mode t)
+ '(ecb-options-version "2.40")
+ '(jabber-history-size-limit 49741824)
+ '(jabber-use-global-history nil)
+ '(lj-cache-login-information t)
+ '(lj-default-username "rigidus")
+ '(org-agenda-files nil)
+ '(org-default-notes-file "~/org/notes.org")
+ '(org-directory "~/org/")
+ '(org-support-shift-select t)
+ '(size-indication-mode t)
+ '(tab-width 4)
+;;  '(org-agenda-files (quote ("~/todo.org")))
+;;  '(org-default-notes-file "~/notes.org")
+;;  '(org-agenda-ndays 7)
+;;  '(org-deadline-warning-days 14)
+;;  '(org-agenda-show-all-dates t)
+;;  '(org-agenda-skip-deadline-if-done t)
+;;  '(org-agenda-skip-scheduled-if-done t)
+;;  '(org-agenda-start-on-weekday nil)
+;;  '(org-reverse-note-order t)
+;;  '(org-fast-tag-selection-single-key (quote expert))
+;;  '(org-agenda-custom-commands
+;;    (quote (("d" todo "DELEGATED" nil)
+;;            ("c" todo "DONE|DEFERRED|CANCELLED" nil)
+;;            ("w" todo "WAITING" nil)
+;;            ("W" agenda "" ((org-agenda-ndays 21)))
+;;            ("A" agenda ""
+;;             ((org-agenda-skip-function
+;;               (lambda nil
+;;                 (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]")))
+;;              (org-agenda-ndays 1)
+;;              (org-agenda-overriding-header "Today's Priority #A tasks: ")))
+;;            ("u" alltodo ""
+;;             ((org-agenda-skip-function
+;;               (lambda nil
+;;                 (org-agenda-skip-entry-if (quote scheduled) (quote deadline)
+;;                                           (quote regexp) "<[^>\n]+>")))
+;;              (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
+;;  '(org-remember-store-without-prompt t)
+;;  '(org-remember-templates
+;;    (quote ((116 "* TODO %?\n  %u" "~/todo.org" "Tasks")
+;;            (110 "* %u %?" "~/notes.org" "Notes"))))
+;;  '(remember-annotation-functions (quote (org-remember-annotation)))
+;;  '(remember-handler-functions (quote (org-remember-handler)))
+)
 
-;; ;; only run this if rtags is installed
-;; ;; (when (require 'rtags nil :noerror)
-;; ;;   ;; make sure you have company-mode installed
-;; ;;   (require 'company)
-;; ;;   (define-key c-mode-base-map (kbd "M-.")
-;; ;;     (function rtags-find-symbol-at-point))
-;; ;;   (define-key c-mode-base-map (kbd "M-,")
-;; ;;     (function rtags-find-references-at-point))
-;; ;;   ;; ;; disable prelud2's use of C-c r, as this is the rtags keyboard prefix
-;; ;;   ;; (define-key prelude-mode-map (kbd "C-c r") nil)
-;; ;;   ;; install standard rtags keybindings. Do M-. on the symbol below to
-;; ;;   ;; jump to definition and see the keybindings.
-;; ;;   (rtags-enable-standard-keybindings)
-;; ;;   ;; comment this out if you don't have or don't use helm
-;; ;;   (setq rtags-use-helm t)
-;; ;;   ;; company completion setup
-;; ;;   (setq rtags-autostart-diagnostics t)
-;; ;;   (rtags-diagnostics)
-;; ;;   (setq rtags-completions-enabled t)
-;; ;;   (push 'company-rtags company-backends)
-;; ;;   (global-company-mode)
-;; ;;   (define-key c-mode-base-map (kbd "<C-tab>") (function company-complete))
-;; ;;   ;; use rtags flycheck mode -- clang warnings shown inline
-;; ;;   (require 'flycheck-rtags)
-;; ;;   ;; c-mode-common-hook is also called by c++-mode
-;; ;;     (add-hook 'c-mode-common-hook #'setup-flycheck-rtags))
-
-;; ;; Как то давно спрашивал на канале почему не работает параметр default-directory, когда я его явно указываю в init.el. Местные не смогли сходу помочь в ситуации и я остался с проблемой. Много часов гуглил и видимо не один я такой, многие писали на стеке и по форумам, недоумевая что же не так. Кто то даже лямбды кривые выписывал, дабы избавится от этого недуга. Оказывается все дело в стартапскрине. Как то он этот параметр переписывает укажите (setq inhibit-startup-screen t) и default-directory работает как надо. Чтобы понять уровень моего наряжения: за все время 3-4 часа ковыряния конфига, потуги чтобы пересесть на другой редактор и перед найденым решением я уже про себя начал говорить "Господи, лишь бы сработало" я аж сам с себя заорал и чуть не уверовал.
-;; (setq nhibit-startup-screen t)
+(custom-set-faces
+ ;;  ;; custom-set-faces was added by Custom.
+ ;;  ;; If you edit it by hand, you could mess it up, so be careful.
+ ;;  ;; Your init file should contain only one such instance.
+ ;;  ;; If there is more than one, they won't work right.
+ ;;  '(hl-line ((t (:inherit highlight :background "khaki1"))))
+ )

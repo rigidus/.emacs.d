@@ -1,5 +1,0 @@
-(:name googleaccount
-:auto-generated t
-:type emacswiki
-:description "Google Accounts login from Emacs"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/googleaccount.el")

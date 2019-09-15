@@ -1,5 +1,0 @@
-(:name emms-player-streaming-fix
-:auto-generated t
-:type emacswiki
-:description "mplayer url fix"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/emms-player-streaming-fix.el")

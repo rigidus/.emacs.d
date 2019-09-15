@@ -1,5 +1,0 @@
-(:name highlight
-:auto-generated t
-:type emacswiki
-:description "Highlighting commands."
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/highlight.el")

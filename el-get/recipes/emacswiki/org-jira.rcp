@@ -1,5 +1,0 @@
-(:name org-jira
-:auto-generated t
-:type emacswiki
-:description "add a jira:ticket protocol to org."
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/org-jira.el")

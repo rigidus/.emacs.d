@@ -1,5 +1,0 @@
-(:name ri
-:auto-generated t
-:type emacswiki
-:description "Ruby Documentation Lookup"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/ri.el")

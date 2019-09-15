@@ -1,5 +1,0 @@
-(:name show-wspace
-:auto-generated t
-:type emacswiki
-:description "OBSOLETE - replaced by library `highlight-chars.el'."
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/show-wspace.el")

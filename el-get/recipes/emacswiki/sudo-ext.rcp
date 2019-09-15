@@ -1,5 +1,0 @@
-(:name sudo-ext
-:auto-generated t
-:type emacswiki
-:description "sudo support"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/sudo-ext.el")

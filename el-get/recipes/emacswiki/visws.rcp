@@ -1,5 +1,0 @@
-(:name visws
-:auto-generated t
-:type emacswiki
-:description "Make whitespace visible    -*- coding: latin-1 -*-"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/visws.el")

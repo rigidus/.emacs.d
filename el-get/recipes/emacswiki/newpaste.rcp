@@ -1,5 +1,0 @@
-(:name newpaste
-:auto-generated t
-:type emacswiki
-:description "Paste directly from Emacs to http://paste.lisp.org using Emacs `url' library"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/newpaste.el")

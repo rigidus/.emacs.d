@@ -1,5 +1,0 @@
-(:name auto-recomp
-:auto-generated t
-:type emacswiki
-:description "Automatically recompile Emacs Lisp files"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/auto-recomp.el")

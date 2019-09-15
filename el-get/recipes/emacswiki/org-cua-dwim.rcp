@@ -1,5 +1,0 @@
-(:name org-cua-dwim
-:auto-generated t
-:type emacswiki
-:description "Org-mode and Cua mode compatibility layer"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/org-cua-dwim.el")

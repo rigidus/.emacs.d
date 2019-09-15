@@ -1,5 +1,0 @@
-(:name type-test
-:auto-generated t
-:type emacswiki
-:description "Typing test"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/type-test.el")

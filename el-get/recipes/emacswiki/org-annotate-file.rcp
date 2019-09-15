@@ -1,5 +1,0 @@
-(:name org-annotate-file
-:auto-generated t
-:type emacswiki
-:description "Annotate a file with org syntax"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/org-annotate-file.el")

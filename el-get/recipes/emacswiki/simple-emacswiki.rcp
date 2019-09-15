@@ -1,5 +1,0 @@
-(:name simple-emacswiki
-:auto-generated t
-:type emacswiki
-:description "edit emacswiki.org within Emacs"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/simple-emacswiki.el")

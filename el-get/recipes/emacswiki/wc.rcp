@@ -1,5 +1,0 @@
-(:name wc
-:auto-generated t
-:type emacswiki
-:description "count words"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/wc.el")

@@ -1,5 +1,0 @@
-(:name ac-dabbrev
-:auto-generated t
-:type emacswiki
-:description "auto-complete.el source for dabbrev"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/ac-dabbrev.el")

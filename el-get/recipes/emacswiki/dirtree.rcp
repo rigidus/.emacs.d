@@ -1,5 +1,0 @@
-(:name dirtree
-:auto-generated t
-:type emacswiki
-:description "Directory tree views"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/dirtree.el")

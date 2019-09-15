@@ -1,5 +1,0 @@
-(:name erc-highlight-nicknames
-:auto-generated t
-:type emacswiki
-:description "Highlights nicknames"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/erc-highlight-nicknames.el")

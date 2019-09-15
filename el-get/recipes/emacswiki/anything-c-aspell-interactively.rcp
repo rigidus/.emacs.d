@@ -1,5 +1,0 @@
-(:name anything-c-aspell-interactively
-:auto-generated t
-:type emacswiki
-:description "Interactive aspell with `anything'."
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/anything-c-aspell-interactively.el")

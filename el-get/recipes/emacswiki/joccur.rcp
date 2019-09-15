@@ -1,5 +1,0 @@
-(:name joccur
-:auto-generated t
-:type emacswiki
-:description "An improved 'occur' implementation."
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/joccur.el")

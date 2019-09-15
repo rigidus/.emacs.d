@@ -1,5 +1,0 @@
-(:name wn-mode
-:auto-generated t
-:type emacswiki
-:description "numeric window switching shortcuts"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/wn-mode.el")

@@ -1,5 +1,0 @@
-(:name macros+
-:auto-generated t
-:type emacswiki
-:description "Extensions to `macros.el'."
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/macros+.el")

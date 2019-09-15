@@ -1,5 +1,0 @@
-(:name festival-extension
-:auto-generated t
-:type emacswiki
-:description "Simple festival extension for festival.el"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/festival-extension.el")

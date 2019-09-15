@@ -1,5 +1,0 @@
-(:name stuffcast
-:auto-generated t
-:type emacswiki
-:description "Stuff a PMP with content"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/stuffcast.el")

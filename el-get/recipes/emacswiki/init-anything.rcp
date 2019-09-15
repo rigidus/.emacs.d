@@ -1,5 +1,0 @@
-(:name init-anything
-:auto-generated t
-:type emacswiki
-:description "Anything configuration"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/init-anything.el")

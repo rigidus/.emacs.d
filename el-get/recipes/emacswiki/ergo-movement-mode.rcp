@@ -1,5 +1,0 @@
-(:name ergo-movement-mode
-:auto-generated t
-:type emacswiki
-:description "Eronomic keybindings for cursor movement"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/ergo-movement-mode.el")

@@ -1,5 +1,0 @@
-(:name tcp-client
-:auto-generated t
-:type emacswiki
-:description "Providing a network interface"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/tcp-client.el")

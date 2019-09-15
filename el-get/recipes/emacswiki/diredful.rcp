@@ -1,5 +1,0 @@
-(:name diredful
-:auto-generated t
-:type emacswiki
-:description "colorful file names in dired buffers"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/diredful.el")

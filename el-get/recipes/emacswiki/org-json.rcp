@@ -1,5 +1,0 @@
-(:name org-json
-:auto-generated t
-:type emacswiki
-:description "conversion between org and json"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/org-json.el")

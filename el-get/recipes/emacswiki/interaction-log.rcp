@@ -1,5 +1,0 @@
-(:name interaction-log
-:auto-generated t
-:type emacswiki
-:description "exhaustive log of interactions with Emacs"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/interaction-log.el")

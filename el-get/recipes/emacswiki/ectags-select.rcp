@@ -1,5 +1,0 @@
-(:name ectags-select
-:auto-generated t
-:type emacswiki
-:description "Select from multiple tags"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/ectags-select.el")

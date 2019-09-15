@@ -1,5 +1,0 @@
-(:name pabbrev
-:auto-generated t
-:type emacswiki
-:description "Predictive abbreviation expansion"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/pabbrev.el")

@@ -1,5 +1,0 @@
-(:name osx-browse
-:auto-generated t
-:type emacswiki
-:description "Web browsing helpers for OS X"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/osx-browse.el")

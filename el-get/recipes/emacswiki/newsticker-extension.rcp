@@ -1,5 +1,0 @@
-(:name newsticker-extension
-:auto-generated t
-:type emacswiki
-:description "Some extension function for newsticker"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/newsticker-extension.el")

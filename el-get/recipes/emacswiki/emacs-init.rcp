@@ -1,5 +1,0 @@
-(:name emacs-init
-:auto-generated t
-:type emacswiki
-:description "Drew Adams's Emacs init file."
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/emacs-init.el")

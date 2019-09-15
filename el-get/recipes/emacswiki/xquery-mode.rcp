@@ -1,5 +1,0 @@
-(:name xquery-mode
-:auto-generated t
-:type emacswiki
-:description "A simple mode for editing xquery programs"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/xquery-mode.el")

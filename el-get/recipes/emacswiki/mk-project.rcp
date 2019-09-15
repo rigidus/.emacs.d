@@ -1,5 +1,0 @@
-(:name mk-project
-:auto-generated t
-:type emacswiki
-:description " Lightweight project handling"
-:website "https://raw.github.com/emacsmirror/emacswiki.org/master/mk-project.el")
