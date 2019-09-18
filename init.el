@@ -6,6 +6,7 @@
 ;;
 ;; EMACS configuration file by Rigidus
 ;;
+;; Hint: text-scale-adjust настраивает размер в GUI
 
 (require 'cl)
 
@@ -188,11 +189,11 @@ Version 2018-10-05"
 (add-hook 'before-save-hook '(lambda ()
 (delete-trailing-whitespace)))
 
-;; Режим по умолчанию c переносом строк по ширине 130
+;; Режим по умолчанию c переносом строк по ширине
 (setq default-major-mode 'text-mode)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (setq auto-fill-mode t)
-(setq fill-column 130)
+(setq fill-column 75)
 
 ;; Создание резервных копий редактируемых файлов (Backup)
 ;; (info "(emacs)Auto Save")
@@ -367,8 +368,6 @@ Version 2018-10-05"
 ;;  (color-theme-modern (20161219 1144))
 ;;  (gnuplot (20141231 2137))
 ;;  (gnuplot-mode (20171013 1616))
-;;  (org-present (20180303 2330))
-;;  (org (9 2 6))
 ;;  (unfill (20170723 146))
 ;;  (wanderlust (20190812 818))
 ;;  (semi (20190708 1302))
@@ -424,7 +423,7 @@ Version 2018-10-05"
 
 ;; SLIME-FANCY is a meta package which loads a combination
 ;; of the most popular packages.
-(slime-setup '(slime-fancy slime-asdf))
+;; (slime-setup '(slime-fancy slime-asdf))
 ;; https://www.common-lisp.net/project/slime/doc/html/Contributed-Packages.html
 
 ;; Эта настройка позволяет SWANK попросить SLIME выполнить код в контексте EMACS
@@ -989,7 +988,7 @@ Version 2018-10-05"
 
 ;; To use company-mode in all buffers, add the following line to your init file:
 
-(add-hook 'after-init-hook 'global-company-mode)
+;; (add-hook 'after-init-hook 'global-company-mode)
 
 ;; To see or change the list of enabled back-ends,
 ;; type M-x customize-variable RET company-backends.
@@ -1009,6 +1008,23 @@ Version 2018-10-05"
   (company-flx-mode +1))
 
 
+;; TELEGA
+
+;; (use-package telega
+;;              :load-path  "~/telega.el"
+;;              :commands (telega)
+;;                :defer t)
+;; (add-to-list 'load-path "~/.emacs.d/elpa/telega-20190913.1912/")
+;; (require 'telega)
+(setq telega-msg-rainbow-title nil)
+
+
+;; HELM
+
+;; (require 'helm-config)
+
+
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1018,15 +1034,17 @@ Version 2018-10-05"
 
 
 ;; http://orgmode.org/manual/Installation.html
-(add-to-list 'load-path "~/src/org-mode/lisp")
-(add-to-list 'load-path "~/src/org-mode/contrib/lisp" t)
+;; (add-to-list 'load-path "~/src/org-mode/lisp")
+;; (add-to-list 'load-path "~/src/org-mode/contrib/lisp" t)
+(add-to-list 'load-path "~/repo/org-mode/lisp")
+(add-to-list 'load-path "~/repo/org-mode/contrib/lisp" t)
 
 ;; Переключаться автоматически в org-mode при открытии файла с расширением .org:
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
 
 ;; Включение fill-column для org-mode
-(add-hook 'org-mode-hook (lambda () (setq fill-column 87)))
+(add-hook 'org-mode-hook (lambda () (setq fill-column 75)))
 
 ;; Задание цепочек ключевых слов (переключение между словами клавишами Shift + Right или + Left с курсором на заголовке). "|" отмечает границу, если заголовок в статусе после этого разделителя, то он "выполнен", это влияет на планирование и отображение в Agenda Views:
 (setq org-todo-keywords '((sequence "TODO(t)" "START(s)" "MEET(m)" "CALL(c)" "DELEGATED(d)" "WAIT(w)" "|" "CANCEL(r)"  "DONE(f)")))
@@ -1155,7 +1173,7 @@ Version 2018-10-05"
          (ruby . t)
          (gnuplot . t)
          (clojure . t)
-         (sh . t)
+         (shell . t)
          (ledger . t)
          (org . t)
          (plantuml . t)
@@ -1295,47 +1313,18 @@ Version 2018-10-05"
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
+ '(package-selected-packages
+   (quote
+    (slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
- '(tab-width 4)
-;;  '(org-agenda-files (quote ("~/todo.org")))
-;;  '(org-default-notes-file "~/notes.org")
-;;  '(org-agenda-ndays 7)
-;;  '(org-deadline-warning-days 14)
-;;  '(org-agenda-show-all-dates t)
-;;  '(org-agenda-skip-deadline-if-done t)
-;;  '(org-agenda-skip-scheduled-if-done t)
-;;  '(org-agenda-start-on-weekday nil)
-;;  '(org-reverse-note-order t)
-;;  '(org-fast-tag-selection-single-key (quote expert))
-;;  '(org-agenda-custom-commands
-;;    (quote (("d" todo "DELEGATED" nil)
-;;            ("c" todo "DONE|DEFERRED|CANCELLED" nil)
-;;            ("w" todo "WAITING" nil)
-;;            ("W" agenda "" ((org-agenda-ndays 21)))
-;;            ("A" agenda ""
-;;             ((org-agenda-skip-function
-;;               (lambda nil
-;;                 (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]")))
-;;              (org-agenda-ndays 1)
-;;              (org-agenda-overriding-header "Today's Priority #A tasks: ")))
-;;            ("u" alltodo ""
-;;             ((org-agenda-skip-function
-;;               (lambda nil
-;;                 (org-agenda-skip-entry-if (quote scheduled) (quote deadline)
-;;                                           (quote regexp) "<[^>\n]+>")))
-;;              (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
-;;  '(org-remember-store-without-prompt t)
-;;  '(org-remember-templates
-;;    (quote ((116 "* TODO %?\n  %u" "~/todo.org" "Tasks")
-;;            (110 "* %u %?" "~/notes.org" "Notes"))))
-;;  '(remember-annotation-functions (quote (org-remember-annotation)))
-;;  '(remember-handler-functions (quote (org-remember-handler)))
-)
+ '(tab-width 4))
 
 (custom-set-faces
- ;;  ;; custom-set-faces was added by Custom.
- ;;  ;; If you edit it by hand, you could mess it up, so be careful.
- ;;  ;; Your init file should contain only one such instance.
- ;;  ;; If there is more than one, they won't work right.
- ;;  '(hl-line ((t (:inherit highlight :background "khaki1"))))
- )
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(helm-lisp-show-completion ((t (:background "brightcyan"))))
+ '(helm-selection ((t (:background "ForestGreen" :distant-foreground "white"))))
+ '(helm-selection-line ((t (:inherit highlight :distant-foreground "white"))))
+ '(widget-field ((t (:background "color-235" :foreground "brightblack")))))
