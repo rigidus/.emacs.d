@@ -270,6 +270,12 @@ Version 2018-10-05"
 (setq mouse-yank-at-point 't)        ;; Paste at point NOT at cursor
 
 
+;; Хочу чтобы inferior shell открывался в том же окне
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*shell*")
+               display-buffer-same-window))
+
+
 ;; Автоматическое выравнивание вставляемого из буфера обмена кода
 
 (defadvice yank (after indent-region activate)
@@ -1034,10 +1040,10 @@ Version 2018-10-05"
 
 
 ;; http://orgmode.org/manual/Installation.html
-;; (add-to-list 'load-path "~/src/org-mode/lisp")
-;; (add-to-list 'load-path "~/src/org-mode/contrib/lisp" t)
-(add-to-list 'load-path "~/repo/org-mode/lisp")
-(add-to-list 'load-path "~/repo/org-mode/contrib/lisp" t)
+(add-to-list 'load-path "~/src/org-mode/lisp")
+(add-to-list 'load-path "~/src/org-mode/contrib/lisp" t)
+;; (add-to-list 'load-path "~/repo/org-mode/lisp")
+;; (add-to-list 'load-path "~/repo/org-mode/contrib/lisp" t)
 
 ;; Переключаться автоматически в org-mode при открытии файла с расширением .org:
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
