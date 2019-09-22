@@ -1,4 +1,4 @@
-;;
+;
 ;;    ___ _ __ ___   __ _  ___ ___
 ;;   / _ \ '_ ` _ \ / _` |/ __/ __|
 ;;  |  __/ | | | | | (_| | (__\__ \
@@ -193,7 +193,7 @@ Version 2018-10-05"
 (setq default-major-mode 'text-mode)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (setq auto-fill-mode t)
-(setq fill-column 75)
+(setq fill-column 73)
 
 ;; Создание резервных копий редактируемых файлов (Backup)
 ;; (info "(emacs)Auto Save")
@@ -327,6 +327,28 @@ Version 2018-10-05"
 
 (global-set-key (kbd "C-x p") 'codeblock)
 
+(fset 'namedcodeblock
+      "#+NAME:\C-m#+BEGIN_SRC\C-m#+END_SRC\C-[OA\C-e ")
+
+(global-set-key (kbd "C-c p") 'namedcodeblock)
+
+;; В целях дальнейшего улучшения эргономики и отказа
+;; от лишних клавиш (таких как клавиши курсора) и
+;; планируемого перехода на клавиатуры уменьшенного
+;; размера, добавим несколько комбинаций для
+;; быстрого путешествия по тексту:
+(global-set-key (kbd "M-n") 'org-forward-paragraph)
+(global-set-key (kbd "M-p") 'org-backward-paragraph)
+;; Также не стоит забывать про базовую комбинацию `M-r',
+;; которая предоставляет удобный способ путешествовать
+;; по трем позициям внутри текущего буфера.
+;; Чтобы избежать использования DELETE можно использовать
+;; `C-d' = delete-char
+;; `M-d' = delete-word удаляет все слово
+;; Клавиша BACKSPACE есть на 40%-х клавиатурах, поэтому
+;; не нуждается в дополнительном определении.
+;; Не стоит забывать про возможность использовать
+;; команды удаления с `C-u' аргументом.
 
 ;; ;; conkeror-browser
 ;; (eval-after-load "browse-url"
@@ -1050,7 +1072,7 @@ Version 2018-10-05"
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
 
 ;; Включение fill-column для org-mode
-(add-hook 'org-mode-hook (lambda () (setq fill-column 75)))
+(add-hook 'org-mode-hook (lambda () (setq fill-column 73)))
 
 ;; Задание цепочек ключевых слов (переключение между словами клавишами Shift + Right или + Left с курсором на заголовке). "|" отмечает границу, если заголовок в статусе после этого разделителя, то он "выполнен", это влияет на планирование и отображение в Agenda Views:
 (setq org-todo-keywords '((sequence "TODO(t)" "START(s)" "MEET(m)" "CALL(c)" "DELEGATED(d)" "WAIT(w)" "|" "CANCEL(r)"  "DONE(f)")))
