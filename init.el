@@ -1,4 +1,4 @@
-;
+;;
 ;;    ___ _ __ ___   __ _  ___ ___
 ;;   / _ \ '_ ` _ \ / _` |/ __/ __|
 ;;  |  __/ | | | | | (_| | (__\__ \
@@ -265,6 +265,8 @@ Version 2018-10-05"
 
 (set-cursor-color "red")             ;; Красный не мигающий (!) курсор
 (blink-cursor-mode nil)
+;; Однако в режиме терминала это не работает, поэтому..
+(send-string-to-terminal "\033]12;red\007")
 ;; мышка...
 (global-set-key [vertical-scroll-bar down-mouse-1] 'scroll-bar-drag) ;; Scroll Bar gets dragged by mouse butn 1
 (setq mouse-yank-at-point 't)        ;; Paste at point NOT at cursor
@@ -546,7 +548,8 @@ Version 2018-10-05"
 (define-globalized-minor-mode global-highlight-parentheses-mode
   highlight-parentheses-mode highlight-parentheses-mode)
 (setq hl-paren-colors
-      '("#FF0000" "#FFBF00" "#1FFF00" "#009EFF" "#2100FF" "gray10" "gray70" "gray90"))
+      '("#FFFFFF" "#FFBF00" "#1FFF00" "#009EFF" "#FF00FF" "#FF0000"
+        "#BFFFBF" "#00FFBF" "#FF1FBF" "#BFFF1F" "#9FBFFF" "#FF7F9F"))
 (global-highlight-parentheses-mode)
 
 
@@ -1337,7 +1340,9 @@ Version 2018-10-05"
  '(jabber-use-global-history nil)
  '(lj-cache-login-information t)
  '(lj-default-username "rigidus")
- '(org-agenda-files nil)
+ '(org-agenda-files
+   (quote
+    ("~/repo/rigidus.ru/org/lrn/delay_switch/b2313.org")))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
