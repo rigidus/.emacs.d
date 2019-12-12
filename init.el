@@ -324,15 +324,23 @@ Version 2018-10-05"
 ;; #+BEGIN_SRC #+END_SRC CODEBLOCK
 ;; http://ergoemacs.org/emacs/emacs_macro_example.html
 ;; http://ergoemacs.org/emacs/keyboard_shortcuts.html
-(fset 'codeblock
-      "#+BEGIN_SRC\C-m#+END_SRC\C-[OA\C-e ")
+(defun codeblock ()
+  (insert "#+END_SRC")
+  (move-beginning-of-line 1)
+  (newline)
+  (previous-line)
+  (insert "#+BEGIN_SRC "))
 
-(global-set-key (kbd "C-x p") 'codeblock)
+(global-set-key (kbd "C-x p") '(lambda ()
+                                 (interactive)
+                                 (set-input-method nil)
+                                 (codeblock)))
 
-(fset 'namedcodeblock
-      "#+NAME:\C-m#+BEGIN_SRC\C-m#+END_SRC\C-[OA\C-e ")
-
-(global-set-key (kbd "C-c p") 'namedcodeblock)
+(global-set-key (kbd "C-c p") (lambda ()
+                                (interactive)
+                                (set-input-method nil)
+                                (insert "#+NAME:")
+                                (newline)))
 
 ;; В целях дальнейшего улучшения эргономики и отказа
 ;; от лишних клавиш (таких как клавиши курсора) и
