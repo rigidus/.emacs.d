@@ -1063,7 +1063,10 @@ Version 2018-10-05"
 ;; (require 'helm-config)
 
 
-
+;; LISP-EXTRA-FONT-LOCK
+(add-to-list 'load-path "~/.emacs.d//elpa/lisp-extra-font-lock-20181008.1921/")
+(require 'lisp-extra-font-lock)
+(lisp-extra-font-lock-global-mode 1)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1356,7 +1359,7 @@ Version 2018-10-05"
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet flycheck go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1369,3 +1372,31 @@ Version 2018-10-05"
  '(helm-selection ((t (:background "ForestGreen" :distant-foreground "white"))))
  '(helm-selection-line ((t (:inherit highlight :distant-foreground "white"))))
  '(widget-field ((t (:background "color-235" :foreground "brightblack")))))
+
+
+
+;; --- GO : http://reangdblog.blogspot.com/2016/06/emacs-ide-go.html
+
+;; (require 'company)
+;; (require 'flycheck)
+;; (require 'yasnippet)
+;; (require 'multi-compile)
+;; (require 'go-eldoc)
+;; (require 'company-go)
+
+(add-hook 'before-save-hook 'gofmt-before-save)
+(setq-default gofmt-command "goimports")
+(add-hook 'go-mode-hook 'go-eldoc-setup)
+(add-hook 'go-mode-hook
+          (lambda ()
+            (set (make-local-variable 'company-backends) '(company-go))
+            (company-mode)))
+(add-hook 'go-mode-hook 'yas-minor-mode)
+(add-hook 'go-mode-hook 'flycheck-mode)
+(setq multi-compile-alist
+      '((go-mode
+         . (("go-build" "go build -v"
+             (locate-dominating-file buffer-file-name ".git"))
+            ("go-build-and-run"
+             "go build -v && echo 'build finish' && eval ./${PWD##*/}"
+             (multi-compile-locate-file-dir ".git"))))))
