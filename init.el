@@ -149,6 +149,9 @@
 
 
 
+
+;; Unfill Region
+;; https://www.emacswiki.org/emacs/UnfillRegion
 (defun xah-show-kill-ring ()
   "Insert all `kill-ring' content in a new buffer named *copy history*.
 URL `http://ergoemacs.org/emacs/emacs_show_kill_ring.html'
@@ -1284,10 +1287,35 @@ Version 2018-10-05"
 
 (setq org-export-time-stamp-file nil)
 (setq org-publish-project-alist
-      '(("org-notes"
-         :base-directory "~/repo/rigidus.ru/org/"
+      '(;; ("org-notes"
+        ;;  :base-directory "~/src/rigidus.ru/org/"
+        ;;  :base-extension "org"
+        ;;  :publishing-directory "~/src/rigidus.ru/www/"
+        ;;  :recursive t
+        ;;  :publishing-function org-html-publish-to-html
+        ;;  :timestamp nil
+        ;;  :html-doctype "html5"
+        ;;  :section-numbers nil
+        ;;  :html-postamble nil
+        ;;  :html-preamble nil
+        ;;  :with-timestamps nil
+        ;;  :timestamp nil
+        ;;  :with-date nil
+        ;;  :html-head-extra "<link href=\"/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />"
+        ;;  :html-head-include-default-style nil
+        ;;  :html-head-include-scripts nil)
+        ;; ("org-static"
+        ;;  :base-directory "~/src/rigidus.ru/org/"
+        ;;  :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|djvu"
+        ;;  :publishing-directory "~/src/rigidus.ru/www/"
+        ;;  :recursive t
+        ;;  :publishing-function org-publish-attachment)
+        ;; ("org"
+        ;;  :components ("org-notes" "org-static"))
+        ("in-solar-notes"
+         :base-directory "~/src/in-solar/org/"
          :base-extension "org"
-         :publishing-directory "~/repo/rigidus.ru/www/"
+         :publishing-directory "~/src/in-solar/www/"
          :recursive t
          :publishing-function org-html-publish-to-html
          :timestamp nil
@@ -1298,18 +1326,18 @@ Version 2018-10-05"
          :with-timestamps nil
          :timestamp nil
          :with-date nil
-         :html-head-extra "<link href=\"/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />"
+         ;; :html-head-extra "<link href=\"../css/style.css\" rel=\"stylesheet\" type=\"text/css\" />"
          :html-head-include-default-style nil
          :html-head-include-scripts nil)
-        ("org-static"
-         :base-directory "~/repo/rigidus.ru/org/"
+        ("in-solar-static"
+         :base-directory "~/src/in-solar/org/"
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|djvu"
-         :publishing-directory "~/repo/rigidus.ru/www/"
+         :publishing-directory "~/src/in-solar/www/"
          :recursive t
          :publishing-function org-publish-attachment)
-        ("org"
-         :components ("org-notes" "org-static"))))
-
+        ("in-solar"
+         :components ("in-solar-notes" "in-solar-static"))
+         ))
 
 
 ;; OrgPresent
@@ -1359,7 +1387,7 @@ Version 2018-10-05"
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet flycheck go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet flycheck go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
