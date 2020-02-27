@@ -152,6 +152,18 @@
 
 ;; Unfill Region
 ;; https://www.emacswiki.org/emacs/UnfillRegion
+(defun unfill-region (beg end)
+  "Unfill the region, joining text paragraphs into a single
+    logical line.  This is useful, e.g., for use with
+    `visual-line-mode'."
+  (interactive "*r")
+  (let ((fill-column (point-max)))
+    (fill-region beg end)))
+
+;; Handy key definition
+(define-key global-map "\C-\M-Q" 'unfill-region)
+
+
 (defun xah-show-kill-ring ()
   "Insert all `kill-ring' content in a new buffer named *copy history*.
 URL `http://ergoemacs.org/emacs/emacs_show_kill_ring.html'
