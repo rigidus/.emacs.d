@@ -406,45 +406,45 @@ Version 2018-10-05"
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 
-;; MELPA
-;; Посмотреть установленные пакеты можно в переменной С-h v package-activated-list
-;; Или вызвав эту функцию:
-(defun list-packages-and-versions ()
-  "Returns a list of all installed packages and their versions"
-  (mapcar
-   (lambda (pkg)
-     `(,pkg ,(package-desc-version
-              (cadr (assq pkg package-alist)))))
-   package-activated-list))
-;; (list-packages-and-versions) =>
-;; ((ace-jump-mode (20140616 815))
-;;  (color-theme-modern (20161219 1144))
-;;  (gnuplot (20141231 2137))
-;;  (gnuplot-mode (20171013 1616))
-;;  (unfill (20170723 146))
-;;  (wanderlust (20190812 818))
-;;  (semi (20190708 1302))
-;;  (flim (20190526 1034))
-;;  (apel (20190407 1056)))
+;; ;; MELPA
+;; ;; Посмотреть установленные пакеты можно в переменной С-h v package-activated-list
+;; ;; Или вызвав эту функцию:
+;; (defun list-packages-and-versions ()
+;;   "Returns a list of all installed packages and their versions"
+;;   (mapcar
+;;    (lambda (pkg)
+;;      `(,pkg ,(package-desc-version
+;;               (cadr (assq pkg package-alist)))))
+;;    package-activated-list))
+;; ;; (list-packages-and-versions) =>
+;; ;; ((ace-jump-mode (20140616 815))
+;; ;;  (color-theme-modern (20161219 1144))
+;; ;;  (gnuplot (20141231 2137))
+;; ;;  (gnuplot-mode (20171013 1616))
+;; ;;  (unfill (20170723 146))
+;; ;;  (wanderlust (20190812 818))
+;; ;;  (semi (20190708 1302))
+;; ;;  (flim (20190526 1034))
+;; ;;  (apel (20190407 1056)))
 
-;; For important compatibility libraries like cl-lib
-(when (< emacs-major-version 24)
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-  (package-initialize) ;; You might already have this line
-  (add-to-list 'package-archives
-               '("melpa-stable" . "https://stable.melpa.org/packages/") t))
+;; ;; For important compatibility libraries like cl-lib
+;; (when (< emacs-major-version 24)
+;;   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+;;   (package-initialize) ;; You might already have this line
+;;   (add-to-list 'package-archives
+;;                '("melpa-stable" . "https://stable.melpa.org/packages/") t))
 
-;; load emacs 24's package system. Add MELPA repository.
-(when (>= emacs-major-version 24)
-  (require 'package)
-  ;; (add-to-list 'package-archives
-  ;;              '("melpa" . "https://melpa.org/packages/"))
-  (add-to-list
-   'package-archives
-   ;; many packages won't show if using stable
-   ;; '("melpa" . "http://stable.melpa.org/packages/")
-   '("melpa" . "http://melpa.milkbox.net/packages/")
-   t))
+;; ;; load emacs 24's package system. Add MELPA repository.
+;; (when (>= emacs-major-version 24)
+;;   (require 'package)
+;;   ;; (add-to-list 'package-archives
+;;   ;;              '("melpa" . "https://melpa.org/packages/"))
+;;   (add-to-list
+;;    'package-archives
+;;    ;; many packages won't show if using stable
+;;    ;; '("melpa" . "http://stable.melpa.org/packages/")
+;;    '("melpa" . "http://melpa.milkbox.net/packages/")
+;;    t))
 
 
 
@@ -1079,7 +1079,7 @@ Version 2018-10-05"
 
 
 ;; LISP-EXTRA-FONT-LOCK
-(add-to-list 'load-path "~/.emacs.d//elpa/lisp-extra-font-lock-20181008.1921/")
+(add-to-list 'load-path "~/.emacs.d/elpa/lisp-extra-font-lock-20181008.1921/")
 (require 'lisp-extra-font-lock)
 (lisp-extra-font-lock-global-mode 1)
 
@@ -1233,7 +1233,7 @@ Version 2018-10-05"
          (ruby . t)
          (gnuplot . t)
          (clojure . t)
-         (shell . t)
+         ;; (shell . t)
          (ledger . t)
          (org . t)
          (plantuml . t)
@@ -1403,7 +1403,9 @@ Version 2018-10-05"
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet flycheck go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet
+             ;; flycheck
+             go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1436,7 +1438,7 @@ Version 2018-10-05"
             (set (make-local-variable 'company-backends) '(company-go))
             (company-mode)))
 (add-hook 'go-mode-hook 'yas-minor-mode)
-(add-hook 'go-mode-hook 'flycheck-mode)
+;; (add-hook 'go-mode-hook 'flycheck-mode)
 (setq multi-compile-alist
       '((go-mode
          . (("go-build" "go build -v"
