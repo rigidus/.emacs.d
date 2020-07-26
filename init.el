@@ -1226,6 +1226,9 @@ Version 2018-10-05"
          (dot . t)
          (ditaa . t)
          (R . t)
+         (C . t)
+         (css . t)
+         (awk . t)
          (python . t)
          (ruby . t)
          (gnuplot . t)
@@ -1240,6 +1243,7 @@ Version 2018-10-05"
 ;; This may be dangerous - make sure you understand the consequences
 ;; of setting this -- see the docstring for details
 (setq org-confirm-babel-evaluate nil)
+(setq org-support-shift-select t)
 
 
 
@@ -1393,7 +1397,7 @@ Version 2018-10-05"
  '(lj-default-username "rigidus")
  '(org-agenda-files
    (quote
-    ("~/repo/rigidus.ru/org/lrn/delay_switch/b2313.org")))
+    ("~/src/in-solar/org/analyse.org" "~/repo/rigidus.ru/org/lrn/delay_switch/b2313.org")))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
