@@ -1205,6 +1205,7 @@ Version 2018-10-05"
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 
 ;; gnuplot
+(require 'gnuplot)
 ;; (require 'org-babel-gnuplot)
 
 ;; /usr/bin/plantuml
@@ -1303,35 +1304,10 @@ Version 2018-10-05"
 
 (setq org-export-time-stamp-file nil)
 (setq org-publish-project-alist
-      '(;; ("org-notes"
-        ;;  :base-directory "~/src/rigidus.ru/org/"
-        ;;  :base-extension "org"
-        ;;  :publishing-directory "~/src/rigidus.ru/www/"
-        ;;  :recursive t
-        ;;  :publishing-function org-html-publish-to-html
-        ;;  :timestamp nil
-        ;;  :html-doctype "html5"
-        ;;  :section-numbers nil
-        ;;  :html-postamble nil
-        ;;  :html-preamble nil
-        ;;  :with-timestamps nil
-        ;;  :timestamp nil
-        ;;  :with-date nil
-        ;;  :html-head-extra "<link href=\"/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />"
-        ;;  :html-head-include-default-style nil
-        ;;  :html-head-include-scripts nil)
-        ;; ("org-static"
-        ;;  :base-directory "~/src/rigidus.ru/org/"
-        ;;  :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|djvu"
-        ;;  :publishing-directory "~/src/rigidus.ru/www/"
-        ;;  :recursive t
-        ;;  :publishing-function org-publish-attachment)
-        ;; ("org"
-        ;;  :components ("org-notes" "org-static"))
-        ("in-solar-notes"
-         :base-directory "~/src/in-solar/org/"
+      '(("org-notes"
+         :base-directory "~/src/rigidus.ru/org/"
          :base-extension "org"
-         :publishing-directory "~/src/in-solar/www/"
+         :publishing-directory "~/src/rigidus.ru/www/"
          :recursive t
          :publishing-function org-html-publish-to-html
          :timestamp nil
@@ -1342,17 +1318,42 @@ Version 2018-10-05"
          :with-timestamps nil
          :timestamp nil
          :with-date nil
-         ;; :html-head-extra "<link href=\"../css/style.css\" rel=\"stylesheet\" type=\"text/css\" />"
+         :html-head-extra "<link href=\"/css/style.css\" rel=\"stylesheet\" type=\"text/css\" />"
          :html-head-include-default-style nil
          :html-head-include-scripts nil)
-        ("in-solar-static"
-         :base-directory "~/src/in-solar/org/"
+        ("org-static"
+         :base-directory "~/src/rigidus.ru/org/"
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|djvu"
-         :publishing-directory "~/src/in-solar/www/"
+         :publishing-directory "~/src/rigidus.ru/www/"
          :recursive t
          :publishing-function org-publish-attachment)
-        ("in-solar"
-         :components ("in-solar-notes" "in-solar-static"))
+        ("org"
+         :components ("org-notes" "org-static"))
+        ;; ("in-solar-notes"
+        ;;  :base-directory "~/src/in-solar/org/"
+        ;;  :base-extension "org"
+        ;;  :publishing-directory "~/src/in-solar/www/"
+        ;;  :recursive t
+        ;;  :publishing-function org-html-publish-to-html
+        ;;  :timestamp nil
+        ;;  :html-doctype "html5"
+        ;;  :section-numbers nil
+        ;;  :html-postamble nil
+        ;;  :html-preamble nil
+        ;;  :with-timestamps nil
+        ;;  :timestamp nil
+        ;;  :with-date nil
+        ;;  ;; :html-head-extra "<link href=\"../css/style.css\" rel=\"stylesheet\" type=\"text/css\" />"
+        ;;  :html-head-include-default-style nil
+        ;;  :html-head-include-scripts nil)
+        ;; ("in-solar-static"
+        ;;  :base-directory "~/src/in-solar/org/"
+        ;;  :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|djvu"
+        ;;  :publishing-directory "~/src/in-solar/www/"
+        ;;  :recursive t
+        ;;  :publishing-function org-publish-attachment)
+        ;; ("in-solar"
+        ;;  :components ("in-solar-notes" "in-solar-static"))
          ))
 
 
@@ -1397,15 +1398,13 @@ Version 2018-10-05"
  '(lj-default-username "rigidus")
  '(org-agenda-files
    (quote
-    ("~/src/in-solar/org/analyse.org" "~/repo/rigidus.ru/org/lrn/delay_switch/b2313.org")))
+    ("~/src/rigidus.ru/org/prj/snapshot.org" "~/src/in-solar/org/analyse.org" "~/repo/rigidus.ru/org/lrn/delay_switch/b2313.org")))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet
-             ;; flycheck
-             go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
