@@ -406,9 +406,17 @@ Version 2018-10-05"
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 
-;; ;; MELPA
-;; ;; Посмотреть установленные пакеты можно в переменной С-h v package-activated-list
-;; ;; Или вызвав эту функцию:
+;; MELPA
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+;; and `package-pinned-packages`. Most users will not need or want to do this.
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+
+
+;; Посмотреть установленные пакеты можно в переменной С-h v package-activated-list
+;; Или вызвав эту функцию:
 ;; (defun list-packages-and-versions ()
 ;;   "Returns a list of all installed packages and their versions"
 ;;   (mapcar
@@ -416,16 +424,16 @@ Version 2018-10-05"
 ;;      `(,pkg ,(package-desc-version
 ;;               (cadr (assq pkg package-alist)))))
 ;;    package-activated-list))
-;; ;; (list-packages-and-versions) =>
-;; ;; ((ace-jump-mode (20140616 815))
-;; ;;  (color-theme-modern (20161219 1144))
-;; ;;  (gnuplot (20141231 2137))
-;; ;;  (gnuplot-mode (20171013 1616))
-;; ;;  (unfill (20170723 146))
-;; ;;  (wanderlust (20190812 818))
-;; ;;  (semi (20190708 1302))
-;; ;;  (flim (20190526 1034))
-;; ;;  (apel (20190407 1056)))
+;; (list-packages-and-versions) =>
+;; ((ace-jump-mode (20140616 815))
+;;  (color-theme-modern (20161219 1144))
+;;  (gnuplot (20141231 2137))
+;;  (gnuplot-mode (20171013 1616))
+;;  (unfill (20170723 146))
+;;  (wanderlust (20190812 818))
+;;  (semi (20190708 1302))
+;;  (flim (20190526 1034))
+;;  (apel (20190407 1056)))
 
 ;; ;; For important compatibility libraries like cl-lib
 ;; (when (< emacs-major-version 24)
@@ -1221,6 +1229,7 @@ Version 2018-10-05"
 ;; Make babel results blocks lowercase
 (setq org-babel-results-keyword "results")
 
+
 (org-babel-do-load-languages
  (quote org-babel-load-languages)
  (quote ((emacs-lisp . t)
@@ -1404,7 +1413,7 @@ Version 2018-10-05"
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1422,26 +1431,26 @@ Version 2018-10-05"
 
 ;; --- GO : http://reangdblog.blogspot.com/2016/06/emacs-ide-go.html
 
-;; (require 'company)
-;; (require 'flycheck)
-;; (require 'yasnippet)
-;; (require 'multi-compile)
-;; (require 'go-eldoc)
-;; (require 'company-go)
+(require 'company)
+(require 'flycheck)
+(require 'yasnippet)
+(require 'multi-compile)
+(require 'go-eldoc)
+(require 'company-go)
 
-;; (add-hook 'before-save-hook 'gofmt-before-save)
-;; (setq-default gofmt-command "goimports")
-;; (add-hook 'go-mode-hook 'go-eldoc-setup)
-;; (add-hook 'go-mode-hook
-;;           (lambda ()
-;;             (set (make-local-variable 'company-backends) '(company-go))
-;;             (company-mode)))
-;; (add-hook 'go-mode-hook 'yas-minor-mode)
-;; ;; (add-hook 'go-mode-hook 'flycheck-mode)
-;; (setq multi-compile-alist
-;;       '((go-mode
-;;          . (("go-build" "go build -v"
-;;              (locate-dominating-file buffer-file-name ".git"))
-;;             ("go-build-and-run"
-;;              "go build -v && echo 'build finish' && eval ./${PWD##*/}"
-;;              (multi-compile-locate-file-dir ".git"))))))
+(add-hook 'before-save-hook 'gofmt-before-save)
+(setq-default gofmt-command "goimports")
+(add-hook 'go-mode-hook 'go-eldoc-setup)
+(add-hook 'go-mode-hook
+          (lambda ()
+            (set (make-local-variable 'company-backends) '(company-go))
+            (company-mode)))
+(add-hook 'go-mode-hook 'yas-minor-mode)
+;; (add-hook 'go-mode-hook 'flycheck-mode)
+(setq multi-compile-alist
+      '((go-mode
+         . (("go-build" "go build -v"
+             (locate-dominating-file buffer-file-name ".git"))
+            ("go-build-and-run"
+             "go build -v && echo 'build finish' && eval ./${PWD##*/}"
+             (multi-compile-locate-file-dir ".git"))))))
