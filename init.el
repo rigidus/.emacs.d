@@ -1454,3 +1454,9 @@ Version 2018-10-05"
             ("go-build-and-run"
              "go build -v && echo 'build finish' && eval ./${PWD##*/}"
              (multi-compile-locate-file-dir ".git"))))))
+
+;; assembler comments for GAS
+(defcustom asm-comment-char ?\#
+  "*The comment-start character assumed by Asm mode."
+  :type 'character
+  :group 'asm)
