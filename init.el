@@ -1413,7 +1413,7 @@ Version 2018-10-05"
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1460,3 +1460,100 @@ Version 2018-10-05"
   "*The comment-start character assumed by Asm mode."
   :type 'character
   :group 'asm)
+
+;; pdf-tools (from akatel)
+
+;; need melpa install: pdf-tools.
+;; Delete the pdf-tools package.
+;; Restart Emacs.
+;; Reinstall pdf-tools.
+
+;; PdfLatex is a tool that converts Latex sources into PDF. This is
+;; specifically very important for researchers, as they use it to
+;; publish their findings. It could be installed very easily using
+;; Linux terminal, though this seems an annoying task on
+;; Windows. Installation commands are given below.
+
+;; Install the TexLive base
+
+;; sudo apt-get install texlive-latex-base
+
+;; Also install the recommended and extra fonts to avoid running
+;; into the error [1], when trying to use pdflatex on latex files
+;; with more fonts.
+
+;; sudo apt-get install texlive-fonts-recommended
+;; sudo apt-get install texlive-fonts-extra
+
+;; Install the extra packages,
+
+;; sudo apt-get install texlive-latex-extra
+
+;; Once installed as above, you may be able to create PDF files from latex sources using PdfLatex as below.
+
+;; pdflatex latex_source_name.tex
+
+;; Ref:
+;; - http://kkpradeeban.blogspot.com/2014/04/installing-latexpdflatex-on-ubuntu.html
+;; - https://gist.github.com/rain1024/98dd5e2c6c8c28f9ea9d
+
+;; USING: M-x org-latex-export-to-pdf
+
+
+(require 'use-package)
+
+(use-package pdf-tools :ensure t
+  :defer 18
+  :custom
+  (pdf-tools-enabled-modes
+   '(pdf-history-minor-mode
+     pdf-isearch-minor-mode
+     pdf-links-minor-mode
+     pdf-misc-minor-mode
+     pdf-outline-minor-mode
+     pdf-misc-size-indication-minor-mode
+     pdf-misc-menu-bar-minor-mode
+     pdf-annot-minor-mode
+     pdf-sync-minor-mode
+     pdf-misc-context-menu-minor-mode
+     pdf-cache-prefetch-minor-mode
+     pdf-view-auto-slice-minor-mode
+     pdf-occur-global-minor-mode))
+  :config
+  (dolist
+      (pkg
+       '( pdf-annot pdf-cache pdf-dev pdf-history pdf-info pdf-isearch
+                    pdf-links pdf-misc pdf-occur pdf-outline pdf-sync
+                    pdf-util pdf-view pdf-virtual))
+    (require pkg))
+  (pdf-tools-install t))
+
+(use-package pdf-view :ensure pdf-tools :defer 19
+  :after (pdf-tools)
+  :magic ("%PDF" . pdf-view-mode)
+  :custom
+  ;; tomorrow-night
+  (pdf-view-midnight-colors '("#c5c8c6" . "#1d1f21"))
+  :bind (:map pdf-view-mode-map
+              ([remap avy-goto-line] . pdf-view-goto-page)
+              ([remap forward-word] . scroll-up-command)
+              ([remap backward-word] . scroll-down-command)))
+
+(use-package tex :ensure auctex :defer 20
+  :after (pdf-tools)
+  :preface
+  (defvaralias 'akater-TeX-after-compilation-hook 'TeX-after-compilation-finished-functions)
+  :custom
+  (TeX-view-program-selection '((output-pdf "PDF Tools")))
+  (TeX-source-correlate-start-server t)
+  :hook
+  ;; Update PDF buffers after successful LaTeX runs
+  (akater-TeX-after-compilation . TeX-revert-document-buffer))
+
+(use-package org-pdfview :ensure t :disabled t
+  :defer 21
+  :after (org pdf-view)
+  :config
+  (add-to-list 'org-file-apps
+               '("\\.pdf\\'" . (lambda (_file link)
+                                 (org-pdfview-open link)))))
