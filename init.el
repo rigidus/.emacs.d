@@ -281,7 +281,8 @@ Version 2018-10-05"
 (set-cursor-color "red")             ;; Красный не мигающий (!) курсор
 (blink-cursor-mode nil)
 ;; Однако в режиме терминала это не работает, поэтому..
-(send-string-to-terminal "\033]12;red\007")
+(if (not (display-graphic-p))
+    (send-string-to-terminal "\033]12;red\007"))
 ;; мышка...
 (global-set-key [vertical-scroll-bar down-mouse-1] 'scroll-bar-drag) ;; Scroll Bar gets dragged by mouse butn 1
 (setq mouse-yank-at-point 't)        ;; Paste at point NOT at cursor
