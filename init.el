@@ -1407,13 +1407,13 @@ Version 2018-10-05"
  '(lj-default-username "rigidus")
  '(org-agenda-files
    (quote
-    ("~/src/rigidus.ru/org/prj/snapshot.org" "~/src/in-solar/org/analyse.org" "~/repo/rigidus.ru/org/lrn/delay_switch/b2313.org")))
+    ("~/src/jft/mfm.org" "~/src/rigidus.ru/org/lrn/ll/relo.org" "~/src/rigidus.ru/org/prj/snapshot.org" "~/src/in-solar/org/analyse.org" "~/repo/rigidus.ru/org/lrn/delay_switch/b2313.org")))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1456,7 +1456,7 @@ Version 2018-10-05"
              (multi-compile-locate-file-dir ".git"))))))
 
 ;; assembler comments for GAS
-(defcustom asm-comment-char ?\#
+(defcustom asm-comment-char ?\;
   "*The comment-start character assumed by Asm mode."
   :type 'character
   :group 'asm)
