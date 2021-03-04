@@ -1414,7 +1414,7 @@ Version 2018-10-05"
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1463,6 +1463,10 @@ Version 2018-10-05"
   :group 'asm)
 
 ;; pdf-tools (from akatel)
+
+;; Из коробки org-modeне знает о pdf-инструментах.
+;; Однако вы можете добавить поддержку открытия
+;; ссылок org на файлы pdf с помощью org-pdfview
 
 ;; need melpa install: pdf-tools.
 ;; Delete the pdf-tools package.
