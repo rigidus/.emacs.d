@@ -7,6 +7,8 @@
 ;; EMACS configuration file by Rigidus
 ;;
 ;; Hint: text-scale-adjust настраивает размер в GUI
+;; Документация Emacs находится в пакете emacs-common-non-dfsg.
+;; Или emacs27-common-non-dfsg. Потом: C-h i
 
 (require 'cl)
 
@@ -280,13 +282,26 @@ Version 2018-10-05"
 
 (set-cursor-color "red")             ;; Красный не мигающий (!) курсор
 (blink-cursor-mode nil)
+
 ;; Однако в режиме терминала это не работает, поэтому..
-(if (not (display-graphic-p))
-    (send-string-to-terminal "\033]12;red\007"))
+(if (not (display-graphic-p)) ;; GUI/Terminal Mode
+    (progn
+      (send-string-to-terminal "\033]12;red\007")
+      )
+  (progn ;; GUI-mode
+    ;; Максимизация окна при запуске в GUI-mode
+    (add-to-list 'default-frame-alist '(fullscreen . maximized))
+    ))
+
+(set-face-attribute 'default (selected-frame) :height 170)
 ;; мышка...
 (global-set-key [vertical-scroll-bar down-mouse-1] 'scroll-bar-drag) ;; Scroll Bar gets dragged by mouse butn 1
 (setq mouse-yank-at-point 't)        ;; Paste at point NOT at cursor
 
+;; Правила открытия буферов
+;; (split-window-right)
+(setq split-height-threshold nil)
+(setq split-width-threshold 80)
 
 ;; Хочу чтобы inferior shell открывался в том же окне
 (add-to-list 'display-buffer-alist
@@ -1414,7 +1429,7 @@ Version 2018-10-05"
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1464,7 +1479,7 @@ Version 2018-10-05"
 
 ;; pdf-tools (from akatel)
 
-;; Из коробки org-modeне знает о pdf-инструментах.
+;; Из коробки org-mode не знает о pdf-инструментах.
 ;; Однако вы можете добавить поддержку открытия
 ;; ссылок org на файлы pdf с помощью org-pdfview
 
@@ -1493,6 +1508,9 @@ Version 2018-10-05"
 ;; Install the extra packages,
 
 ;; sudo apt-get install texlive-latex-extra
+
+;; Install all languages
+;; sudo apt-get install texlive-lang-all
 
 ;; Once installed as above, you may be able to create PDF files from latex sources using PdfLatex as below.
 
@@ -1562,3 +1580,68 @@ Version 2018-10-05"
   (add-to-list 'org-file-apps
                '("\\.pdf\\'" . (lambda (_file link)
                                  (org-pdfview-open link)))))
+
+
+;; Emacs Presentations - org-tree-slide
+
+(when (require 'org-tree-slide nil t)
+  (global-set-key (kbd "<f8>") 'org-tree-slide-mode)
+  (global-set-key (kbd "S-<f8>") 'org-tree-slide-skip-done-toggle)
+  (define-key org-tree-slide-mode-map (kbd "<f9>")
+    'org-tree-slide-move-previous-tree)
+  (define-key org-tree-slide-mode-map (kbd "<f10>")
+    'org-tree-slide-move-next-tree)
+  (define-key org-tree-slide-mode-map (kbd "<f11>")
+    'org-tree-slide-content)
+  (setq org-tree-slide-skip-outline-level 4)
+  (org-tree-slide-narrowing-control-profile)
+  (setq org-tree-slide-skip-done nil))
+
+;; ---------------------
+
+;; http://emacs-fu.blogspot.com/search/label/beamer
+;; allow for export=>beamer by placing
+
+;; #+LaTeX_CLASS: beamer in org files
+
+(require 'ox-latex)
+
+(unless (boundp 'org-export-latex-classes)
+  (setq org-export-latex-classes nil))
+
+(add-to-list
+ 'org-export-latex-classes
+ ;; beamer class, for presentations
+ '("beamer"
+   "\\documentclass{beamer}\n
+    \\mode<{{{beamermode}}}>\n
+    \\setbeameroption{show notes}
+    \\usepackage[utf8]{inputenc}\n
+    \\usepackage[T1]{fontenc}\n
+    \\usepackage{hyperref}\n
+    \\usepackage{color}
+    \\usepackage{listings}
+    \\lstset{numbers=none,language=[ISO]C++,tabsize=4,frame=single,basicstyle=\\small,showspaces=false,showstringspaces=false,showtabs=false,keywordstyle=\\color{blue}\\bfseries,commentstyle=\\color{red},}\n
+    \\usepackage{verbatim}\n
+    \\institute{{{{beamerinstitute}}}}\n
+    \\subject{{{{beamersubject}}}}\n"
+   ("\\section{%s}" . "\\section*{%s}")
+   ("\\begin{frame}[fragile]\\frametitle{%s}"
+    "\\end{frame}"
+    "\\begin{frame}[fragile]\\frametitle{%s}"
+    "\\end{frame}")))
+
+;; letter class, for formal letters
+
+(add-to-list
+ 'org-export-latex-classes
+ '("letter"
+   "\\documentclass[11pt]{letter}\n
+    \\usepackage[utf8]{inputenc}\n
+    \\usepackage[T1]{fontenc}\n
+    \\usepackage{color}"
+   ("\\section{%s}" . "\\section*{%s}")
+   ("\\subsection{%s}" . "\\subsection*{%s}")
+   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
