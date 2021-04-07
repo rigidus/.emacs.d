@@ -1,0 +1,2 @@
+;;; -*- no-byte-compile: t -*-
+(define-package "solidity-flycheck" "20210331.1709" "Flycheck integration for solidity emacs mode" '((flycheck "32snapshot") (solidity-mode "0.1.9") (dash "2.17.0")) :commit "9b1b7097fb5aaecb2aeec558b7d975bb3d7b8d10" :authors '(("Lefteris Karapetsas " . "lefteris@refu.co")) :maintainer '("Lefteris Karapetsas " . "lefteris@refu.co") :keywords '("languages" "solidity" "flycheck"))
