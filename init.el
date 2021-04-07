@@ -1429,7 +1429,7 @@ Version 2018-10-05"
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
