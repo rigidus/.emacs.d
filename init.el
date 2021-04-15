@@ -1645,3 +1645,8 @@ Version 2018-10-05"
    ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
    ("\\paragraph{%s}" . "\\paragraph*{%s}")
    ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+
+;; Markdown exporting
+
+(require 'ox-md)
