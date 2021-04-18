@@ -118,7 +118,7 @@
 
 (defun what-can-i-do ()
   (interactive)
-  (let ((pattern "\\(\\[\\(TODO\\|VRFY\\):gmm\\]\\)") ;; "\\(\\[TODO:.\\{3,\\}\\]\\)"
+  (let ((pattern "\\(\\[\\(TODO\\|VRFY\\|NOTE\\):gmm\\]\\)") ;; "\\(\\[TODO:.\\{3,\\}\\]\\)"
         (curbuff (current-buffer))
         (newbuff (generate-new-buffer "*what-can-i-do*")))
     (save-excursion
@@ -1144,12 +1144,13 @@ Version 2018-10-05"
         ("CANCEL" . (:foreground "violet" :weight bold))
         ("DONE" . (:foreground "green" :weight bold))))
 
-;; ORG-MODE TODO|VRFY font-lock-faces
+;; ORG-MODE TODO|VRFY|NOTE font-lock-faces
 (font-lock-add-keywords 'org-mode
                         '(("\\(\\[TODO:[a-z]\\{3,\\}\\]\\)" . 'font-lock-warning-face)
                           ("\\(\\[COMMENT:[a-z]\\{3,\\}\\]\\)" . 'font-lock-keyword-face)
                           ;; ("\\(comment\\)" . 'font-lock-comment-face)
                           ("\\(\\[VRFY:[a-z]\\{3,\\}\\]\\)" . 'font-lock-function-name-face)
+                          ("\\(\\[NOTE:[a-z]\\{3,\\}\\]\\)" . 'font-lock-function-name-face)
                           ;; ("\\(variable-name\\)" . 'font-lock-variable-name-face)
                           ;; ("\\(keyword\\)" . 'font-lock-keyword-face)
                           ;; ("\\(comment\\)" . 'font-lock-comment-face)
