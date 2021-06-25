@@ -725,10 +725,10 @@ Version 2018-10-05"
  'custom-theme-load-path
  (file-name-as-directory "~/.emacs.d/elpa/color-theme-modern-20161219.1144"))
 ;;
-;; (load-theme 'comidia t t)
-;; (enable-theme 'comidia)
+(load-theme 'comidia t t)
+(enable-theme 'comidia)
 ;;
-(load-theme 'tango t)
+;; (load-theme 'tango t)
 ;; (enable-theme 'wheatgrass)
 ;; Here's list of emacs 24.3 themes.
 ;; adwaita
