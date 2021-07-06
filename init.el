@@ -1143,6 +1143,7 @@ Version 2018-10-05"
 
 ;; Задание цепочек ключевых слов (переключение между словами клавишами Shift + Right или + Left с курсором на заголовке). "|" отмечает границу, если заголовок в статусе после этого разделителя, то он "выполнен", это влияет на планирование и отображение в Agenda Views:
 (setq org-todo-keywords '((sequence "TODO(t)" "START(s)" "MEET(m)" "CALL(c)" "DELEGATED(d)" "WAIT(w)" "|" "CANCEL(r)"  "DONE(f)")))
+
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
@@ -1438,7 +1439,7 @@ Version 2018-10-05"
  '(lj-default-username "rigidus")
  '(org-agenda-files
    (quote
-    ("~/src/bridge/doc.org" "~/src/et/README.org" "~/src/jft/mfm.org" "~/src/rigidus.ru/org/lrn/ll/relo.org" "~/src/rigidus.ru/org/prj/snapshot.org" "~/src/in-solar/org/analyse.org" "~/repo/rigidus.ru/org/lrn/delay_switch/b2313.org")))
+    ()))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
