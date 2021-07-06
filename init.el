@@ -362,12 +362,12 @@ Version 2018-10-05"
   (previous-line)
   (insert "#+BEGIN_SRC "))
 
-(global-set-key (kbd "C-x p") '(lambda ()
+(global-set-key (kbd "C-x [") '(lambda ()
                                  (interactive)
                                  (set-input-method nil)
                                  (codeblock)))
 
-(global-set-key (kbd "C-c p") (lambda ()
+(global-set-key (kbd "C-x ]") (lambda ()
                                 (interactive)
                                 (set-input-method nil)
                                 (insert "#+NAME:")
@@ -1438,7 +1438,7 @@ Version 2018-10-05"
  '(lj-default-username "rigidus")
  '(org-agenda-files
    (quote
-    ("~/src/et/README.org" "~/src/jft/mfm.org" "~/src/rigidus.ru/org/lrn/ll/relo.org" "~/src/rigidus.ru/org/prj/snapshot.org" "~/src/in-solar/org/analyse.org" "~/repo/rigidus.ru/org/lrn/delay_switch/b2313.org")))
+    ("~/src/bridge/doc.org" "~/src/et/README.org" "~/src/jft/mfm.org" "~/src/rigidus.ru/org/lrn/ll/relo.org" "~/src/rigidus.ru/org/prj/snapshot.org" "~/src/in-solar/org/analyse.org" "~/repo/rigidus.ru/org/lrn/delay_switch/b2313.org")))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
