@@ -1142,7 +1142,9 @@ Version 2018-10-05"
 (add-hook 'org-mode-hook (lambda () (setq fill-column 73)))
 
 ;; Задание цепочек ключевых слов (переключение между словами клавишами Shift + Right или + Left с курсором на заголовке). "|" отмечает границу, если заголовок в статусе после этого разделителя, то он "выполнен", это влияет на планирование и отображение в Agenda Views:
-(setq org-todo-keywords '((sequence "TODO(t)" "START(s)" "MEET(m)" "CALL(c)" "DELEGATED(d)" "WAIT(w)" "|" "CANCEL(r)"  "DONE(f)")))
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "START(s)" "MEET(m)" "CALL(c)" "DELEGATED(d)" "WAIT(w)" "|" "CANCEL(r)"  "DONE(f)")
+        (sequence "WEEK(w)" "MONTH(m)" "IDEA(i)")))
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
@@ -1155,7 +1157,7 @@ Version 2018-10-05"
         ("MEET" . (:foreground "yellow" :weight bold))
         ("CALL" . (:foreground "lightblue" :weight bold))
         ("DELEGATED" . (:foreground "white" :weight bold))
-        ("WAIT" . (:foreground "black" :weight bold))
+        ("WAIT" . (:foreground "gray" :weight bold))
         ("CANCEL" . (:foreground "violet" :weight bold))
         ("DONE" . (:foreground "green" :weight bold))))
 
