@@ -88,6 +88,7 @@
     (user-toggle-input-method)))
 
 (set-input-method "russian-computer")
+(setq default-input-method 'russian-computer)
 (user-toggle-input-method)
 
 ;; Установка раскладки при переключении по С-\
