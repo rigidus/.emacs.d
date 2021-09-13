@@ -10,11 +10,11 @@
 ;; Документация Emacs находится в пакете emacs-common-non-dfsg.
 ;; Или emacs27-common-non-dfsg. Потом: C-h i
 
+;;; Debug-Init
 (require 'cl)
-
 (setq debug-on-error t)
 
-;; Comment function
+;;; Comment function
 (defun comment-or-uncomment-this (&optional lines)
   (interactive "P")
   (if mark-active
@@ -28,18 +28,18 @@
 (global-set-key (kbd "C-x /")
 		'comment-or-uncomment-this)
 
-;; выделение парных скобок
+;;; Выделение парных скобок
 (show-paren-mode 1)
 
-;; выделять все выражение в скобках
+;;; выделять все выражение в скобках
 ;; (setq show-paren-style 'expression)
 
-;; GOTOLINE
+;;; Goto-line
 (global-set-key [?\M-g] 'goto-line)
 (global-set-key (kbd "\e\eg") 'goto-line)
 
 
-;; ТОЧКИ ЕМАКС (Антон Кульчицкий)
+;;; ТОЧКИ ЕМАКС (Антон Кульчицкий)
 (defun user-cyrillic-redefinitions ()
   "Set of global keys binding for cyrillic.
    This function is to be called from user-toggle-input-method"
@@ -91,8 +91,10 @@
 (setq default-input-method 'russian-computer)
 (user-toggle-input-method)
 
-;; Установка раскладки при переключении по С-\
+;;; Установка раскладки при переключении по С-\
 (global-set-key (kbd "\C-\\") 'user-toggle-input-method)
+
+;;; Meta-Meta-Shift
 
 ;; Итак, я предлагаю команду 'Meta-Meta-Shift-/' для того, чтобы
 ;; запомнить текущую позицию и команду 'Meta-Meta-/' для того, чтобы
@@ -115,7 +117,7 @@
 (global-set-key (kbd "\e\e/") 'save-point-and-switch)
 (global-set-key (kbd "\e\e?") 'save-point-only)
 
-;; Водки найду
+;;; What-Can-I-Do
 
 (defun what-can-i-do ()
   (interactive)
@@ -151,9 +153,7 @@
 (global-set-key (kbd "C-c m") 'what-can-i-do)
 
 
-
-
-;; Unfill Region
+;;; Unfill Region
 ;; https://www.emacswiki.org/emacs/UnfillRegion
 (defun unfill-region (beg end)
   "Unfill the region, joining text paragraphs into a single
@@ -167,6 +167,7 @@
 (define-key global-map "\C-\M-Q" 'unfill-region)
 
 
+;;; Xah-show-kill-ring
 (defun xah-show-kill-ring ()
   "Insert all `kill-ring' content in a new buffer named *copy history*.
 URL `http://ergoemacs.org/emacs/emacs_show_kill_ring.html'
@@ -353,6 +354,7 @@ Version 2018-10-05"
                       (buffer-substring beg end))))
 
 
+;; Code-Blocks
 ;; #+BEGIN_SRC #+END_SRC CODEBLOCK
 ;; http://ergoemacs.org/emacs/emacs_macro_example.html
 ;; http://ergoemacs.org/emacs/keyboard_shortcuts.html
@@ -374,6 +376,7 @@ Version 2018-10-05"
                                 (insert "#+NAME:")
                                 (newline)))
 
+;;; Fast-Jumps
 ;; В целях дальнейшего улучшения эргономики и отказа
 ;; от лишних клавиш (таких как клавиши курсора) и
 ;; планируемого перехода на клавиатуры уменьшенного
@@ -414,16 +417,16 @@ Version 2018-10-05"
 
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; EXTENSIONS
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; EXTENSIONS
+
 
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 
-;; MELPA
+;;; MELPA
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
@@ -473,7 +476,7 @@ Version 2018-10-05"
 
 
 
-;; SBCL
+;;; SBCL
 
 (setq inferior-lisp-program "sbcl --dynamic-space-size 2048")
 (setq slime-lisp-implementations '((sbcl ("sbcl"))))
@@ -516,7 +519,8 @@ Version 2018-10-05"
              (local-set-key (kbd "RET") 'newline-and-indent)))
 
 
-;; IBUFFER - Более удобный переключатель буферов
+;;; IBUFFER
+;; Более удобный переключатель буферов
 
 (require 'ibuffer)
 (global-set-key [?\C-x ?\C-b] 'ibuffer)
@@ -588,7 +592,7 @@ Version 2018-10-05"
               (mark " " (name 16 -1) " " filename))))
 
 
-;; HL-P
+;;; Highlight-Parentheses
 
 ;; http://nschum.de/src/emacs/highlight-parentheses/highlight-parentheses.el
 (require 'highlight-parentheses)
@@ -601,7 +605,7 @@ Version 2018-10-05"
 (global-highlight-parentheses-mode)
 
 
-;; FORTH
+;;; FORTH
 
 (autoload 'forth-mode "gforth.el")
 (autoload 'forth-block-mode "gforth.el")
@@ -609,7 +613,7 @@ Version 2018-10-05"
 (add-to-list 'auto-mode-alist '("\\.f$" . forth-mode))
 
 
-;; JABBER
+;;; JABBER
 
 (add-to-list 'load-path "~/.emacs.d/emacs-jabber")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/emacs-jabber")
@@ -640,7 +644,7 @@ Version 2018-10-05"
 (load-file "~/.emacs.d/lisp/jabber-account.el")
 
 
-;; ACE-JUMP-MODE
+;;; ACE-JUMP-MODE
 
 
 ;; https://www.emacswiki.org/emacs/AceJump
@@ -680,7 +684,7 @@ Version 2018-10-05"
 
 
 
-;; ACE-MC (ace & multiple-cursors)
+;;; ACE-MC (ace & multiple-cursors)
 
 ;; ace-mc-add-multiple-cursors запрашивает «Query Char» для первого
 ;; символа слова, почти так же, как это делает Ace Jump.  Фактически,
@@ -707,7 +711,7 @@ Version 2018-10-05"
 (global-set-key (kbd "C-M-]") 'ace-mc-add-single-cursor)
 
 
-;; UNIQUIFY
+;;; UNIQUIFY
 ;; http://emacswiki.org/emacs/uniquify
 (require 'uniquify)
 ;; (setq uniquify-buffer-name-style t)
@@ -717,11 +721,10 @@ Version 2018-10-05"
 (setq uniquify-ignore-buffers-re "^\\*")
 (setq post-forward-angle-brackets 'post-forward-angle-brackets)
 
-
-;; FULLSCREEN
+;;; FULLSCREEN
 (require 'fullscreen)
 
-;; COLOR-THEME-MODERN
+;;; COLOR-THEME-MODERN
 (add-to-list
  'custom-theme-load-path
  (file-name-as-directory "~/.emacs.d/elpa/color-theme-modern-20161219.1144"))
@@ -747,7 +750,7 @@ Version 2018-10-05"
 ;; wombat
 
 
-;; DICTEM
+;;; DICTEM
 
 ;; Бегаете по переводимому тексту. На незнакомом слове нажали C-c d
 ;; и в отдельном буфере в отдельном окне отображается перевод. Между
@@ -864,7 +867,7 @@ Version 2018-10-05"
   ) ; end of (when (executable-find "dictd") ...)
 
 
-;; UNFILL (from melpa - not need require, only for note)
+;;; UNFILL (from melpa - not need require, only for note)
 ;; (require 'unfill)
 ;; Usage
 ;; M-x unfill-region
@@ -872,7 +875,7 @@ Version 2018-10-05"
 ;; M-x unfill-toggle
 
 
-;; EMMC (not works from meplpa yet)
+;;; EMMC (not works from meplpa yet)
 ;; http://www.gnu.org/software/emms/quickstart.html
 ;; (require 'emms-setup)
 ;; (emms-standard)
@@ -900,7 +903,7 @@ Version 2018-10-05"
 ;; (emms-default-players)
 
 
-;; WANDERLUST
+;;; WANDERLUST
 ;; http://box.matto.nl/emacsgmail.html
 ;; http://www.emacswiki.org/emacs/hgw-init-wl.el
 
@@ -1020,7 +1023,7 @@ Version 2018-10-05"
       'mail-send-hook))
 
 
-;; ERC
+;;; ERC
 (require 'erc)
 
 ;; загружаем авто-подключение к каналам, и задаем список каналов для
@@ -1060,7 +1063,7 @@ Version 2018-10-05"
 
 
 
-;; COMPANY-MODE
+;;; COMPANY-MODE
 
 ;; Once installed, enable company-mode with M-x company-mode.
 
@@ -1095,13 +1098,13 @@ Version 2018-10-05"
 
 
 
-;; COMPANY-FLX
+;;; COMPANY-FLX
 
 (with-eval-after-load 'company
   (company-flx-mode +1))
 
 
-;; TELEGA
+;;; TELEGA
 
 ;; (use-package telega
 ;;              :load-path  "~/telega.el"
@@ -1112,21 +1115,19 @@ Version 2018-10-05"
 (setq telega-msg-rainbow-title nil)
 
 
-;; HELM
+;;; HELM
 
 ;; (require 'helm-config)
 
 
-;; LISP-EXTRA-FONT-LOCK
+;;; LISP-EXTRA-FONT-LOCK
 (add-to-list 'load-path "~/.emacs.d/elpa/lisp-extra-font-lock-20181008.1921/")
 (require 'lisp-extra-font-lock)
 (lisp-extra-font-lock-global-mode 1)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; OrgMode
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;; OrgMode
 
 
 ;; http://orgmode.org/manual/Installation.html
@@ -1235,22 +1236,21 @@ Version 2018-10-05"
 ;; (mapc #'org-babel-load-file (directory-files dotfiles-dir t "\\.org$"))
 
 
-;;
-;; Org Babel
-;;
+;;; Org Babel
+
 ;; (require 'org-babel)
 ;; (require 'org-babel-init)
 
-
 (require 'ob-tangle)
 
-;; ditaa
+;;; Ditaa
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 
-;; gnuplot
+;;; Gnuplot
 (require 'gnuplot)
 ;; (require 'org-babel-gnuplot)
 
+;;; PlantUML
 ;; /usr/bin/plantuml
 (load-file "~/.emacs.d/lisp/plantuml_helpers.el")
 (setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
@@ -1261,10 +1261,11 @@ Version 2018-10-05"
     (error nil)))
 (add-hook 'org-babel-after-execute-hook 'bh/display-inline-images 'append)
 
-;; Make babel results blocks lowercase
+;;; Make babel results blocks lowercase
 (setq org-babel-results-keyword "results")
 
 
+;;; Org-babel-do-load-languages
 (org-babel-do-load-languages
  (quote org-babel-load-languages)
  (quote ((emacs-lisp . t)
@@ -1284,14 +1285,14 @@ Version 2018-10-05"
          (plantuml . t)
          (latex . t))))
 
-;; Do not prompt to confirm evaluation
+;;; Do not prompt to confirm evaluation
 ;; This may be dangerous - make sure you understand the consequences
 ;; of setting this -- see the docstring for details
 (setq org-confirm-babel-evaluate nil)
 (setq org-support-shift-select t)
 
 
-
+;;; Org-Mode-Exporting
 ;; put your css files there
 (defvar org-theme-css-dir "~/.emacs.d/org-css/")
 
@@ -1401,7 +1402,7 @@ Version 2018-10-05"
          ))
 
 
-;; OrgPresent
+;;; OrgPresent
 
 (autoload 'org-present "org-present" nil t)
 
@@ -1421,11 +1422,7 @@ Version 2018-10-05"
                  (org-present-read-write)))))
 
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; CUSTOM
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;;; CUSTOM
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -1440,15 +1437,13 @@ Version 2018-10-05"
  '(jabber-use-global-history nil)
  '(lj-cache-login-information t)
  '(lj-default-username "rigidus")
- '(org-agenda-files
-   (quote
-    ()))
+ '(org-agenda-files nil)
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1464,7 +1459,8 @@ Version 2018-10-05"
 
 
 
-;; --- GO : http://reangdblog.blogspot.com/2016/06/emacs-ide-go.html
+;;; GoLang
+;; http://reangdblog.blogspot.com/2016/06/emacs-ide-go.html
 
 (require 'company)
 (require 'flycheck)
@@ -1490,13 +1486,15 @@ Version 2018-10-05"
              "go build -v && echo 'build finish' && eval ./${PWD##*/}"
              (multi-compile-locate-file-dir ".git"))))))
 
-;; assembler comments for GAS
+;;; assembler comments for GAS
 (defcustom asm-comment-char ?\;
   "*The comment-start character assumed by Asm mode."
   :type 'character
   :group 'asm)
 
-;; pdf-tools (from akatel)
+;;; Pdf-Tools
+
+;; (from akatel)
 
 ;; Из коробки org-mode не знает о pdf-инструментах.
 ;; Однако вы можете добавить поддержку открытия
@@ -1601,7 +1599,7 @@ Version 2018-10-05"
                                  (org-pdfview-open link)))))
 
 
-;; Emacs Presentations - org-tree-slide
+;;; Emacs Presentations - org-tree-slide
 
 (when (require 'org-tree-slide nil t)
   (global-set-key (kbd "<f8>") 'org-tree-slide-mode)
@@ -1666,7 +1664,7 @@ Version 2018-10-05"
    ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
 
-;; Markdown exporting
+;;; Markdown exporting
 
 (require 'ox-md)
 
