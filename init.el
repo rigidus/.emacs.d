@@ -1131,8 +1131,8 @@ Version 2018-10-05"
 
 
 ;; http://orgmode.org/manual/Installation.html
-(add-to-list 'load-path "~/src/org-mode/lisp")
-(add-to-list 'load-path "~/src/org-mode/contrib/lisp" t)
+;; (add-to-list 'load-path "~/src/org-mode/lisp")
+;; (add-to-list 'load-path "~/src/org-mode/contrib/lisp" t)
 ;; (add-to-list 'load-path "~/repo/org-mode/lisp")
 ;; (add-to-list 'load-path "~/repo/org-mode/contrib/lisp" t)
 
@@ -1443,7 +1443,7 @@ Version 2018-10-05"
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (org-roam emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
