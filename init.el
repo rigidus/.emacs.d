@@ -558,6 +558,8 @@ Version 2018-10-05"
                              (mode . closure-template-html-mode)))
                ("JS"        (or
                              (mode . espresso-mode)))
+               ("GO"        (or
+                             (mode . go-mode)))
                ("ELISP"     (or
                              (mode . elisp-mode)
                              (mode . emacs-lisp-mode)))
@@ -1485,6 +1487,7 @@ Version 2018-10-05"
             ("go-build-and-run"
              "go build -v && echo 'build finish' && eval ./${PWD##*/}"
              (multi-compile-locate-file-dir ".git"))))))
+
 
 ;;; assembler comments for GAS
 (defcustom asm-comment-char ?\;
