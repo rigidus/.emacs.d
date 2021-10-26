@@ -671,10 +671,10 @@ Version 2018-10-05"
   '(ace-jump-mode-enable-mark-sync))
 (define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
 
-;;If you use viper mode :
-;; (define-key viper-vi-global-user-map (kbd "SPC") 'ace-jump-mode)
-;;If you use evil
-;; (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
+;; If you use viper mode :
+;;   (define-key viper-vi-global-user-map (kbd "SPC") 'ace-jump-mode)
+;; If you use evil
+;;   (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
 
 ;; https://emacs.stackexchange.com/questions/5749/using-ace-jump-mode-inside-shell-in-emacs
 (defun my-shell-hook ()
@@ -683,7 +683,6 @@ Version 2018-10-05"
 (defun my-org-mode-hook ()
   (define-key org-mode-map (kbd "C-c SPC") 'ace-jump-mode))
 (add-hook 'org-mode-hook 'my-org-mode-hook)
-
 
 
 ;;; ACE-MC (ace & multiple-cursors)
@@ -1143,7 +1142,10 @@ Version 2018-10-05"
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
 
 ;; Включение fill-column для org-mode
-(add-hook 'org-mode-hook (lambda () (setq fill-column 73)))
+;; (add-hook 'org-mode-hook (lambda () (setq fill-column 73)))
+
+;; Включение visual-line-mode для org-mode
+(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
 ;; Задание цепочек ключевых слов (переключение между словами клавишами Shift + Right или + Left с курсором на заголовке). "|" отмечает границу, если заголовок в статусе после этого разделителя, то он "выполнен", это влияет на планирование и отображение в Agenda Views:
 (setq org-todo-keywords
@@ -1445,7 +1447,7 @@ Version 2018-10-05"
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (org-roam emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (ace-jump-mode org-roam emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
