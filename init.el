@@ -10,10 +10,6 @@
 ;; Документация Emacs находится в пакете emacs-common-non-dfsg.
 ;; Или emacs27-common-non-dfsg. Потом: C-h i
 
-;;; Debug-Init
-(require 'cl)
-(setq debug-on-error t)
-
 ;;; Comment function
 (defun comment-or-uncomment-this (&optional lines)
   (interactive "P")
@@ -26,7 +22,12 @@
      (line-end-position lines))))
 
 (global-set-key (kbd "C-x /")
-		'comment-or-uncomment-this)
+ 		'comment-or-uncomment-this)
+
+;;; Debug-Init
+(require 'cl)
+(setq debug-on-error t)
+
 
 ;;; Выделение парных скобок
 (show-paren-mode 1)
@@ -37,7 +38,6 @@
 ;;; Goto-line
 (global-set-key [?\M-g] 'goto-line)
 (global-set-key (kbd "\e\eg") 'goto-line)
-
 
 ;;; ТОЧКИ ЕМАКС (Антон Кульчицкий)
 (defun user-cyrillic-redefinitions ()
@@ -153,287 +153,14 @@
 (global-set-key (kbd "C-c m") 'what-can-i-do)
 
 
-;;; Unfill Region
-;; https://www.emacswiki.org/emacs/UnfillRegion
-(defun unfill-region (beg end)
-  "Unfill the region, joining text paragraphs into a single
-    logical line.  This is useful, e.g., for use with
-    `visual-line-mode'."
-  (interactive "*r")
-  (let ((fill-column (point-max)))
-    (fill-region beg end)))
-
-;; Handy key definition
-(define-key global-map "\C-\M-Q" 'unfill-region)
-
-
-;;; Xah-show-kill-ring
-(defun xah-show-kill-ring ()
-  "Insert all `kill-ring' content in a new buffer named *copy history*.
-URL `http://ergoemacs.org/emacs/emacs_show_kill_ring.html'
-Version 2018-10-05"
-  (interactive)
-  (let (($buf (generate-new-buffer "*copy history*")))
-    (progn
-      (switch-to-buffer $buf)
-      (funcall 'fundamental-mode)
-      (setq buffer-offer-save t)
-      (dolist (x kill-ring )
-        (insert x "\n\u000cttt\n\n"))
-      (goto-char (point-min)))
-    (when (fboundp 'xah-show-formfeed-as-line)
-      (xah-show-formfeed-as-line))))
-
-;; COMMON SETTINGS
-
-
-(delete-selection-mode 1)   ;; <del> и BackSpace удаляют выделенный текст
-(transient-mark-mode 1)     ;; Показывать выделенный текст
-
-;; Makes clipboard work
-(setq x-select-enable-clipboard t)
-;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
-(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-
-;; для корректного выведения escape-последовательностей shell`a
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
-;; Установки автоопределения кодировок. Первой будет определяться utf-8-unix
-(prefer-coding-system 'cp866)
-(prefer-coding-system 'koi8-r-unix)
-(prefer-coding-system 'windows-1251-dos)
-(prefer-coding-system 'utf-8-unix)
-
-;; Удаляем оконечные пробелы перед сохранением файлов
-(add-hook 'before-save-hook '(lambda ()
-(delete-trailing-whitespace)))
-
-;; Режим по умолчанию c переносом строк по ширине
-(setq default-major-mode 'text-mode)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
-(setq auto-fill-mode t)
-(setq fill-column 73)
-
-;; Создание резервных копий редактируемых файлов (Backup)
-;; (info "(emacs)Auto Save")
-(setq auto-save-interval 512)            ;; Количество нажатий до автосохранения
-(setq auto-save-timeout 20)              ;; Автосохранение в перерыве между нажатиями (в секундах)
-(setq backup-directory-alist             ;; Все временные копии в один каталог.
-      '((".*" . "~/.emacs.d/backups")))  ;; Каталог создаётся автоматически.
-(setq backup-by-copying t)               ;; Режим сохранения копий
-(setq version-control t)                 ;; Создавать копии с номерами версий
-(setq delete-old-versions t)             ;; Удалять старые версии без подтверждения
-(setq kept-new-versions 6)               ;; нумерованный бэкап - 2 первых и 2 последних
-(setq kept-old-versions 2)
-
-;; Оптимизация работы редактора
-;; limit on number of Lisp variable bindings & unwind-protects
-(setq max-specpdl-size (* 10 max-specpdl-size)) ; 10 * 1 M (default)
-;; limit serving to catch infinite recursions for you before they
-;; cause actual stack overflow in C, which would be fatal for Emacs
-(setq max-lisp-eval-depth (* 10 max-lisp-eval-depth)) ; 10 * 400 (default)
-;; speed up things by preventing garbage collections
-(setq gc-cons-threshold (* 10 gc-cons-threshold)) ; 10 * 400 KB (default)
-
-;; Интерфейс
-
-(menu-bar-mode -1)                   ;; Делаем емакс аскетичным
-(tool-bar-mode -1)
-(setq column-number-mode t)          ;; Показывать номер текущей колонки
-(setq line-number-mode t)            ;; Показывать номер текущей строки
-(setq inhibit-startup-message t)     ;; Не показываем сообщение при старте
-(fset 'yes-or-no-p 'y-or-n-p)	     ;; не заставляйте меня печать "yes" целиком
-(setq echo-keystrokes 0.001)         ;; Мгновенное отображение набранных сочетаний клавиш
-(setq use-dialog-boxes nil)          ;; Не использовать диалоговые окна
-(setq cursor-in-non-selected-windows nil) ;; Не показывать курсоры в неактивных окнах
-(setq default-tab-width 4)           ;; размер табуляции
-(setq c-basic-offset 4)              ;; табуляция для режимов, основанных на c-mode
-(setq tab-width 4)
-(setq cperl-indent-level 4)
-(setq sgml-basic-offset 4)           ;; для HTML и XML
-(setq-default indent-tabs-mode nil)  ;; отступ только пробелами
-(setq initial-scratch-message nil)   ;; Scratch buffer settings. Очищаем его.
-(setq case-fold-search t)            ;; Поиск без учёта регистра
-(global-font-lock-mode t)            ;; Поддержка различных начертаний шрифтов в буфере
-(setq font-lock-maximum-decoration t);; Максимальное использование различных начертаний шрифтов
-(if window-system (setq scalable-fonts-allowed t)) ;; Масштабируемые шрифты в графическом интерфейсе
-(setq read-file-name-completion-ignore-case t) ;; Дополнение имён файлов без учёта регистра
-(file-name-shadow-mode t)            ;; Затенять игнорируемую часть имени файла
-(setq resize-mini-windows t)         ;; Изменять при необходимости размер минибуфера по вертикали
-(auto-image-file-mode t)             ;; Показывать картинки
-(setq read-quoted-char-radix 10)     ;; Ввод символов по коду в десятичном счислении `C-q'
-(put 'upcase-region 'disabled nil)   ;; Разрешить поднимать регистр символов
-(put 'downcase-region 'disabled nil) ;; Разрешить опускать регистр символов
-
-(put 'narrow-to-region 'disabled nil);; Разрешить ограничение редактирования только в выделенном участке
-(put 'narrow-to-page 'disabled nil)  ;; Разрешить ограничение редактирования только на текущей странице
-(setq scroll-step 1)                 ;; Перематывать по одной строке
-(setq temp-buffer-max-height         ;; Максимальная высота временного буфера
-      (lambda (buffer)
-        (/ (- (frame-height) 2) 3)))
-(temp-buffer-resize-mode t)          ;; Высота временного буфера зависит от его содержимого
-(setq frame-title-format '("" "%b @ Emacs " emacs-version)) ;; Заголовок окна
-
-(setq scroll-conservatively 50)      ;; Гладкий скроллинг с полями
-(setq scroll-preserve-screen-position 't)
-(setq scroll-margin 10)
-
-(setq my-author-name (getenv "USER"))
-(setq user-full-name (getenv "USER"))
-(setq require-final-newline t)       ;; always end a file with a newline
-
-(set-cursor-color "red")             ;; Красный не мигающий (!) курсор
-(blink-cursor-mode nil)
-
-;; Однако в режиме терминала это не работает, поэтому..
-(if (not (display-graphic-p)) ;; GUI/Terminal Mode
-    (progn
-      (send-string-to-terminal "\033]12;red\007")
-      )
-  (progn ;; GUI-mode
-    ;; Максимизация окна при запуске в GUI-mode
-    (add-to-list 'default-frame-alist '(fullscreen . maximized))
-    ))
-
-(set-face-attribute 'default (selected-frame) :height 170)
-;; мышка...
-(global-set-key [vertical-scroll-bar down-mouse-1] 'scroll-bar-drag) ;; Scroll Bar gets dragged by mouse butn 1
-(setq mouse-yank-at-point 't)        ;; Paste at point NOT at cursor
-
-;; Правила открытия буферов
-;; (split-window-right)
-(setq split-height-threshold nil)
-(setq split-width-threshold 80)
-
-;; Хочу чтобы inferior shell открывался в том же окне
-(add-to-list 'display-buffer-alist
-             `(,(rx bos "*shell*")
-               display-buffer-same-window))
-
-
-;; Автоматическое выравнивание вставляемого из буфера обмена кода
-
-(defadvice yank (after indent-region activate)
-  (if (member major-mode
-              '(emacs-lisp-mode scheme-mode lisp-mode c-mode c++-mode
-                                objc-mode latex-mode plain-tex-mode python-mode))
-      (indent-region (region-beginning) (region-end) nil)))
-
-(defadvice yank-pop (after indent-region activate)
-  (if (member major-mode
-              '(emacs-lisp-mode scheme-mode lisp-mode c-mode c++-mode
-                                objc-mode latex-mode plain-tex-mode python-mode))
-      (indent-region (region-beginning) (region-end) nil)))
-
-
-;; Заменить окончания строк в формате DOS ^M на Unix
-(defun dos-to-unix ()
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (search-forward "\r" nil t)
-      (replace-match ""))))
-
-;; Удалить пробельные символы в конце строк
-(defun delete-trailing-whitespaces ()
-  (interactive "*")
-  (delete-trailing-whitespace))
-
-;; Поиск в Google по содержимому региона
-(defun google-region (beg end)
-  "Google the selected region."
-  (interactive "r")
-  (browse-url (concat "http://www.google.com/search?ie=utf-8&oe=utf-8&q="
-                      (buffer-substring beg end))))
-
-;; Поиск в Yandex по содержимому региона
-(defun yandex-region (beg end)
-  "Google the selected region."
-  (interactive "r")
-  (browse-url (concat "http://yandex.ru/yandsearch?text="
-                      (buffer-substring beg end))))
-
-
-;; Code-Blocks
-;; #+BEGIN_SRC #+END_SRC CODEBLOCK
-;; http://ergoemacs.org/emacs/emacs_macro_example.html
-;; http://ergoemacs.org/emacs/keyboard_shortcuts.html
-(defun codeblock ()
-  (insert "#+END_SRC")
-  (move-beginning-of-line 1)
-  (newline)
-  (previous-line)
-  (insert "#+BEGIN_SRC "))
-
-(global-set-key (kbd "C-x [") '(lambda ()
-                                 (interactive)
-                                 (set-input-method nil)
-                                 (codeblock)))
-
-(global-set-key (kbd "C-x ]") (lambda ()
-                                (interactive)
-                                (set-input-method nil)
-                                (insert "#+NAME:")
-                                (newline)))
-
-;;; Fast-Jumps
-;; В целях дальнейшего улучшения эргономики и отказа
-;; от лишних клавиш (таких как клавиши курсора) и
-;; планируемого перехода на клавиатуры уменьшенного
-;; размера, добавим несколько комбинаций для
-;; быстрого путешествия по тексту:
-(global-set-key (kbd "M-n") 'org-forward-paragraph)
-(global-set-key (kbd "M-p") 'org-backward-paragraph)
-;; Также не стоит забывать про базовую комбинацию `M-r',
-;; которая предоставляет удобный способ путешествовать
-;; по трем позициям внутри текущего буфера.
-;; Чтобы избежать использования DELETE можно использовать
-;; `C-d' = delete-char
-;; `M-d' = delete-word удаляет все слово
-;; Клавиша BACKSPACE есть на 40%-х клавиатурах, поэтому
-;; не нуждается в дополнительном определении.
-;; Не стоит забывать про возможность использовать
-;; команды удаления с `C-u' аргументом.
-
-;; ;; conkeror-browser
-;; (eval-after-load "browse-url"
-;;   '(defun browse-url-conkeror (url &optional new-window)
-;;      "ask the conkeror www browser to load url."
-;;      (interactive (browse-url-interactive-arg "url: "))
-;;      ;; url encode any `confusing' characters in the url. this needs to
-;;      ;; include at least commas; presumably also close parens and dollars.
-;;      (while (string-match "[,)$]" url)
-;;        (setq url (replace-match
-;; 				  (format "%%%x" (string-to-char (match-string 0 url)))
-;; 				  t t url)))
-;;      (let* ((process-environment (browse-url-process-environment))
-;; 			(process
-;; 			 (apply 'start-process
-;; 					(concat "conkeror " url)
-;; 					nil "conkeror"
-;; 					(list url)))))))
-;; ;; set conkeror-browser
-;; (setq browse-url-browser-function 'browse-url-conkeror)
-
-
-
-
-;;; EXTENSIONS
-
-
-
-
-(add-to-list 'load-path "~/.emacs.d/lisp")
-
-
 ;;; MELPA
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-;; and `package-pinned-packages`. Most users will not need or want to do this.
+;; Comment/uncomment this line to enable MELPA Stable if desired.
+;; See `package-archive-priorities` and `package-pinned-packages`
+;; Most users will not need or want to do this.
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
-
 
 ;; Посмотреть установленные пакеты можно в переменной С-h v package-activated-list
 ;; Или вызвав эту функцию:
@@ -475,6 +202,270 @@ Version 2018-10-05"
 ;;    t))
 
 
+
+;;; Unfill Region
+;; https://www.emacswiki.org/emacs/UnfillRegion
+(defun unfill-region (beg end)
+  "Unfill the region, joining text paragraphs into a single
+    logical line.  This is useful, e.g., for use with
+    `visual-line-mode'."
+  (interactive "*r")
+  (let ((fill-column (point-max)))
+    (fill-region beg end)))
+
+;; Handy key definition
+(define-key global-map "\C-\M-Q" 'unfill-region)
+
+
+;;; Xah-show-kill-ring
+(defun xah-show-kill-ring ()
+  "Insert all `kill-ring' content in a new buffer named *copy history*.
+URL `http://ergoemacs.org/emacs/emacs_show_kill_ring.html'
+Version 2018-10-05"
+  (interactive)
+  (let (($buf (generate-new-buffer "*copy history*")))
+    (progn
+      (switch-to-buffer $buf)
+      (funcall 'fundamental-mode)
+      (setq buffer-offer-save t)
+      (dolist (x kill-ring )
+        (insert x "\n\u000cttt\n\n"))
+      (goto-char (point-min)))
+    (when (fboundp 'xah-show-formfeed-as-line)
+      (xah-show-formfeed-as-line))))
+
+
+;;; COMMON SETTINGS
+
+(delete-selection-mode 1)   ;; <del> и BackSpace удаляют выделенный текст
+(transient-mark-mode 1)     ;; Показывать выделенный текст
+
+;;; Makes clipboard work
+(setq x-select-enable-clipboard t)
+;; (setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
+;;; Escape-sequences
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;;; Codepages. First detection for utf-8-unix
+(prefer-coding-system 'cp866)
+(prefer-coding-system 'koi8-r-unix)
+(prefer-coding-system 'windows-1251-dos)
+(prefer-coding-system 'utf-8-unix)
+
+;;; Delete trailing whitespaces before saving file
+(defun delete-trailing-whitespaces ()
+  (interactive "*")
+  (delete-trailing-whitespace))
+(add-hook 'before-save-hook
+          '(lambda ()
+             (delete-trailing-whitespace)))
+
+;;; Auto Fill Mode (disbled)
+(setq default-major-mode 'text-mode)
+;; (add-hook 'text-mode-hook 'turn-on-auto-fill)
+(remove-hook 'text-mode-hook #'turn-on-auto-fill)
+(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+(auto-fill-mode -1)
+;; (setq auto-fill-mode t)
+;; (setq fill-column 73)
+
+;;; Backups
+;; (info "(emacs)Auto Save")
+(setq auto-save-interval 512)            ;; Количество нажатий до автосохранения
+(setq auto-save-timeout 20)   ;; Автосохранение в перерыве между нажатиями (в секундах)
+(setq backup-directory-alist             ;; Все временные копии в один каталог.
+      '((".*" . "~/.emacs.d/backups")))  ;; Каталог создаётся автоматически.
+(setq backup-by-copying t)               ;; Режим сохранения копий
+(setq version-control t)                 ;; Создавать копии с номерами версий
+(setq delete-old-versions t)             ;; Удалять старые версии без подтверждения
+(setq kept-new-versions 6)               ;; нумерованный бэкап - 2 первых и 2 последних
+(setq kept-old-versions 2)
+
+;;; Optimization
+;; limit on number of Lisp variable bindings & unwind-protects
+(setq max-specpdl-size (* 10 max-specpdl-size)) ; 10 * 1 M (default)
+;; limit serving to catch infinite recursions for you before they
+;; cause actual stack overflow in C, which would be fatal for Emacs
+(setq max-lisp-eval-depth (* 10 max-lisp-eval-depth)) ; 10 * 400 (default)
+;; speed up things by preventing garbage collections
+(setq gc-cons-threshold (* 10 gc-cons-threshold)) ; 10 * 400 KB (default)
+
+;;; INTERFACE
+
+(menu-bar-mode -1)                   ;; Делаем емакс аскетичным
+(tool-bar-mode -1)
+(setq column-number-mode t)          ;; Показывать номер текущей колонки
+(setq line-number-mode t)            ;; Показывать номер текущей строки
+(setq inhibit-startup-message t)     ;; Не показываем сообщение при старте
+(fset 'yes-or-no-p 'y-or-n-p)	     ;; не заставляйте меня печать "yes" целиком
+(setq echo-keystrokes 0.001)         ;; Мгновенное отображение набранных сочетаний клавиш
+(setq use-dialog-boxes nil)          ;; Не использовать диалоговые окна
+(setq cursor-in-non-selected-windows nil) ;; Не показывать курсоры в неактивных окнах
+(setq default-tab-width 4)           ;; размер табуляции
+(setq c-basic-offset 4)              ;; табуляция (Tabulation) для режимов,
+(setq tab-width 4)                   ;; основанных на c-mode
+(setq cperl-indent-level 4)          ;; и для
+(setq sgml-basic-offset 4)           ;; HTML-mode и XML-mode
+(setq-default indent-tabs-mode nil)  ;; отступ только пробелами
+(setq initial-scratch-message nil)   ;; Scratch buffer settings. Очищаем его.
+(setq case-fold-search t)            ;; Поиск без учёта регистра
+(global-font-lock-mode t)            ;; Поддержка различных начертаний шрифтов в буфере
+(setq font-lock-maximum-decoration t);; Максимальное использование различных начертаний шрифтов
+(if window-system (setq scalable-fonts-allowed t)) ;; Масштабируемые шрифты в GUI
+(setq read-file-name-completion-ignore-case t) ;; Дополнение имён файлов без учёта регистра
+(file-name-shadow-mode t)            ;; Затенять игнорируемую часть имени файла
+(setq resize-mini-windows t)         ;; Изменять при необходимости размер минибуфера по вертикали
+(auto-image-file-mode t)             ;; Показывать картинки
+(setq read-quoted-char-radix 10)     ;; Ввод символов по коду в десятичном счислении `C-q'
+(put 'upcase-region 'disabled nil)   ;; Разрешить поднимать регистр символов
+(put 'downcase-region 'disabled nil) ;; Разрешить опускать регистр символов
+(put 'narrow-to-region 'disabled nil);; Разрешить ограничение редактирования только в выделенном участке
+(put 'narrow-to-page 'disabled nil)  ;; Разрешить ограничение редактирования только на текущей странице
+(setq scroll-step 1)                 ;; Перематывать по одной строке
+(setq temp-buffer-max-height         ;; Максимальная высота временного буфера
+      (lambda (buffer)
+        (/ (- (frame-height) 2) 3)))
+(temp-buffer-resize-mode t)          ;; Высота временного буфера зависит от его содержимого
+(setq frame-title-format '("" "%b @ Emacs " emacs-version)) ;; Заголовок окна
+(setq scroll-conservatively 50)      ;; Гладкий скроллинг с полями
+(setq scroll-preserve-screen-position 't)
+(setq scroll-margin 10)
+(setq my-author-name (getenv "USER"))
+(setq user-full-name (getenv "USER"))
+(setq require-final-newline t)       ;; always end a file with a newline
+(set-cursor-color "red")             ;; Красный не мигающий (!) курсор
+(blink-cursor-mode nil)
+;; Однако в режиме терминала это не работает, поэтому..
+(if (not (display-graphic-p))
+    (progn ;; GUI/Terminal Mode
+      (send-string-to-terminal "\033]12;red\007"))
+  (progn   ;; else: GUI-mode
+    ;; Максимизация окна при запуске в GUI-mode
+    (add-to-list 'default-frame-alist '(fullscreen . maximized))))
+
+(set-face-attribute 'default (selected-frame) :height 170)
+;; Mouse
+(global-set-key [vertical-scroll-bar down-mouse-1]
+                'scroll-bar-drag) ;; Scroll Bar gets dragged by mouse btn 1
+(setq mouse-yank-at-point 't)        ;; Paste at point NOT at cursor
+
+;; Правила открытия буферов
+;; (split-window-right)
+(setq split-height-threshold nil)
+(setq split-width-threshold 80)
+
+;; Хочу чтобы inferior shell открывался в том же окне
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*shell*")
+               display-buffer-same-window))
+
+;; Aligning the code from the clipboard
+(defadvice yank (after indent-region activate)
+  (if (member major-mode
+              '(emacs-lisp-mode scheme-mode lisp-mode c-mode c++-mode
+                                objc-mode latex-mode plain-tex-mode python-mode))
+      (indent-region (region-beginning) (region-end) nil)))
+
+(defadvice yank-pop (after indent-region activate)
+  (if (member major-mode
+              '(emacs-lisp-mode scheme-mode lisp-mode c-mode c++-mode
+                                objc-mode latex-mode plain-tex-mode python-mode))
+      (indent-region (region-beginning) (region-end) nil)))
+
+
+;; Заменить окончания строк в формате DOS ^M на Unix
+(defun dos-to-unix ()
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (search-forward "\r" nil t)
+      (replace-match ""))))
+
+
+;; Поиск в Google по содержимому региона
+(defun google-region (beg end)
+  "Google the selected region."
+  (interactive "r")
+  (browse-url (concat "http://www.google.com/search?ie=utf-8&oe=utf-8&q="
+                      (buffer-substring beg end))))
+
+;; Поиск в Yandex по содержимому региона
+(defun yandex-region (beg end)
+  "Google the selected region."
+  (interactive "r")
+  (browse-url (concat "http://yandex.ru/yandsearch?text="
+                      (buffer-substring beg end))))
+
+
+;; Code-Blocks
+;; #+BEGIN_SRC #+END_SRC CODEBLOCK
+;; http://ergoemacs.org/emacs/emacs_macro_example.html
+;; http://ergoemacs.org/emacs/keyboard_shortcuts.html
+(defun codeblock ()
+  (insert "#+END_SRC")
+  (move-beginning-of-line 1)
+  (newline)
+  (previous-line)
+  (insert "#+BEGIN_SRC "))
+
+(global-set-key (kbd "C-x [")
+                '(lambda ()
+                   (interactive)
+                   (set-input-method nil)
+                   (codeblock)))
+
+(global-set-key (kbd "C-x ]")
+                '(lambda ()
+                  (interactive)
+                  (set-input-method nil)
+                  (insert "#+NAME:")
+                  (newline)))
+
+;;; Fast-Jumps
+;; В целях дальнейшего улучшения эргономики и отказа
+;; от лишних клавиш (таких как клавиши курсора) и
+;; планируемого перехода на клавиатуры уменьшенного
+;; размера, добавим несколько комбинаций для
+;; быстрого путешествия по тексту:
+(global-set-key (kbd "M-n") 'org-forward-paragraph)
+(global-set-key (kbd "M-p") 'org-backward-paragraph)
+;; Также не стоит забывать про базовую комбинацию `M-r',
+;; которая предоставляет удобный способ путешествовать
+;; по трем позициям внутри текущего буфера.
+;; Чтобы избежать использования DELETE можно использовать
+;; `C-d' = delete-char
+;; `M-d' = delete-word удаляет все слово
+;; Клавиша BACKSPACE есть на 40%-х клавиатурах, поэтому
+;; не нуждается в дополнительном определении.
+;; Не стоит забывать про возможность использовать
+;; команды удаления с `C-u' аргументом.
+
+;; ;; conkeror-browser - пример вызова
+;; (eval-after-load "browse-url"
+;;   '(defun browse-url-conkeror (url &optional new-window)
+;;      "ask the conkeror www browser to load url."
+;;      (interactive (browse-url-interactive-arg "url: "))
+;;      ;; url encode any `confusing' characters in the url. this needs to
+;;      ;; include at least commas; presumably also close parens and dollars.
+;;      (while (string-match "[,)$]" url)
+;;        (setq url (replace-match
+;; 				  (format "%%%x" (string-to-char (match-string 0 url)))
+;; 				  t t url)))
+;;      (let* ((process-environment (browse-url-process-environment))
+;; 			(process
+;; 			 (apply 'start-process
+;; 					(concat "conkeror " url)
+;; 					nil "conkeror"
+;; 					(list url)))))))
+;; ;; set conkeror-browser
+;; (setq browse-url-browser-function 'browse-url-conkeror)
+
+
+;;; EXTENSIONS
+
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 ;;; SBCL
 
@@ -617,16 +608,16 @@ Version 2018-10-05"
 
 ;;; JABBER
 
-(add-to-list 'load-path "~/.emacs.d/emacs-jabber")
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/emacs-jabber")
-(require 'jabber)
-(setq jabber-auto-reconnect t)
-(setq jabber-chat-buffer-format "*---%n-*")
-(setq jabber-groupchat-buffer-format "*===%n-*")
-(setq jabber-history-dir "~/.jabber-chatlogs")
-(setq jabber-history-enabled t)
-(setq jabber-history-muc-enabled t)
-(setq jabber-history-size-limit 1024000000)
+;; (add-to-list 'load-path "~/.emacs.d/emacs-jabber")
+;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/emacs-jabber")
+;; (require 'jabber)
+;; (setq jabber-auto-reconnect t)
+;; (setq jabber-chat-buffer-format "*---%n-*")
+;; (setq jabber-groupchat-buffer-format "*===%n-*")
+;; (setq jabber-history-dir "~/.jabber-chatlogs")
+;; (setq jabber-history-enabled t)
+;; (setq jabber-history-muc-enabled t)
+;; (setq jabber-history-size-limit 1024000000)
 
 ;; ;; Не закрывать буфер ростера при активном подключении
 ;; (my-hook-for (kill-buffer-query-functions)
@@ -643,7 +634,7 @@ Version 2018-10-05"
 ;; M-x jabber-edit-bookmarks - для редактирвания закладок
 
 ;; Специальные настройки jabber-аккаунтов
-(load-file "~/.emacs.d/lisp/jabber-account.el")
+;; (load-file "~/.emacs.d/lisp/jabber-account.el")
 
 
 ;;; ACE-JUMP-MODE
@@ -759,113 +750,113 @@ Version 2018-10-05"
 ;; слове. Переместились к следующему непонятному слову, нажали C-c
 ;; d, и в уже открытом окне с буфером появится перевод нового слова.
 
-(when (executable-find "dictd")
-  ;; check dictd is available
-  (add-to-list 'load-path "~/.emacs.d/dictem-1.0.4")
-  (require 'dictem)
+;; (when (executable-find "dictd")
+;;   ;; check dictd is available
+;;   (add-to-list 'load-path "~/.emacs.d/dictem-1.0.4")
+;;   (require 'dictem)
 
-  ;; (setq dictem-server "localhost")
+;;   ;; (setq dictem-server "localhost")
 
-  (setq dictem-user-databases-alist
-        '(("_en-ru"  . ("mueller-base" "mueller-dict"
-                        "mueller-geo" "mueller-names"
-                        "mueller-abbrev"))
-          ))
+;;   (setq dictem-user-databases-alist
+;;         '(("_en-ru"  . ("mueller-base" "mueller-dict"
+;;                         "mueller-geo" "mueller-names"
+;;                         "mueller-abbrev"))
+;;           ))
 
-  (setq dictem-use-existing-buffer t)
-  (setq dictem-use-user-databases-only t)
+;;   (setq dictem-use-existing-buffer t)
+;;   (setq dictem-use-user-databases-only t)
 
-  (setq dictem-port "2628")
-  (dictem-initialize)
+;;   (setq dictem-port "2628")
+;;   (dictem-initialize)
 
-  ;; redefined function
-  (defun dictem-ensure-buffer ()
-    "If current buffer is not a dictem buffer, create a new one."
-    (let* ((dictem-buffer (get-buffer-create dictem-buffer-name))
-           (dictem-window (get-buffer-window dictem-buffer))
-           (window-configuration (current-window-configuration))
-           (selected-window (frame-selected-window)))
-      (if (window-live-p dictem-window)
-          (select-window dictem-window)
-        (switch-to-buffer-other-window dictem-buffer))
+;;   ;; redefined function
+;;   (defun dictem-ensure-buffer ()
+;;     "If current buffer is not a dictem buffer, create a new one."
+;;     (let* ((dictem-buffer (get-buffer-create dictem-buffer-name))
+;;            (dictem-window (get-buffer-window dictem-buffer))
+;;            (window-configuration (current-window-configuration))
+;;            (selected-window (frame-selected-window)))
+;;       (if (window-live-p dictem-window)
+;;           (select-window dictem-window)
+;;         (switch-to-buffer-other-window dictem-buffer))
 
-      (if (dictem-mode-p)
-          (progn
-            (if dictem-use-content-history
-                (setq dictem-content-history
-                      (cons (list (buffer-substring
-                                   (point-min) (point-max))
-                                  (point)) dictem-content-history)))
-            (setq buffer-read-only nil)
-            (erase-buffer))
-        (progn
-          (dictem-mode)
+;;       (if (dictem-mode-p)
+;;           (progn
+;;             (if dictem-use-content-history
+;;                 (setq dictem-content-history
+;;                       (cons (list (buffer-substring
+;;                                    (point-min) (point-max))
+;;                                   (point)) dictem-content-history)))
+;;             (setq buffer-read-only nil)
+;;             (erase-buffer))
+;;         (progn
+;;           (dictem-mode)
 
-          (make-local-variable 'dictem-window-configuration)
-          (make-local-variable 'dictem-selected-window)
-          (make-local-variable 'dictem-content-history)
-          (setq dictem-window-configuration window-configuration)
-          (setq dictem-selected-window selected-window)))))
+;;           (make-local-variable 'dictem-window-configuration)
+;;           (make-local-variable 'dictem-selected-window)
+;;           (make-local-variable 'dictem-content-history)
+;;           (setq dictem-window-configuration window-configuration)
+;;           (setq dictem-selected-window selected-window)))))
 
-  (add-hook 'dictem-postprocess-match-hook
-            'dictem-postprocess-match)
+;;   (add-hook 'dictem-postprocess-match-hook
+;;             'dictem-postprocess-match)
 
-  (add-hook 'dictem-postprocess-definition-hook
-            'dictem-postprocess-definition-separator)
+;;   (add-hook 'dictem-postprocess-definition-hook
+;;             'dictem-postprocess-definition-separator)
 
-  (add-hook 'dictem-postprocess-definition-hook
-            'dictem-postprocess-definition-hyperlinks)
+;;   (add-hook 'dictem-postprocess-definition-hook
+;;             'dictem-postprocess-definition-hyperlinks)
 
-  (add-hook 'dictem-postprocess-show-info-hook
-            'dictem-postprocess-definition-hyperlinks)
+;;   (add-hook 'dictem-postprocess-show-info-hook
+;;             'dictem-postprocess-definition-hyperlinks)
 
-  (add-hook 'dictem-postprocess-definition-hook
-            'dictem-postprocess-each-definition)
+;;   (add-hook 'dictem-postprocess-definition-hook
+;;             'dictem-postprocess-each-definition)
 
-  (define-key dictem-mode-map [tab] 'dictem-next-link)
-  (define-key dictem-mode-map [(backtab)] 'dictem-previous-link)
+;;   (define-key dictem-mode-map [tab] 'dictem-next-link)
+;;   (define-key dictem-mode-map [(backtab)] 'dictem-previous-link)
 
-  ;; http://paste.lisp.org/display/89086
-  (defun dictem-run-define-at-point-with-query ()
-    "Query the default dict server with the word read in within this function."
-    (interactive)
-    (let* ((default-word (thing-at-point 'symbol))
-           (default-prompt (concat "Lookup Word "
-                                   (if default-word
-                                       (concat "(" default-word ")") nil)
-                                   ": "))
-           (dictem-query
-            (funcall #'(lambda (str)
-                         "Remove Whitespace from beginning and end of a string."
-                         (replace-regexp-in-string "^[ \n\t]*\\(.*?\\)[ \n\t]*$"
-                                                   "\\1"
-                                                   str))
-                     (read-string default-prompt nil nil default-word))))
-      (if (= (length dictem-query) 0) nil
-        (dictem-run 'dictem-base-search "_en-ru" dictem-query "."))))
+;;   ;; http://paste.lisp.org/display/89086
+;;   (defun dictem-run-define-at-point-with-query ()
+;;     "Query the default dict server with the word read in within this function."
+;;     (interactive)
+;;     (let* ((default-word (thing-at-point 'symbol))
+;;            (default-prompt (concat "Lookup Word "
+;;                                    (if default-word
+;;                                        (concat "(" default-word ")") nil)
+;;                                    ": "))
+;;            (dictem-query
+;;             (funcall #'(lambda (str)
+;;                          "Remove Whitespace from beginning and end of a string."
+;;                          (replace-regexp-in-string "^[ \n\t]*\\(.*?\\)[ \n\t]*$"
+;;                                                    "\\1"
+;;                                                    str))
+;;                      (read-string default-prompt nil nil default-word))))
+;;       (if (= (length dictem-query) 0) nil
+;;         (dictem-run 'dictem-base-search "_en-ru" dictem-query "."))))
 
-  (defun dictem-run-define-at-point ()
-    "dictem look up for thing at point"
-    (interactive)
-    (let* ((default-word (thing-at-point 'symbol))
-           (selected-window (frame-selected-window))
-           (dictem-query
-            (funcall #'(lambda (str)
-                         "Remove Whitespace from beginning and end of a string."
-                         (replace-regexp-in-string "^[ \n\t]*\\(.*?\\)[ \n\t]*$"
-                                                   "\\1"
-                                                   str))
-                     default-word)))
-      (if (= (length dictem-query) 0)
-          nil
-        (progn
-          (dictem-run 'dictem-base-search "_en-ru" dictem-query ".")
-          (select-window selected-window)))))
+;;   (defun dictem-run-define-at-point ()
+;;     "dictem look up for thing at point"
+;;     (interactive)
+;;     (let* ((default-word (thing-at-point 'symbol))
+;;            (selected-window (frame-selected-window))
+;;            (dictem-query
+;;             (funcall #'(lambda (str)
+;;                          "Remove Whitespace from beginning and end of a string."
+;;                          (replace-regexp-in-string "^[ \n\t]*\\(.*?\\)[ \n\t]*$"
+;;                                                    "\\1"
+;;                                                    str))
+;;                      default-word)))
+;;       (if (= (length dictem-query) 0)
+;;           nil
+;;         (progn
+;;           (dictem-run 'dictem-base-search "_en-ru" dictem-query ".")
+;;           (select-window selected-window)))))
 
-  (global-set-key "\C-cd" 'dictem-run-define-at-point)
-  (global-set-key "\C-cz" 'dictem-run-define-at-point-with-query)
+;;   (global-set-key "\C-cd" 'dictem-run-define-at-point)
+;;   (global-set-key "\C-cz" 'dictem-run-define-at-point-with-query)
 
-  ) ; end of (when (executable-find "dictd") ...)
+;;   ) ;; end of (when (executable-find "dictd") ...)
 
 
 ;;; UNFILL (from melpa - not need require, only for note)
@@ -908,159 +899,137 @@ Version 2018-10-05"
 ;; http://box.matto.nl/emacsgmail.html
 ;; http://www.emacswiki.org/emacs/hgw-init-wl.el
 
-(autoload 'wl "wl" "Wanderlust" t)
-(autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
-(autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
+;; (autoload 'wl "wl" "Wanderlust" t)
+;; (autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
+;; (autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
 
-(setq mime-edit-split-message nil)
+;; (setq mime-edit-split-message nil)
 
-(setq wl-from "rigidus <i.am.rigidus@gmail.com>")
-(setq elmo-imap4-default-user "i.am.rigidus"
-      elmo-imap4-default-server "imap.gmail.com"
-      elmo-imap4-default-port 993
-      elmo-imap4-default-authenticate-type 'clear
-      elmo-imap4-default-stream-type 'ssl
-      elmo-imap4-use-modified-utf7 t
+;; (setq wl-from "rigidus <i.am.rigidus@gmail.com>")
+;; (setq elmo-imap4-default-user "i.am.rigidus"
+;;       elmo-imap4-default-server "imap.gmail.com"
+;;       elmo-imap4-default-port 993
+;;       elmo-imap4-default-authenticate-type 'clear
+;;       elmo-imap4-default-stream-type 'ssl
+;;       elmo-imap4-use-modified-utf7 t
 
-      wl-message-id-domain "i.am.rigidus@gmail.com"
-      wl-from "i.am.rigidus <i.am.rigidus@gmail.com>"
-      wl-smtp-posting-server "smtp.gmail.com"
-      wl-smtp-connection-type 'starttls
-      wl-smtp-posting-port 587
-      wl-smtp-authenticate-type "plain"
-      wl-smtp-posting-user "i.am.rigidus"
-      wl-local-domain "gmail.com"
+;;       wl-message-id-domain "i.am.rigidus@gmail.com"
+;;       wl-from "i.am.rigidus <i.am.rigidus@gmail.com>"
+;;       wl-smtp-posting-server "smtp.gmail.com"
+;;       wl-smtp-connection-type 'starttls
+;;       wl-smtp-posting-port 587
+;;       wl-smtp-authenticate-type "plain"
+;;       wl-smtp-posting-user "i.am.rigidus"
+;;       wl-local-domain "gmail.com"
 
-      elmo-pop3-debug t
-      ssl-certificate-verification-policy 1
-      wl-default-folder "%inbox"
-      wl-default-spec "%"
-      wl-folder-check-async t
-      wl-thread-indent-level 4
-      wl-thread-have-younger-brother-str "+"
-      wl-thread-youngest-child-str       "+"
-      wl-thread-vertical-str             "|"
-      wl-thread-horizontal-str           "-"
-      wl-thread-space-str                " "
-      wl-summary-width	nil
-      wl-summary-line-format "%n%T%P %W %D-%M-%Y %h:%m %t%[%c %f% %] %s"
-      wl-message-buffer-prefetch-folder-type-list nil
-      mime-transfer-level 8
-      mime-edit-split-message nil
-      mime-edit-message-max-length 32768
-      mime-header-accept-quoted-encoded-words t
-      ;; mime-browse-url-function 'browse-url-conkeror
-      pgg-passphrase-cache-expiry 300
-      pgg-decrypt-automatically t
-      wl-message-ignored-field-list '("^.*")
-      wl-message-visible-field-list '("^From:" "^To:" "^Cc:" "^Date:" "^Subject:" "^User-Agent:" "^X-Mailer:")
-      wl-message-sort-field-list    wl-message-visible-field-list
-      wl-message-window-size '(1 . 3)
-      wl-folder-window-width 40
-      wl-draft-preview-attributes-buffer-lines 7
-      wl-draft-config-alist
-      '(
-        ((string-match "avenger" wl-draft-parent-folder)
-         (wl-message-id-domain . "avenger-f@yandex.ru")
-         (wl-from . "rigidus <avenger-f@yandex.ru>")
-         ("From" . "avenger-f@yandex.ru")
-         ;; ("Fcc" . "%Sent:avenger-f@yandex.ru:993")
-         (wl-smtp-posting-server . "smtp.yandex.ru")
-         ;; (wl-smtp-connection-type . nil)
-         (wl-smtp-connection-type . 'starttls)
-         ;; (wl-smtp-connection-type . 'ssl)
-         ;; (wl-smtp-posting-port . 25)
-         ;; (wl-smtp-posting-port . 465)
-         (wl-smtp-posting-port . 587)
-         (wl-smtp-authenticate-type . "plain")
-         (wl-smtp-posting-user . "avenger-f")
-         (wl-local-domain . "yandex.ru")
-         )
-        ((string-match "content3208080" wl-draft-parent-folder)
-         (wl-message-id-domain . "content3208080@yandex.ru")
-         (wl-from . "content3208080 <content3208080@yandex.ru>")
-         ("From" . "content3208080@yandex.ru")
-         (wl-smtp-posting-server . "smtp.yandex.ru")
-         (wl-smtp-connection-type . 'starttls)
-         (wl-smtp-posting-port . 587)
-         (wl-smtp-authenticate-type . "plain")
-         (wl-smtp-posting-user . "content3208080")
-         (wl-local-domain . "yandex.ru")
-         )
-        ((string-match "i.am.rigidus" wl-draft-parent-folder)
-         (wl-message-id-domain . "i.am.rigidus@gmail.com")
-         (wl-from . "i.am.rigidus <i.am.rigidus@gmail.com>")
-         ("From" . "i.am.rigidus@gmail.com")
-         (wl-smtp-posting-server . "smtp.gmail.com")
-         (wl-smtp-connection-type . 'starttls)
-         (wl-smtp-posting-port . 587)
-         (wl-smtp-authenticate-type . "plain")
-         (wl-smtp-posting-user . "i.am.rigidus")
-         (wl-local-domain . "gmail.com")
-         )
-        ((string-match "avenger.rigidus" wl-draft-parent-folder)
-         (wl-message-id-domain . "avenger.rigidus@gmail.com")
-         (wl-from . "avenger.rigidus <avenger.rigidus@gmail.com>")
-         ("From" . "avenger.rigidus@gmail.com")
-         (wl-smtp-posting-server . "smtp.gmail.com")
-         (wl-smtp-connection-type . 'starttls)
-         (wl-smtp-posting-port . 587)
-         (wl-smtp-authenticate-type . "plain")
-         (wl-smtp-posting-user . "avenger.rigidus")
-         (wl-local-domain . "gmail.com")
-         )
-        )
-      )
+;;       elmo-pop3-debug t
+;;       ssl-certificate-verification-policy 1
+;;       wl-default-folder "%inbox"
+;;       wl-default-spec "%"
+;;       wl-folder-check-async t
+;;       wl-thread-indent-level 4
+;;       wl-thread-have-younger-brother-str "+"
+;;       wl-thread-youngest-child-str       "+"
+;;       wl-thread-vertical-str             "|"
+;;       wl-thread-horizontal-str           "-"
+;;       wl-thread-space-str                " "
+;;       wl-summary-width	nil
+;;       wl-summary-line-format "%n%T%P %W %D-%M-%Y %h:%m %t%[%c %f% %] %s"
+;;       wl-message-buffer-prefetch-folder-type-list nil
+;;       mime-transfer-level 8
+;;       mime-edit-split-message nil
+;;       mime-edit-message-max-length 32768
+;;       mime-header-accept-quoted-encoded-words t
+;;       ;; mime-browse-url-function 'browse-url-conkeror
+;;       pgg-passphrase-cache-expiry 300
+;;       pgg-decrypt-automatically t
+;;       wl-message-ignored-field-list '("^.*")
+;;       wl-message-visible-field-list '("^From:" "^To:" "^Cc:" "^Date:" "^Subject:" "^User-Agent:" "^X-Mailer:")
+;;       wl-message-sort-field-list    wl-message-visible-field-list
+;;       wl-message-window-size '(1 . 3)
+;;       wl-folder-window-width 40
+;;       wl-draft-preview-attributes-buffer-lines 7
+;;       wl-draft-config-alist
+;;       '(
+;;         ((string-match "avenger" wl-draft-parent-folder)
+;;          (wl-message-id-domain . "avenger-f@yandex.ru")
+;;          (wl-from . "rigidus <avenger-f@yandex.ru>")
+;;          ("From" . "avenger-f@yandex.ru")
+;;          ;; ("Fcc" . "%Sent:avenger-f@yandex.ru:993")
+;;          (wl-smtp-posting-server . "smtp.yandex.ru")
+;;          ;; (wl-smtp-connection-type . nil)
+;;          (wl-smtp-connection-type . 'starttls)
+;;          ;; (wl-smtp-connection-type . 'ssl)
+;;          ;; (wl-smtp-posting-port . 25)
+;;          ;; (wl-smtp-posting-port . 465)
+;;          (wl-smtp-posting-port . 587)
+;;          (wl-smtp-authenticate-type . "plain")
+;;          (wl-smtp-posting-user . "avenger-f")
+;;          (wl-local-domain . "yandex.ru")
+;;          )
+;;         ((string-match "i.am.rigidus" wl-draft-parent-folder)
+;;          (wl-message-id-domain . "i.am.rigidus@gmail.com")
+;;          (wl-from . "i.am.rigidus <i.am.rigidus@gmail.com>")
+;;          ("From" . "i.am.rigidus@gmail.com")
+;;          (wl-smtp-posting-server . "smtp.gmail.com")
+;;          (wl-smtp-connection-type . 'starttls)
+;;          (wl-smtp-posting-port . 587)
+;;          (wl-smtp-authenticate-type . "plain")
+;;          (wl-smtp-posting-user . "i.am.rigidus")
+;;          (wl-local-domain . "gmail.com")
+;;          )
+;;         )
+;;       )
 
-(autoload 'wl-user-agent-compose "wl-draft" nil t)
-(if (boundp 'mail-user-agent)
-    (setq mail-user-agent 'wl-user-agent))
-(if (fboundp 'define-mail-user-agent)
-    (define-mail-user-agent
-      'wl-user-agent
-      'wl-user-agent-compose
-      'wl-draft-send
-      'wl-draft-kill
-      'mail-send-hook))
+;; (autoload 'wl-user-agent-compose "wl-draft" nil t)
+;; (if (boundp 'mail-user-agent)
+;;     (setq mail-user-agent 'wl-user-agent))
+;; (if (fboundp 'define-mail-user-agent)
+;;     (define-mail-user-agent
+;;       'wl-user-agent
+;;       'wl-user-agent-compose
+;;       'wl-draft-send
+;;       'wl-draft-kill
+;;       'mail-send-hook))
 
 
 ;;; ERC
-(require 'erc)
+;; (require 'erc)
 
-;; загружаем авто-подключение к каналам, и задаем список каналов для
-;; подключения
-(erc-autojoin-mode t)
+;; ;; загружаем авто-подключение к каналам, и задаем список каналов для
+;; ;; подключения
+;; (erc-autojoin-mode t)
 
-(setq erc-autojoin-channels-alist
-      '(("irc.freenode.net" "#lisp" "#emacs")))
+;; (setq erc-autojoin-channels-alist
+;;       '(("irc.freenode.net" "#lisp" "#emacs")))
 
 
-(require 'erc-fill)
-(erc-fill-mode t)
+;; (require 'erc-fill)
+;; (erc-fill-mode t)
 
-;; задаем персональные данные, хотя их можно задать и через
-;; M-x customize-group erc
-(setq erc-user-full-name "rigidus")
-(setq erc-email-userid "avenger-f@yandex.ru")
+;; ;; задаем персональные данные, хотя их можно задать и через
+;; ;; M-x customize-group erc
+;; (setq erc-user-full-name "rigidus")
+;; (setq erc-email-userid "avenger-f@yandex.ru")
 
-;; часть относящаяся к логированию переговоров на каналах
-;; нужно ли вставлять старый лог в окно канала?
-(setq erc-log-insert-log-on-open nil)
+;; ;; часть относящаяся к логированию переговоров на каналах
+;; ;; нужно ли вставлять старый лог в окно канала?
+;; (setq erc-log-insert-log-on-open nil)
 
-;; логировать переговоры на каналах?
-(setq erc-log-channels t)
+;; ;; логировать переговоры на каналах?
+;; (setq erc-log-channels t)
 
-;; где будут храниться логи
-(setq erc-log-channels-directory "~/.irclogs/")
+;; ;; где будут храниться логи
+;; (setq erc-log-channels-directory "~/.irclogs/")
 
-;; сохранять ли логи при возникновении PART
-(setq erc-save-buffer-on-part t)
+;; ;; сохранять ли логи при возникновении PART
+;; (setq erc-save-buffer-on-part t)
 
-;; убирать или нет временные отметки?
-(setq erc-hide-timestamps nil)
+;; ;; убирать или нет временные отметки?
+;; (setq erc-hide-timestamps nil)
 
-;; максимальный размер буфера канала
-(setq erc-max-buffer-size 500000)
+;; ;; максимальный размер буфера канала
+;; (setq erc-max-buffer-size 500000)
 
 
 
@@ -1113,7 +1082,7 @@ Version 2018-10-05"
 ;;                :defer t)
 ;; (add-to-list 'load-path "~/.emacs.d/elpa/telega-20190913.1912/")
 ;; (require 'telega)
-(setq telega-msg-rainbow-title nil)
+;; (setq telega-msg-rainbow-title nil)
 
 
 ;;; HELM
@@ -1141,13 +1110,19 @@ Version 2018-10-05"
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
 
-;; Включение fill-column для org-mode
+;; Включение fill-column для org-mode (отключено)
 ;; (add-hook 'org-mode-hook (lambda () (setq fill-column 73)))
 
 ;; Включение visual-line-mode для org-mode
-(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+(add-hook 'org-mode-hook 'turn-on-visual-line-mode)
 
-;; Задание цепочек ключевых слов (переключение между словами клавишами Shift + Right или + Left с курсором на заголовке). "|" отмечает границу, если заголовок в статусе после этого разделителя, то он "выполнен", это влияет на планирование и отображение в Agenda Views:
+
+;; Задание цепочек ключевых слов
+;; (переключение между словами клавишами Shift + Right
+;; или + Left с курсором на заголовке).
+;; "|" отмечает границу, если заголовок в статусе
+;; после этого разделителя, то он "выполнен",
+;; это влияет на планирование и отображение в Agenda Views:
 (setq org-todo-keywords
       '((sequence "TODO(t)" "START(s)" "MEET(m)" "CALL(c)" "DELEGATED(d)" "WAIT(w)" "|" "CANCEL(r)"  "DONE(f)")
         (sequence "WEEK(w)" "MONTH(m)" "IDEA(i)")))
@@ -1447,7 +1422,7 @@ Version 2018-10-05"
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (ace-jump-mode org-roam emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+    (org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1473,13 +1448,14 @@ Version 2018-10-05"
 (require 'go-eldoc)
 (require 'company-go)
 
-(add-hook 'before-save-hook 'gofmt-before-save)
+;; (add-hook 'before-save-hook 'gofmt-before-save)
 (setq-default gofmt-command "goimports")
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 (add-hook 'go-mode-hook
           (lambda ()
             (set (make-local-variable 'company-backends) '(company-go))
             (company-mode)))
+
 (add-hook 'go-mode-hook 'yas-minor-mode)
 ;; (add-hook 'go-mode-hook 'flycheck-mode)
 (setq multi-compile-alist
@@ -1619,6 +1595,7 @@ Version 2018-10-05"
   (org-tree-slide-narrowing-control-profile)
   (setq org-tree-slide-skip-done nil))
 
+
 ;; ---------------------
 
 ;; http://emacs-fu.blogspot.com/search/label/beamer
@@ -1744,7 +1721,6 @@ Version 2018-10-05"
 
 (use-package flycheck :ensure)
 
-
 ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;; auto-completion and code snippets
 
@@ -1800,7 +1776,6 @@ Version 2018-10-05"
 
 (use-package toml-mode :ensure)
 
-
 ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;; setting up debugging support with dap-mode
 
@@ -1828,3 +1803,20 @@ Version 2018-10-05"
 ;;            ;; uncomment if lldb-mi is not in PATH
 ;;            ;; :lldbmipath "path/to/lldb-mi"
 ;;            ))))
+
+;; Org-roam
+(setq org-roam-v2-ack t)
+(use-package org-roam
+  :ensure t
+  :init
+    (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/src/org")
+  (org-roam-complete-everywhere t)
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+         :map org-mode-map
+         ("C-M-i"   . completion-at-point))
+  :config
+  (org-roam-setup))
