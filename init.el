@@ -335,6 +335,7 @@ Version 2018-10-05"
 (setq my-author-name (getenv "USER"))
 (setq user-full-name (getenv "USER"))
 (setq require-final-newline t)       ;; always end a file with a newline
+;; https://stackoverflow.com/questions/4642835/how-to-change-the-cursor-color-on-emacs#4932922
 (set-cursor-color "red")             ;; Красный не мигающий (!) курсор
 (blink-cursor-mode nil)
 ;; Однако в режиме терминала это не работает, поэтому..
@@ -1416,7 +1417,7 @@ Version 2018-10-05"
  '(jabber-use-global-history nil)
  '(lj-cache-login-information t)
  '(lj-default-username "rigidus")
- '(org-agenda-files nil)
+ '(org-agenda-files (quote ("~/src/1inch/test_example.org")))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
