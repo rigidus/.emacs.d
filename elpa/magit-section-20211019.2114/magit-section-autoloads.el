@@ -1,4 +1,4 @@
-;;; magit-section-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t -*-
+;;; magit-section-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
 
@@ -9,7 +9,7 @@
 ;;;### (autoloads nil "magit-section" "magit-section.el" (0 0 0 0))
 ;;; Generated autoloads from magit-section.el
 
-(register-definition-prefixes "magit-section" '("isearch-clean-overlays@magit-mode" "magit-"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "magit-section" '("isearch-clean-overlays@magit-mode" "magit-")))
 
 ;;;***
 

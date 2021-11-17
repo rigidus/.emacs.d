@@ -1,4 +1,4 @@
-;;; lisp-extra-font-lock-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t -*-
+;;; lisp-extra-font-lock-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
 
@@ -18,20 +18,10 @@ List of modes where Lisp Extra Font Lock Global mode should be enabled.")
 (autoload 'lisp-extra-font-lock-mode "lisp-extra-font-lock" "\
 Minor mode that highlights bound variables and quoted expressions in lisp.
 
-This is a minor mode.  If called interactively, toggle the
-`Lisp-Extra-Font-Lock mode' mode.  If the prefix argument is
-positive, enable the mode, and if it is zero or negative, disable
-the mode.
-
-If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
-the mode if ARG is nil, omitted, or is a positive number.
-Disable the mode if ARG is a negative number.
-
-To check whether the minor mode is enabled in the current buffer,
-evaluate `lisp-extra-font-lock-mode'.
-
-The mode's hook is called both when the mode is enabled and when
-it is disabled.
+If called interactively, enable Lisp-Extra-Font-Lock mode if ARG
+is positive, and disable it if ARG is zero or negative.  If
+called from Lisp, also enable the mode if ARG is omitted or nil,
+and toggle it if ARG is `toggle'; disable the mode otherwise.
 
 \(fn &optional ARG)" t nil)
 
@@ -49,23 +39,17 @@ or call the function `lisp-extra-font-lock-global-mode'.")
 
 (autoload 'lisp-extra-font-lock-global-mode "lisp-extra-font-lock" "\
 Toggle Lisp-Extra-Font-Lock mode in all buffers.
-With prefix ARG, enable Lisp-Extra-Font-Lock-Global mode if ARG is
-positive; otherwise, disable it.
+With prefix ARG, enable Lisp-Extra-Font-Lock-Global mode if ARG is positive;
+otherwise, disable it.  If called from Lisp, enable the mode if
+ARG is omitted or nil.
 
-If called from Lisp, toggle the mode if ARG is `toggle'.
-Enable the mode if ARG is nil, omitted, or is a positive number.
-Disable the mode if ARG is a negative number.
-
-Lisp-Extra-Font-Lock mode is enabled in all buffers where `(lambda nil
-\(when (apply 'derived-mode-p lisp-extra-font-lock-modes)
-\(lisp-extra-font-lock-mode 1)))' would do it.
-
-See `lisp-extra-font-lock-mode' for more information on
-Lisp-Extra-Font-Lock mode.
+Lisp-Extra-Font-Lock mode is enabled in all buffers where
+`(lambda nil (when (apply 'derived-mode-p lisp-extra-font-lock-modes) (lisp-extra-font-lock-mode 1)))' would do it.
+See `lisp-extra-font-lock-mode' for more information on Lisp-Extra-Font-Lock mode.
 
 \(fn &optional ARG)" t nil)
 
-(register-definition-prefixes "lisp-extra-font-lock" '("lisp-extra-font-lock-"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "lisp-extra-font-lock" '("lisp-extra-font-lock-")))
 
 ;;;***
 

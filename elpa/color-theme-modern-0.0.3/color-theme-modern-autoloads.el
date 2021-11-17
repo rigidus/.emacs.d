@@ -1,4 +1,4 @@
-;;; color-theme-modern-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t -*-
+;;; color-theme-modern-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
 
@@ -12,7 +12,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "aalto-dark-theme" '("aalto-dark"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "aalto-dark-theme" '("aalto-dark")))
 
 ;;;***
 
@@ -22,7 +22,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "aalto-light-theme" '("aalto-light"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "aalto-light-theme" '("aalto-light")))
 
 ;;;***
 
@@ -32,7 +32,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "aliceblue-theme" '("aliceblue"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "aliceblue-theme" '("aliceblue")))
 
 ;;;***
 
@@ -41,7 +41,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "andreas-theme" '("andreas"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "andreas-theme" '("andreas")))
 
 ;;;***
 
@@ -50,7 +50,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "arjen-theme" '("arjen"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "arjen-theme" '("arjen")))
 
 ;;;***
 
@@ -60,7 +60,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "beige-diff-theme" '("beige-diff"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "beige-diff-theme" '("beige-diff")))
 
 ;;;***
 
@@ -70,7 +70,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "beige-eshell-theme" '("beige-eshell"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "beige-eshell-theme" '("beige-eshell")))
 
 ;;;***
 
@@ -80,7 +80,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "bharadwaj-slate-theme" '("bharadwaj-slate"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "bharadwaj-slate-theme" '("bharadwaj-slate")))
 
 ;;;***
 
@@ -90,7 +90,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "bharadwaj-theme" '("bharadwaj"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "bharadwaj-theme" '("bharadwaj")))
 
 ;;;***
 
@@ -99,7 +99,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "billw-theme" '("billw"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "billw-theme" '("billw")))
 
 ;;;***
 
@@ -109,7 +109,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "black-on-gray-theme" '("black-on-gray"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "black-on-gray-theme" '("black-on-gray")))
 
 ;;;***
 
@@ -119,7 +119,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "blippblopp-theme" '("blippblopp"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "blippblopp-theme" '("blippblopp")))
 
 ;;;***
 
@@ -129,7 +129,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "blue-erc-theme" '("blue-erc"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "blue-erc-theme" '("blue-erc")))
 
 ;;;***
 
@@ -139,7 +139,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "blue-eshell-theme" '("blue-eshell"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "blue-eshell-theme" '("blue-eshell")))
 
 ;;;***
 
@@ -149,7 +149,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "blue-gnus-theme" '("blue-gnus"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "blue-gnus-theme" '("blue-gnus")))
 
 ;;;***
 
@@ -159,7 +159,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "blue-mood-theme" '("blue-mood"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "blue-mood-theme" '("blue-mood")))
 
 ;;;***
 
@@ -169,7 +169,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "blue-sea-theme" '("blue-sea"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "blue-sea-theme" '("blue-sea")))
 
 ;;;***
 
@@ -179,7 +179,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "calm-forest-theme" '("calm-forest"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "calm-forest-theme" '("calm-forest")))
 
 ;;;***
 
@@ -189,7 +189,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "charcoal-black-theme" '("charcoal-black"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "charcoal-black-theme" '("charcoal-black")))
 
 ;;;***
 
@@ -198,7 +198,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "clarity-theme" '("clarity"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "clarity-theme" '("clarity")))
 
 ;;;***
 
@@ -207,7 +207,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "classic-theme" '("classic"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "classic-theme" '("classic")))
 
 ;;;***
 
@@ -216,7 +216,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "cobalt-theme" '("cobalt"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "cobalt-theme" '("cobalt")))
 
 ;;;***
 
@@ -225,7 +225,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "comidia-theme" '("comidia"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "comidia-theme" '("comidia")))
 
 ;;;***
 
@@ -235,7 +235,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "dark-blue-theme" '("dark-blue"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dark-blue-theme" '("dark-blue")))
 
 ;;;***
 
@@ -245,7 +245,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "dark-blue2-theme" '("dark-blue2"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dark-blue2-theme" '("dark-blue2")))
 
 ;;;***
 
@@ -255,7 +255,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "dark-erc-theme" '("dark-erc"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dark-erc-theme" '("dark-erc")))
 
 ;;;***
 
@@ -265,7 +265,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "dark-font-lock-theme" '("dark-font-lock"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dark-font-lock-theme" '("dark-font-lock")))
 
 ;;;***
 
@@ -275,7 +275,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "dark-gnus-theme" '("dark-gnus"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dark-gnus-theme" '("dark-gnus")))
 
 ;;;***
 
@@ -285,7 +285,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "dark-green-theme" '("dark-green"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dark-green-theme" '("dark-green")))
 
 ;;;***
 
@@ -295,7 +295,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "dark-info-theme" '("dark-info"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dark-info-theme" '("dark-info")))
 
 ;;;***
 
@@ -305,7 +305,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "dark-laptop-theme" '("dark-laptop"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "dark-laptop-theme" '("dark-laptop")))
 
 ;;;***
 
@@ -315,7 +315,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "deep-blue-theme" '("deep-blue"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "deep-blue-theme" '("deep-blue")))
 
 ;;;***
 
@@ -324,7 +324,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "desert-theme" '("desert"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "desert-theme" '("desert")))
 
 ;;;***
 
@@ -334,7 +334,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "digital-ofs1-theme" '("digital-ofs1"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "digital-ofs1-theme" '("digital-ofs1")))
 
 ;;;***
 
@@ -344,7 +344,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "emacs-21-theme" '("emacs-21"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "emacs-21-theme" '("emacs-21")))
 
 ;;;***
 
@@ -354,7 +354,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "emacs-nw-theme" '("emacs-nw"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "emacs-nw-theme" '("emacs-nw")))
 
 ;;;***
 
@@ -364,7 +364,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "euphoria-theme" '("euphoria"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "euphoria-theme" '("euphoria")))
 
 ;;;***
 
@@ -374,7 +374,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "feng-shui-theme" '("feng-shui"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "feng-shui-theme" '("feng-shui")))
 
 ;;;***
 
@@ -384,7 +384,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "fischmeister-theme" '("fischmeister"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "fischmeister-theme" '("fischmeister")))
 
 ;;;***
 
@@ -393,7 +393,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "gnome-theme" '("gnome"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "gnome-theme" '("gnome")))
 
 ;;;***
 
@@ -402,7 +402,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "gnome2-theme" '("gnome2"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "gnome2-theme" '("gnome2")))
 
 ;;;***
 
@@ -412,7 +412,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "goldenrod-theme" '("goldenrod"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "goldenrod-theme" '("goldenrod")))
 
 ;;;***
 
@@ -421,7 +421,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "gray1-theme" '("gray1"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "gray1-theme" '("gray1")))
 
 ;;;***
 
@@ -430,7 +430,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "gray30-theme" '("gray30"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "gray30-theme" '("gray30")))
 
 ;;;***
 
@@ -439,7 +439,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "greiner-theme" '("greiner"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "greiner-theme" '("greiner")))
 
 ;;;***
 
@@ -448,7 +448,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "gtk-ide-theme" '("gtk-ide"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "gtk-ide-theme" '("gtk-ide")))
 
 ;;;***
 
@@ -458,7 +458,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "high-contrast-theme" '("high-contrast"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "high-contrast-theme" '("high-contrast")))
 
 ;;;***
 
@@ -467,7 +467,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "hober-theme" '("hober"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "hober-theme" '("hober")))
 
 ;;;***
 
@@ -476,7 +476,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "infodoc-theme" '("infodoc"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "infodoc-theme" '("infodoc")))
 
 ;;;***
 
@@ -486,7 +486,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "jb-simple-theme" '("jb-simple"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "jb-simple-theme" '("jb-simple")))
 
 ;;;***
 
@@ -496,7 +496,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "jedit-grey-theme" '("jedit-grey"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "jedit-grey-theme" '("jedit-grey")))
 
 ;;;***
 
@@ -506,7 +506,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "jonadabian-slate-theme" '("jonadabian-slate"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "jonadabian-slate-theme" '("jonadabian-slate")))
 
 ;;;***
 
@@ -516,7 +516,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "jonadabian-theme" '("jonadabian"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "jonadabian-theme" '("jonadabian")))
 
 ;;;***
 
@@ -526,7 +526,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "jsc-dark-theme" '("jsc-dark"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "jsc-dark-theme" '("jsc-dark")))
 
 ;;;***
 
@@ -536,7 +536,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "jsc-light-theme" '("jsc-light"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "jsc-light-theme" '("jsc-light")))
 
 ;;;***
 
@@ -546,7 +546,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "jsc-light2-theme" '("jsc-light2"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "jsc-light2-theme" '("jsc-light2")))
 
 ;;;***
 
@@ -555,7 +555,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "julie-theme" '("julie"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "julie-theme" '("julie")))
 
 ;;;***
 
@@ -565,7 +565,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "katester-theme" '("katester"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "katester-theme" '("katester")))
 
 ;;;***
 
@@ -575,7 +575,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "kingsajz-theme" '("kingsajz"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "kingsajz-theme" '("kingsajz")))
 
 ;;;***
 
@@ -585,7 +585,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "late-night-theme" '("late-night"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "late-night-theme" '("late-night")))
 
 ;;;***
 
@@ -595,7 +595,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "lawrence-theme" '("lawrence"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "lawrence-theme" '("lawrence")))
 
 ;;;***
 
@@ -604,7 +604,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "ld-dark-theme" '("ld-dark"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ld-dark-theme" '("ld-dark")))
 
 ;;;***
 
@@ -613,7 +613,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "lethe-theme" '("lethe"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "lethe-theme" '("lethe")))
 
 ;;;***
 
@@ -622,7 +622,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "marine-theme" '("marine"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "marine-theme" '("marine")))
 
 ;;;***
 
@@ -632,7 +632,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "marquardt-theme" '("marquardt"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "marquardt-theme" '("marquardt")))
 
 ;;;***
 
@@ -641,7 +641,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "matrix-theme" '("matrix"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "matrix-theme" '("matrix")))
 
 ;;;***
 
@@ -651,7 +651,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "midnight-theme" '("midnight"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "midnight-theme" '("midnight")))
 
 ;;;***
 
@@ -661,7 +661,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "mistyday-theme" '("mistyday"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "mistyday-theme" '("mistyday")))
 
 ;;;***
 
@@ -670,7 +670,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "montz-theme" '("montz"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "montz-theme" '("montz")))
 
 ;;;***
 
@@ -679,7 +679,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "oswald-theme" '("oswald"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "oswald-theme" '("oswald")))
 
 ;;;***
 
@@ -688,7 +688,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "parus-theme" '("parus"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "parus-theme" '("parus")))
 
 ;;;***
 
@@ -697,7 +697,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "pierson-theme" '("pierson"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pierson-theme" '("pierson")))
 
 ;;;***
 
@@ -706,7 +706,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "pok-wob-theme" '("pok-wob"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pok-wob-theme" '("pok-wob")))
 
 ;;;***
 
@@ -715,7 +715,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "pok-wog-theme" '("pok-wog"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pok-wog-theme" '("pok-wog")))
 
 ;;;***
 
@@ -725,7 +725,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "railscast-theme" '("railscast"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "railscast-theme" '("railscast")))
 
 ;;;***
 
@@ -735,7 +735,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "ramangalahy-theme" '("ramangalahy"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ramangalahy-theme" '("ramangalahy")))
 
 ;;;***
 
@@ -745,7 +745,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "raspopovic-theme" '("raspopovic"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "raspopovic-theme" '("raspopovic")))
 
 ;;;***
 
@@ -755,7 +755,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "renegade-theme" '("renegade"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "renegade-theme" '("renegade")))
 
 ;;;***
 
@@ -764,7 +764,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "resolve-theme" '("resolve"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "resolve-theme" '("resolve")))
 
 ;;;***
 
@@ -774,7 +774,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "retro-green-theme" '("retro-green"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "retro-green-theme" '("retro-green")))
 
 ;;;***
 
@@ -784,7 +784,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "retro-orange-theme" '("retro-orange"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "retro-orange-theme" '("retro-orange")))
 
 ;;;***
 
@@ -794,7 +794,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "robin-hood-theme" '("robin-hood"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "robin-hood-theme" '("robin-hood")))
 
 ;;;***
 
@@ -803,7 +803,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "rotor-theme" '("rotor"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "rotor-theme" '("rotor")))
 
 ;;;***
 
@@ -812,7 +812,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "ryerson-theme" '("ryerson"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ryerson-theme" '("ryerson")))
 
 ;;;***
 
@@ -822,7 +822,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "salmon-diff-theme" '("salmon-diff"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "salmon-diff-theme" '("salmon-diff")))
 
 ;;;***
 
@@ -832,7 +832,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "salmon-font-lock-theme" '("salmon-font-lock"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "salmon-font-lock-theme" '("salmon-font-lock")))
 
 ;;;***
 
@@ -842,7 +842,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "scintilla-theme" '("scintilla"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "scintilla-theme" '("scintilla")))
 
 ;;;***
 
@@ -851,7 +851,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "shaman-theme" '("shaman"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "shaman-theme" '("shaman")))
 
 ;;;***
 
@@ -861,7 +861,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "simple-1-theme" '("simple-1"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "simple-1-theme" '("simple-1")))
 
 ;;;***
 
@@ -871,7 +871,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "sitaramv-nt-theme" '("sitaramv-nt"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "sitaramv-nt-theme" '("sitaramv-nt")))
 
 ;;;***
 
@@ -881,7 +881,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "sitaramv-solaris-theme" '("sitaramv-solaris"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "sitaramv-solaris-theme" '("sitaramv-solaris")))
 
 ;;;***
 
@@ -890,7 +890,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "snow-theme" '("snow"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "snow-theme" '("snow")))
 
 ;;;***
 
@@ -899,7 +899,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "snowish-theme" '("snowish"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "snowish-theme" '("snowish")))
 
 ;;;***
 
@@ -909,7 +909,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "standard-ediff-theme" '("standard-ediff"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "standard-ediff-theme" '("standard-ediff")))
 
 ;;;***
 
@@ -919,7 +919,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "standard-theme" '("standard"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "standard-theme" '("standard")))
 
 ;;;***
 
@@ -928,7 +928,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "subdued-theme" '("subdued"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "subdued-theme" '("subdued")))
 
 ;;;***
 
@@ -938,7 +938,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "subtle-blue-theme" '("subtle-blue"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "subtle-blue-theme" '("subtle-blue")))
 
 ;;;***
 
@@ -948,7 +948,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "subtle-hacker-theme" '("subtle-hacker"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "subtle-hacker-theme" '("subtle-hacker")))
 
 ;;;***
 
@@ -958,7 +958,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "taming-mr-arneson-theme" '("taming-mr-arneson"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "taming-mr-arneson-theme" '("taming-mr-arneson")))
 
 ;;;***
 
@@ -967,7 +967,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "taylor-theme" '("taylor"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "taylor-theme" '("taylor")))
 
 ;;;***
 
@@ -977,7 +977,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "tty-dark-theme" '("tty-dark"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "tty-dark-theme" '("tty-dark")))
 
 ;;;***
 
@@ -987,7 +987,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "vim-colors-theme" '("vim-colors"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "vim-colors-theme" '("vim-colors")))
 
 ;;;***
 
@@ -997,7 +997,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "whateveryouwant-theme" '("whateveryouwant"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "whateveryouwant-theme" '("whateveryouwant")))
 
 ;;;***
 
@@ -1006,7 +1006,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "wheat-theme" '("wheat"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "wheat-theme" '("wheat")))
 
 ;;;***
 
@@ -1016,7 +1016,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "word-perfect-theme" '("word-perfect"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "word-perfect-theme" '("word-perfect")))
 
 ;;;***
 
@@ -1025,7 +1025,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "xemacs-theme" '("xemacs"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "xemacs-theme" '("xemacs")))
 
 ;;;***
 
@@ -1034,7 +1034,7 @@
 
 (when load-file-name (add-to-list 'custom-theme-load-path (file-name-as-directory (file-name-directory load-file-name))))
 
-(register-definition-prefixes "xp-theme" 'nil)
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "xp-theme" 'nil))
 
 ;;;***
 

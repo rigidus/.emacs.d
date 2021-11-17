@@ -1,4 +1,4 @@
-;;; multi-compile-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t -*-
+;;; multi-compile-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
 
@@ -17,7 +17,7 @@ Look up the directory hierarchy from current file for a directory containing fil
 (autoload 'multi-compile-run "multi-compile" "\
 Choice target and start compile." t nil)
 
-(register-definition-prefixes "multi-compile" '("multi-compile-"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "multi-compile" '("multi-compile-")))
 
 ;;;***
 

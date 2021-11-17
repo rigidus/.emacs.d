@@ -1422,7 +1422,7 @@ Version 2018-10-05"
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
+   '(solidity-mode auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1431,6 +1431,7 @@ Version 2018-10-05"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-bold ((t (:foreground "LightSteelBlue" :inherit 'bold))))
  '(helm-lisp-show-completion ((t (:background "brightcyan"))))
  '(helm-selection ((t (:background "ForestGreen" :distant-foreground "white"))))
  '(helm-selection-line ((t (:inherit highlight :distant-foreground "white"))))
@@ -1820,3 +1821,32 @@ Version 2018-10-05"
          ("C-M-i"   . completion-at-point))
   :config
   (org-roam-setup))
+
+;; Org-roam-ui
+
+;; (add-to-list 'load-path "~/.emacs.d/elpa/org-roam-ui-20211116.1306")
+(load-library "org-roam-ui")
+
+;; KeyChord
+;; https://github.com/emacsorphanage/key-chord/
+(require 'key-chord)
+(key-chord-mode 1)
+;; (key-chord-define-global "hj"     'undo)
+;; (key-chord-define-global "[?h ?j]"  'undo)  ; the same
+;; (key-chord-define-global ",."     "<>\C-b")
+;; (key-chord-define-global "4r"     "$")
+;; (key-chord-define-global "jk"     'dabbrev-expand)
+;; (key-chord-define-global "cv"     'reindent-then-newline-and-indent)
+;; (key-chord-define-global "4r"     "$")
+;; (key-chord-define-global "''"     "`'\C-b")
+;; (key-chord-define-global ",,"     'indent-for-comment)
+;; (key-chord-define-global "qq"     "the ")
+;; (key-chord-define-global "QQ"     "The ")
+;; (key-chord-define c++-mode-map ";;"  "\C-e;")
+;; (key-chord-define c++-mode-map "{}"  "{\n\n}\C-p\t")
+;; Examples: Mode specific chords
+(key-chord-define lisp-mode-map "de"     "(defun ")
+(key-chord-define lisp-mode-map "dm"     "(defmacro ")
+(key-chord-define lisp-mode-map "dp"     "(defparameter *")
+(key-chord-define lisp-mode-map "la"     "(lambda (")
+(key-chord-define lisp-mode-map "3'"     "#'(lambda (")

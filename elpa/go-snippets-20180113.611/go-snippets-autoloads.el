@@ -1,4 +1,4 @@
-;;; go-snippets-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t -*-
+;;; go-snippets-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
 
@@ -13,7 +13,7 @@
 
 (eval-after-load 'yasnippet '(go-snippets-initialize))
 
-(register-definition-prefixes "go-snippets" '("go-snippets-dir"))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "go-snippets" '("go-snippets-dir")))
 
 ;;;***
 
