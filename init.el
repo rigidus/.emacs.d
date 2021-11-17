@@ -1260,7 +1260,7 @@ Version 2018-10-05"
          (gnuplot . t)
          (clojure . t)
          ;; (shell . t)
-         (ledger . t)
+         ;; (ledger . t)
          (org . t)
          (plantuml . t)
          (latex . t))))
