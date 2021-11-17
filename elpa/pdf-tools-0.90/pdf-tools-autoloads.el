@@ -1,4 +1,4 @@
-;;; pdf-tools-autoloads.el --- automatically extracted autoloads
+;;; pdf-tools-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t -*-
 ;;
 ;;; Code:
 
@@ -12,25 +12,39 @@
 (autoload 'pdf-annot-minor-mode "pdf-annot" "\
 Support for PDF Annotations.
 
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Annot minor mode' mode.  If the prefix argument is positive,
+enable the mode, and if it is zero or negative, disable the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `pdf-annot-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
+
 \\{pdf-annot-minor-mode-map}
 
 \(fn &optional ARG)" t nil)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-annot" '("pdf-annot-")))
+(register-definition-prefixes "pdf-annot" '("pdf-annot-"))
 
 ;;;***
 
 ;;;### (autoloads nil "pdf-cache" "pdf-cache.el" (0 0 0 0))
 ;;; Generated autoloads from pdf-cache.el
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-cache" '("page" "pdf-cache-" "textregions" "boundingbox" "define-pdf-cache-function")))
+(register-definition-prefixes "pdf-cache" '("boundingbox" "define-pdf-cache-function" "page" "pdf-cache-" "textregions"))
 
 ;;;***
 
 ;;;### (autoloads nil "pdf-dev" "pdf-dev.el" (0 0 0 0))
 ;;; Generated autoloads from pdf-dev.el
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-dev" '("pdf-dev-")))
+(register-definition-prefixes "pdf-dev" '("pdf-dev-"))
 
 ;;;***
 
@@ -40,6 +54,21 @@ Support for PDF Annotations.
 (autoload 'pdf-history-minor-mode "pdf-history" "\
 Keep a history of previously visited pages.
 
+This is a minor mode.  If called interactively, toggle the
+`Pdf-History minor mode' mode.  If the prefix argument is
+positive, enable the mode, and if it is zero or negative, disable
+the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `pdf-history-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
+
 This is a simple stack-based history.  Turning the page or
 following a link pushes the left-behind page on the stack, which
 may be navigated with the following keys.
@@ -48,14 +77,14 @@ may be navigated with the following keys.
 
 \(fn &optional ARG)" t nil)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-history" '("pdf-history-")))
+(register-definition-prefixes "pdf-history" '("pdf-history-"))
 
 ;;;***
 
 ;;;### (autoloads nil "pdf-info" "pdf-info.el" (0 0 0 0))
 ;;; Generated autoloads from pdf-info.el
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-info" '("pdf-info-")))
+(register-definition-prefixes "pdf-info" '("pdf-info-"))
 
 ;;;***
 
@@ -64,6 +93,21 @@ may be navigated with the following keys.
 
 (autoload 'pdf-isearch-minor-mode "pdf-isearch" "\
 Isearch mode for PDF buffer.
+
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Isearch minor mode' mode.  If the prefix argument is
+positive, enable the mode, and if it is zero or negative, disable
+the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `pdf-isearch-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
 
 When this mode is enabled \\[isearch-forward], among other keys,
 starts an incremental search in this PDF document.  Since this mode
@@ -95,7 +139,7 @@ that not every isearch command work as expected.
 
 \(fn &optional ARG)" t nil)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-isearch" '("pdf-isearch-")))
+(register-definition-prefixes "pdf-isearch" '("pdf-isearch-"))
 
 ;;;***
 
@@ -104,6 +148,20 @@ that not every isearch command work as expected.
 
 (autoload 'pdf-links-minor-mode "pdf-links" "\
 Handle links in PDF documents.\\<pdf-links-minor-mode-map>
+
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Links minor mode' mode.  If the prefix argument is positive,
+enable the mode, and if it is zero or negative, disable the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `pdf-links-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
 
 If this mode is enabled, most links in the document may be
 activated by clicking on them or by pressing \\[pdf-links-action-perform] and selecting
@@ -129,7 +187,7 @@ scroll the current page.
 
 \(fn LINK)" t nil)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-links" '("pdf-links-")))
+(register-definition-prefixes "pdf-links" '("pdf-links-"))
 
 ;;;***
 
@@ -148,7 +206,7 @@ see.
 
 \(fn &optional NO-QUERY-P SKIP-DEPENDENCIES-P NO-ERROR-P FORCE-DEPENDENCIES-P)" nil nil)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-loader" '("pdf-loader--")))
+(register-definition-prefixes "pdf-loader" '("pdf-loader--"))
 
 ;;;***
 
@@ -158,26 +216,85 @@ see.
 (autoload 'pdf-misc-minor-mode "pdf-misc" "\
 FIXME:  Not documented.
 
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Misc minor mode' mode.  If the prefix argument is positive,
+enable the mode, and if it is zero or negative, disable the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `pdf-misc-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
+
 \(fn &optional ARG)" t nil)
 
 (autoload 'pdf-misc-size-indication-minor-mode "pdf-misc" "\
 Provide a working size indication in the mode-line.
+
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Misc-Size-Indication minor mode' mode.  If the prefix
+argument is positive, enable the mode, and if it is zero or
+negative, disable the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `pdf-misc-size-indication-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
 
 \(fn &optional ARG)" t nil)
 
 (autoload 'pdf-misc-menu-bar-minor-mode "pdf-misc" "\
 Display a PDF Tools menu in the menu-bar.
 
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Misc-Menu-Bar minor mode' mode.  If the prefix argument is
+positive, enable the mode, and if it is zero or negative, disable
+the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `pdf-misc-menu-bar-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
+
 \(fn &optional ARG)" t nil)
 
 (autoload 'pdf-misc-context-menu-minor-mode "pdf-misc" "\
 Provide a right-click context menu in PDF buffers.
 
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Misc-Context-Menu minor mode' mode.  If the prefix argument
+is positive, enable the mode, and if it is zero or negative,
+disable the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `pdf-misc-context-menu-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
+
 \\{pdf-misc-context-menu-minor-mode-map}
 
 \(fn &optional ARG)" t nil)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-misc" '("pdf-misc-")))
+(register-definition-prefixes "pdf-misc" '("pdf-misc-"))
 
 ;;;***
 
@@ -199,9 +316,7 @@ the prefix-arg is inverted.
 Perform `pdf-occur' on multiple buffer.
 
 For a programmatic search of multiple documents see
-`pdf-occur-search'.
-
-\(fn)" t nil)
+`pdf-occur-search'." t nil)
 
 (defvar pdf-occur-global-minor-mode nil "\
 Non-nil if Pdf-Occur-Global minor mode is enabled.
@@ -216,6 +331,21 @@ or call the function `pdf-occur-global-minor-mode'.")
 (autoload 'pdf-occur-global-minor-mode "pdf-occur" "\
 Enable integration of Pdf Occur with other modes.
 
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Occur-Global minor mode' mode.  If the prefix argument is
+positive, enable the mode, and if it is zero or negative, disable
+the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `(default-value \\='pdf-occur-global-minor-mode)'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
+
 This global minor mode enables (or disables)
 `pdf-occur-ibuffer-minor-mode' and `pdf-occur-dired-minor-mode'
 in all current and future ibuffer/dired buffer.
@@ -224,6 +354,21 @@ in all current and future ibuffer/dired buffer.
 
 (autoload 'pdf-occur-ibuffer-minor-mode "pdf-occur" "\
 Hack into ibuffer's do-occur binding.
+
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Occur-Ibuffer minor mode' mode.  If the prefix argument is
+positive, enable the mode, and if it is zero or negative, disable
+the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `pdf-occur-ibuffer-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
 
 This mode remaps `ibuffer-do-occur' to
 `pdf-occur-ibuffer-do-occur', which will start the PDF Tools
@@ -235,6 +380,21 @@ and otherwise fallback to `ibuffer-do-occur'.
 (autoload 'pdf-occur-dired-minor-mode "pdf-occur" "\
 Hack into dired's `dired-do-search' binding.
 
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Occur-Dired minor mode' mode.  If the prefix argument is
+positive, enable the mode, and if it is zero or negative, disable
+the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `pdf-occur-dired-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
+
 This mode remaps `dired-do-search' to
 `pdf-occur-dired-do-search', which will start the PDF Tools
 version of `occur', if all marked buffer's are in `pdf-view-mode'
@@ -242,7 +402,7 @@ and otherwise fallback to `dired-do-search'.
 
 \(fn &optional ARG)" t nil)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-occur" '("pdf-occur-")))
+(register-definition-prefixes "pdf-occur" '("pdf-occur-"))
 
 ;;;***
 
@@ -251,6 +411,21 @@ and otherwise fallback to `dired-do-search'.
 
 (autoload 'pdf-outline-minor-mode "pdf-outline" "\
 Display an outline of a PDF document.
+
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Outline minor mode' mode.  If the prefix argument is
+positive, enable the mode, and if it is zero or negative, disable
+the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `pdf-outline-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
 
 This provides a PDF's outline on the menu bar via imenu.
 Additionally the same outline may be viewed in a designated
@@ -269,11 +444,9 @@ buffer, unless NO-SELECT-WINDOW-P is non-nil.
 \(fn &optional BUFFER NO-SELECT-WINDOW-P)" t nil)
 
 (autoload 'pdf-outline-imenu-enable "pdf-outline" "\
-Enable imenu in the current PDF buffer.
+Enable imenu in the current PDF buffer." t nil)
 
-\(fn)" t nil)
-
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-outline" '("pdf-outline")))
+(register-definition-prefixes "pdf-outline" '("pdf-outline"))
 
 ;;;***
 
@@ -287,6 +460,20 @@ This works via SyncTeX, which means the TeX sources need to have
 been compiled with `--synctex=1'.  In AUCTeX this can be done by
 setting `TeX-source-correlate-method' to 'synctex (before AUCTeX
 is loaded) and enabling `TeX-source-correlate-mode'.
+
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Sync minor mode' mode.  If the prefix argument is positive,
+enable the mode, and if it is zero or negative, disable the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `pdf-sync-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
 
 Then \\[pdf-sync-backward-search-mouse] in the PDF buffer will open the
 corresponding TeX location.
@@ -308,7 +495,7 @@ with AUCTeX.
 
 (define-obsolete-variable-alias 'pdf-sync-display-pdf-action 'pdf-sync-forward-display-action nil)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-sync" '("pdf-sync-")))
+(register-definition-prefixes "pdf-sync" '("pdf-sync-"))
 
 ;;;***
 
@@ -358,19 +545,16 @@ MODES defaults to `pdf-tools-enabled-modes'.
 
 \(fn &optional MODES)" t nil)
 
-(autoload 'pdf-tools-help "pdf-tools" "\
+(autoload 'pdf-tools-help "pdf-tools" nil t nil)
 
-
-\(fn)" t nil)
-
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-tools" '("pdf-tools-")))
+(register-definition-prefixes "pdf-tools" '("pdf-tools-"))
 
 ;;;***
 
 ;;;### (autoloads nil "pdf-util" "pdf-util.el" (0 0 0 0))
 ;;; Generated autoloads from pdf-util.el
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-util" '("pdf-util-" "display-buffer-split-below-and-attach")))
+(register-definition-prefixes "pdf-util" '("display-buffer-split-below-and-attach" "pdf-util-"))
 
 ;;;***
 
@@ -384,7 +568,7 @@ See also `pdf-view-bookmark-make-record'.
 
 \(fn BMK)" nil nil)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-view" '("pdf-view-")))
+(register-definition-prefixes "pdf-view" '("pdf-view-"))
 
 ;;;***
 
@@ -414,6 +598,21 @@ or call the function `pdf-virtual-global-minor-mode'.")
 (autoload 'pdf-virtual-global-minor-mode "pdf-virtual" "\
 Enable recognition and handling of VPDF files.
 
+This is a minor mode.  If called interactively, toggle the
+`Pdf-Virtual-Global minor mode' mode.  If the prefix argument is
+positive, enable the mode, and if it is zero or negative, disable
+the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `(default-value \\='pdf-virtual-global-minor-mode)'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
+
 \(fn &optional ARG)" t nil)
 
 (autoload 'pdf-virtual-buffer-create "pdf-virtual" "\
@@ -421,7 +620,7 @@ Enable recognition and handling of VPDF files.
 
 \(fn &optional FILENAMES BUFFER-NAME DISPLAY-P)" t nil)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "pdf-virtual" '("pdf-virtual-")))
+(register-definition-prefixes "pdf-virtual" '("pdf-virtual-"))
 
 ;;;***
 

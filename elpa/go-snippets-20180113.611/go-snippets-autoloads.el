@@ -1,4 +1,4 @@
-;;; go-snippets-autoloads.el --- automatically extracted autoloads
+;;; go-snippets-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t -*-
 ;;
 ;;; Code:
 
@@ -9,14 +9,11 @@
 ;;;### (autoloads nil "go-snippets" "go-snippets.el" (0 0 0 0))
 ;;; Generated autoloads from go-snippets.el
 
-(autoload 'go-snippets-initialize "go-snippets" "\
-
-
-\(fn)" nil nil)
+(autoload 'go-snippets-initialize "go-snippets" nil nil nil)
 
 (eval-after-load 'yasnippet '(go-snippets-initialize))
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "go-snippets" '("go-snippets-dir")))
+(register-definition-prefixes "go-snippets" '("go-snippets-dir"))
 
 ;;;***
 

@@ -1,2 +1,0 @@
-;;; -*- no-byte-compile: t -*-
-(define-package "company-solidity" "0.1.10" "Company-mode back-end for solidity-mode" '((company "0.9.0") (cl-lib "0.5.0") (solidity-mode "0.1.9")) :commit "93412f211fad7dfc3b02aa226856fc52b6a15c22" :authors '(("Samuel Smolkin" . "sam@future-precedent.org")) :maintainer '("Samuel Smolkin" . "sam@future-precedent.org") :keywords '("solidity" "completion" "company") :url "https://github.com/ethereum/emacs-solidity")

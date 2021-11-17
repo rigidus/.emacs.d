@@ -1,4 +1,4 @@
-;;; emacsql-autoloads.el --- automatically extracted autoloads
+;;; emacsql-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t -*-
 ;;
 ;;; Code:
 
@@ -15,7 +15,7 @@ A prefix argument causes the SQL to be printed into the current buffer.
 
 \(fn &optional PREFIX)" t nil)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "emacsql" '("emacsql-")))
+(register-definition-prefixes "emacsql" '("emacsql-"))
 
 ;;;***
 
@@ -23,7 +23,7 @@ A prefix argument causes the SQL to be printed into the current buffer.
 ;;;;;;  0 0 0))
 ;;; Generated autoloads from emacsql-compiler.el
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "emacsql-compiler" '("emacsql-")))
+(register-definition-prefixes "emacsql-compiler" '("emacsql-"))
 
 ;;;***
 

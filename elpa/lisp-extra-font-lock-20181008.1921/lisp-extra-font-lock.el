@@ -5,6 +5,7 @@
 ;; Author: Anders Lindgren
 ;; Keywords: languages, faces
 ;; Package-Version: 20181008.1921
+;; Package-Commit: 4605eccbe1a7fcbd3cacf5b71249435413b4db4f
 ;; Created: 2014-11-22
 ;; Version: 0.0.6
 ;; URL: https://github.com/Lindydancer/lisp-extra-font-lock

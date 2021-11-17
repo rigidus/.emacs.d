@@ -1,4 +1,4 @@
-;;; go-eldoc-autoloads.el --- automatically extracted autoloads
+;;; go-eldoc-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t -*-
 ;;
 ;;; Code:
 
@@ -10,11 +10,9 @@
 ;;; Generated autoloads from go-eldoc.el
 
 (autoload 'go-eldoc-setup "go-eldoc" "\
-Set up eldoc function and enable eldoc-mode.
+Set up eldoc function and enable eldoc-mode." t nil)
 
-\(fn)" t nil)
-
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "go-eldoc" '("go-eldoc-")))
+(register-definition-prefixes "go-eldoc" '("go-eldoc-"))
 
 ;;;***
 

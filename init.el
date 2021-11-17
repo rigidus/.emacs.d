@@ -720,7 +720,7 @@ Version 2018-10-05"
 ;;; COLOR-THEME-MODERN
 (add-to-list
  'custom-theme-load-path
- (file-name-as-directory "~/.emacs.d/elpa/color-theme-modern-20161219.1144"))
+ (file-name-as-directory "~/.emacs.d/elpa/color-theme-modern-0.0.3/"))
 ;;
 (load-theme 'comidia t t)
 (enable-theme 'comidia)
@@ -1071,8 +1071,8 @@ Version 2018-10-05"
 
 ;;; COMPANY-FLX
 
-(with-eval-after-load 'company
-  (company-flx-mode +1))
+;; (with-eval-after-load 'company
+;;   (company-flx-mode +1))
 
 
 ;;; TELEGA
@@ -1417,13 +1417,12 @@ Version 2018-10-05"
  '(jabber-use-global-history nil)
  '(lj-cache-login-information t)
  '(lj-default-username "rigidus")
- '(org-agenda-files (quote ("~/src/1inch/test_example.org")))
+ '(org-agenda-files '("~/src/1inch/test_example.org"))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   (quote
-    (org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc)))
+   '(auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1524,31 +1523,31 @@ Version 2018-10-05"
 
 (require 'use-package)
 
-(use-package pdf-tools :ensure t
-  :defer 18
-  :custom
-  (pdf-tools-enabled-modes
-   '(pdf-history-minor-mode
-     pdf-isearch-minor-mode
-     pdf-links-minor-mode
-     pdf-misc-minor-mode
-     pdf-outline-minor-mode
-     pdf-misc-size-indication-minor-mode
-     pdf-misc-menu-bar-minor-mode
-     pdf-annot-minor-mode
-     pdf-sync-minor-mode
-     pdf-misc-context-menu-minor-mode
-     pdf-cache-prefetch-minor-mode
-     pdf-view-auto-slice-minor-mode
-     pdf-occur-global-minor-mode))
-  :config
-  (dolist
-      (pkg
-       '( pdf-annot pdf-cache pdf-dev pdf-history pdf-info pdf-isearch
-                    pdf-links pdf-misc pdf-occur pdf-outline pdf-sync
-                    pdf-util pdf-view pdf-virtual))
-    (require pkg))
-  (pdf-tools-install t))
+;; (use-package pdf-tools :ensure t
+;;   :defer 18
+;;   :custom
+;;   (pdf-tools-enabled-modes
+;;    '(pdf-history-minor-mode
+;;      pdf-isearch-minor-mode
+;;      pdf-links-minor-mode
+;;      pdf-misc-minor-mode
+;;      pdf-outline-minor-mode
+;;      pdf-misc-size-indication-minor-mode
+;;      pdf-misc-menu-bar-minor-mode
+;;      pdf-annot-minor-mode
+;;      pdf-sync-minor-mode
+;;      pdf-misc-context-menu-minor-mode
+;;      pdf-cache-prefetch-minor-mode
+;;      pdf-view-auto-slice-minor-mode
+;;      pdf-occur-global-minor-mode))
+;;   :config
+;;   (dolist
+;;       (pkg
+;;        '( pdf-annot pdf-cache pdf-dev pdf-history pdf-info pdf-isearch
+;;                     pdf-links pdf-misc pdf-occur pdf-outline pdf-sync
+;;                     pdf-util pdf-view pdf-virtual))
+;;     (require pkg))
+;;   (pdf-tools-install t))
 
 (use-package pdf-view :ensure pdf-tools :defer 19
   :after (pdf-tools)
@@ -1775,7 +1774,7 @@ Version 2018-10-05"
 ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;; for Cargo.toml and other config files
 
-(use-package toml-mode :ensure)
+;; (use-package toml-mode :ensure)
 
 ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;; setting up debugging support with dap-mode

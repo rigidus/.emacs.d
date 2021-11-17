@@ -1,3 +1,5 @@
-.pass.el
 backups/
-auto-save-list/
+org-roam.db
+recentf
+session.*
+.org-id-locations
