@@ -1422,7 +1422,7 @@ Version 2018-10-05"
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(counsel swiper solidity-mode auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
+   '(consult-eglot consult-lsp dumb-jump counsel swiper solidity-mode auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1873,3 +1873,52 @@ Version 2018-10-05"
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+
+;: Lsp-mode
+;; https://github.com/golang/tools/blob/master/gopls/doc/emacs.md/
+
+(require 'lsp-mode)
+(add-hook 'go-mode-hook #'lsp-deferred)
+
+;; Set up before-save hooks to format buffer and add/delete imports.
+;; Make sure you don't have other gofmt/goimports hooks enabled.
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+(lsp-register-custom-settings
+ '(("gopls.completeUnimported" t t)
+   ("gopls.staticcheck" t t)))
+
+(require 'project)
+
+(defun project-find-go-module (dir)
+  (when-let ((root (locate-dominating-file dir "go.mod")))
+    (cons 'go-module root)))
+
+(cl-defmethod project-root ((project (head go-module)))
+  (cdr project))
+
+(add-hook 'project-find-functions #'project-find-go-module)
+
+;; Optional: load other packages before eglot to enable eglot integrations.
+(require 'company)
+(require 'yasnippet)
+
+(require 'go-mode)
+;; https://github.com/joaotavora/eglot#1-2-3
+(require 'eglot)
+(add-hook 'go-mode-hook 'eglot-ensure)
+
+;; Optional: install eglot-format-buffer as a save hook.
+;; The depth of -10 places this before eglot's willSave notification,
+;; so that that notification reports the actual contents that will be saved.
+(defun eglot-format-buffer-on-save ()
+  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
+(add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
+
+(setq-default eglot-workspace-configuration
+              '((:gopls .
+                        ((staticcheck . t)
+                         (matcher . "CaseSensitive")))))
