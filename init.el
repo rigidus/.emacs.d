@@ -1,4 +1,4 @@
-;;
+4;;
 ;;    ___ _ __ ___   __ _  ___ ___
 ;;   / _ \ '_ ` _ \ / _` |/ __/ __|
 ;;  |  __/ | | | | | (_| | (__\__ \
@@ -1422,7 +1422,7 @@ Version 2018-10-05"
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(solidity-mode auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
+   '(counsel swiper solidity-mode auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1845,8 +1845,31 @@ Version 2018-10-05"
 ;; (key-chord-define c++-mode-map ";;"  "\C-e;")
 ;; (key-chord-define c++-mode-map "{}"  "{\n\n}\C-p\t")
 ;; Examples: Mode specific chords
-(key-chord-define lisp-mode-map "de"     "(defun ")
-(key-chord-define lisp-mode-map "dm"     "(defmacro ")
-(key-chord-define lisp-mode-map "dp"     "(defparameter *")
-(key-chord-define lisp-mode-map "la"     "(lambda (")
-(key-chord-define lisp-mode-map "3'"     "#'(lambda (")
+;; (key-chord-define lisp-mode-map "|D"     "(defun ")
+;; (key-chord-define lisp-mode-map "|M"     "(defmacro ")
+;; (key-chord-define lisp-mode-map "|P"     "(defparameter *")
+;; (key-chord-define lisp-mode-map "|L"     "(lambda (")
+
+;; Ivy and Councel
+(ivy-mode)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+;; enable this if you want `swiper' to use it
+;; (setq search-default-mode #'char-fold-to-regexp)
+(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "<f6>") 'ivy-resume)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "<f1> f") 'counsel-describe-function)
+(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
+(global-set-key (kbd "<f1> l") 'counsel-find-library)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c k") 'counsel-ag)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
