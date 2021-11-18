@@ -1,4 +1,4 @@
-4;;
+;;
 ;;    ___ _ __ ___   __ _  ___ ___
 ;;   / _ \ '_ ` _ \ / _` |/ __/ __|
 ;;  |  __/ | | | | | (_| | (__\__ \
@@ -678,7 +678,7 @@ Version 2018-10-05"
 
 
 ;;; ACE-MC (ace & multiple-cursors)
-
+(require 'ace-mc)
 ;; ace-mc-add-multiple-cursors запрашивает «Query Char» для первого
 ;; символа слова, почти так же, как это делает Ace Jump.  Фактически,
 ;; ace-mc-add-multiple-cursors принимает аналогичные префиксные
@@ -1422,7 +1422,7 @@ Version 2018-10-05"
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(consult-eglot consult-lsp dumb-jump counsel swiper solidity-mode auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
+   '(org-download ivy-hydra multiple-cursors counsel-projectile go-projectile consult-eglot consult-lsp dumb-jump counsel swiper solidity-mode auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1856,6 +1856,7 @@ Version 2018-10-05"
 (setq enable-recursive-minibuffers t)
 ;; enable this if you want `swiper' to use it
 ;; (setq search-default-mode #'char-fold-to-regexp)
+;; https://oremacs.com/swiper/
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "<f6>") 'ivy-resume)
@@ -1906,8 +1907,17 @@ Version 2018-10-05"
 (require 'company)
 (require 'yasnippet)
 
+;; Omar Munchav, [11/18/21 7:26 PM]
+;; Я юзал lsp-mode + gopls
+;; https://github.com/golang/tools/blob/master/gopls/README.md#installation
+;; go install golang.org/x/tools/gopls@latest
+;; Ну там gopls ставился в какую то странную папку
+;; Мне пришлось ссылку в bin создавать
+;; Либо эту папку добавить в path
+
 (require 'go-mode)
 ;; https://github.com/joaotavora/eglot#1-2-3
+;; https://github.com/joaotavora/eglot/blob/master/README.md/
 (require 'eglot)
 (add-hook 'go-mode-hook 'eglot-ensure)
 
@@ -1922,3 +1932,12 @@ Version 2018-10-05"
               '((:gopls .
                         ((staticcheck . t)
                          (matcher . "CaseSensitive")))))
+
+(require 'go-projectile)
+
+
+;;; OrgDownload
+
+(require 'org-download)
+;; Drag-and-drop to `dired`
+(add-hook 'dired-mode-hook 'org-download-enable)
