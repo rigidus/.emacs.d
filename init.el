@@ -1422,7 +1422,7 @@ Version 2018-10-05"
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(org-download ivy-hydra multiple-cursors counsel-projectile go-projectile consult-eglot consult-lsp dumb-jump counsel swiper solidity-mode auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
+   '(elmacro wgrep ripgrep org-download ivy-hydra multiple-cursors counsel-projectile go-projectile consult-eglot consult-lsp dumb-jump counsel swiper solidity-mode auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
  '(size-indication-mode t)
  '(tab-width 4))
 
@@ -1941,3 +1941,78 @@ Version 2018-10-05"
 (require 'org-download)
 ;; Drag-and-drop to `dired`
 (add-hook 'dired-mode-hook 'org-download-enable)
+
+;;; ElMacro - https://github.com/Silex/elmacro
+(elmacro-mode)
+;; M-x elmacro-show-last-macro
+;; C-x C-k C-e - Edit the last defined keyboard macro (kmacro-edit-macro).
+;; C-x C-k e name RET - Edit a previously defined keyboard macro name (edit-kbd-macro).
+;; C-x C-k l - Edit the last 300 keystrokes as a keyboard macro (kmacro-edit-lossage).
+;; C-x C-k n - Give a command name (for the duration of the Emacs session) to the most recently defined keyboard macro (kmacro-name-last-macro).
+;; C-x C-k b - Bind the most recently defined keyboard macro to a key sequence (for the duration of the session) (kmacro-bind-to-key).
+;; M-x insert-kbd-macro - Insert in the buffer a keyboard macro’s definition, as Lisp code.
+(defun last-macro ()
+  (interactive)
+  (isearch-backward-regexp nil 1)
+  (isearch-printing-char 102 1)
+  (isearch-printing-char 117 1)
+  (isearch-printing-char 110 1)
+  (isearch-printing-char 99 1)
+  (isearch-printing-char 46 1)
+  (isearch-printing-char 42 1)
+  (isearch-printing-char 123 1)
+  (isearch-exit)
+  (set-mark-command nil)
+  (isearch-forward-regexp nil 1)
+  (isearch-printing-char 123 1)
+  (isearch-exit)
+  (left-char 1)
+  (forward-list 1)
+  (kill-ring-save 3446 4701 1)
+  ;; (yank nil)
+  )
+;; (defun ivy-last-macro-action (x)
+;;   (last-macro)
+;;   (with-ivy-window
+;;     (insert x)))
+(defun my-action-1 (x)
+  (message "action-11: %s" (ivy--trim-grep-line-number x)))
+(defun my-action-2 (x)
+  (message "action-2: %s" x))
+(defun my-action-3 (x)
+  (message "action-3: %s" x))
+(defun my-command-with-3-actions ()
+  (interactive)
+  (ivy-read "test: " '("foo" "bar" "baz")
+            :action '(1
+                      ("o" my-action-1 "action 1")
+                      ("j" my-action-2 "action 2")
+                      ("k" my-action-3 "action 3"))))
+;; extractor
+(defun extract-fn (x)
+  ;; (let ((x "par/pre.lsp:7:2:(defun verbose-enough (n)"))
+  (if (null (string-match ":[0-9]+:" x))
+      (user-error "No file and line")
+    ;; else
+    (let* ((line (substring x (+ (match-beginning 0) 1) (- (match-end 0) 1)))
+           (line-no (string-to-number (ivy--remove-props line 'face)))
+           (file (substring x 0 (match-beginning 0)))
+           (char (if (null (string-match ":[0-9]+:" x (- (match-end 0) 1)))
+                     (user-error "No pos in line")
+                   (substring x (+ (match-beginning 0) 1)
+                              (- (match-end 0) 1))))
+           (char-no (string-to-number (ivy--remove-props char 'face)))
+           (buffer (find-file file)))
+      (with-current-buffer buffer
+        (message "bfn : %s" (buffer-file-name buffer))
+        (message "line-no : %s" line-no)
+        (message "char-no : %s" char-no)
+        (goto-line line-no)
+        (forward-char char-no)
+        (last-macro)
+        (kill-buffer buffer)
+    ))))
+;; Extract
+(ivy-add-actions
+ t
+ '(("e" extract-fn "extract")))
