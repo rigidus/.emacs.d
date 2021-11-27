@@ -4,3 +4,8 @@ org-roam.db
 recentf
 session.*
 .org-id-locations
+org-roam.db
+bookmarks
+projectile-bookmarks.eld
+projects
+.lsp-session-v1
