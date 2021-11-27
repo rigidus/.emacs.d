@@ -4,7 +4,7 @@
 
 ;; Author: Lefteris Karapetsas  <lefteris@refu.co>
 ;; Keywords: languages, solidity
-;; Version: 0.1.10
+;; Version: 0.1.11
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -88,12 +88,14 @@ Possible values are:
         (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
 
 (defconst solidity-keywords
-  '("after"
+  '("abstract"
+    "after"
     "anonymous"
     "as"
     "assembly"
     "assert"
     "break"
+    "catch"
     "constant"
     "constructor"
     "continue"
@@ -105,10 +107,12 @@ Possible values are:
     "emit"
     "enum"
     "event"
+    "error"
     "external"
     "for"
     "function"
     "if"
+    "immutable"
     "import"
     "in"
     "indexed"
@@ -120,6 +124,7 @@ Possible values are:
     "memory"
     "modifier"
     "new"
+    "override"
     "payable"
     "pragma"
     "private"
@@ -134,9 +139,11 @@ Possible values are:
     "switch"
     "this"
     "throw"
+    "try"
     "using"
     "var"
     "view"
+    "virtual"
     "while"
     )
   "Keywords of the solidity language.")
@@ -167,6 +174,7 @@ Possible values are:
 (defconst solidity-variable-modifier
   '("constant"
     "public"
+    "immutable"
     "indexed"
     "storage"
     "memory"
@@ -244,6 +252,7 @@ Possible values are:
     "int248"
     "int256"
 
+    "let"
     "mapping"
     "real"
     "string"
@@ -293,7 +302,7 @@ Possible values are:
   "Built in constructs of the solidity language.")
 
 (defvar solidity-identifier-regexp
-  "\\([a-zA-z0-9]\\|_\\)+")
+  "\\([a-zA-Z0-9]\\|_\\)+")
 
 (defvar solidity-variable-attributes
   "\\(&\\|*\\|~\\)"
@@ -331,8 +340,12 @@ Possible values are:
                                 (2 font-lock-variable-name-face))
    '(solidity-match-event-decl (1 font-lock-keyword-face)
                                   (2 font-lock-variable-name-face))
+   '(solidity-match-error-decl (1 font-lock-keyword-face)
+                               (2 font-lock-variable-name-face))
+   '(solidity-match-user-defined-value-type-decl (1 font-lock-keyword-face)
+                               (2 font-lock-variable-name-face))
    '(solidity-match-variable-decls (1 font-lock-keyword-face)
-                                   (4 font-lock-variable-name-face))
+                                   (2 font-lock-variable-name-face))
    `(,(regexp-opt solidity-constants 'words) . font-lock-constant-face))
   "The font lock options for solidity.")
 
@@ -398,6 +411,24 @@ Highlight the 1st result."
     " *\\(\\<event\\>\\) +\\(" solidity-identifier-regexp "\\)")
    limit))
 
+(defun solidity-match-error-decl (limit)
+  "Search the buffer forward until LIMIT matching error names.
+
+Highlight the 1st result."
+  (solidity-match-regexp
+   (concat
+    " *\\(\\<error\\>\\) +\\(" solidity-identifier-regexp "\\)")
+   limit))
+
+(defun solidity-match-user-defined-value-type-decl (limit)
+  "Search the buffer forward until LIMIT matching user defined value type names.
+
+Highlight the 1st result."
+  (solidity-match-regexp
+   (concat
+    " *\\(\\<type\\>\\) +\\(" solidity-identifier-regexp "\\)")
+   limit))
+
 (defun solidity-match-modifier-decl (limit)
   "Search the buffer forward until LIMIT matching function names.
 
@@ -422,7 +453,7 @@ Highlight the 1st result."
 Highlight the 1st result."
   (solidity-match-regexp
    (concat
-    " *\\(" (regexp-opt solidity-builtin-types 'words) " *\\(\\[ *[0-9]*\\]\\)* *\\) " "\\("(regexp-opt solidity-variable-modifier 'words) " \\)* *\\(" solidity-identifier-regexp "\\)")
+    " *\\(" (regexp-opt solidity-builtin-types 'words) " *\\(?:\\[ *[0-9]*\\]\\)* *\\) " "\\(?:"(regexp-opt solidity-variable-modifier 'words) " \\)* *\\(" solidity-identifier-regexp "\\)")
    limit))
 
 ;; solidity syntax table
@@ -548,7 +579,7 @@ Cursor must be at the function's name.  Does not currently work for constructors
   (set (make-local-variable 'comment-multi-line) t)
   (set (make-local-variable 'comment-line-break-function)
        'c-indent-new-comment-line)
-
+  (set (make-local-variable 'c-basic-offset) 4)
 
   (when solidity-mode-disable-c-mode-hook
     (set (make-local-variable 'c-mode-hook) nil))
