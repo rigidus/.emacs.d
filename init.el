@@ -1806,28 +1806,48 @@ Version 2018-10-05"
 ;;            ))))
 
 ;; Org-roam
-(setq org-roam-v2-ack t)
+;; https://github.com/aragaer/dotfiles/blob/master/emacs.d/myinit.org#org-roam
 (use-package org-roam
   :ensure t
-  :init
-    (setq org-roam-v2-ack t)
+  :init (setq org-roam-v2-ack t)
+  :hook (after-init . org-roam-setup)
   :custom
-  (org-roam-directory "~/src/org")
+  (org-roam-directory (file-truename "~/src/org/"))
+  (org-roam-db-update-method 'immediate)
   (org-roam-complete-everywhere t)
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n i" . org-roam-node-insert)
+  :bind ((("C-c n l" . org-roam-buffer-toggle)
+          ("C-c n c" . org-roam-capture)
+          ("C-c n f" . org-roam-node-find)
+          ("C-c j" . org-roam-dailies-map))
          :map org-mode-map
-         ("C-M-i"   . completion-at-point))
+         (("C-c n i" . org-roam-node-insert)
+          ("C-c n w" . org-roam-refile)
+          ("C-M-i"   . completion-at-point)))
   :config
-  (org-roam-setup))
+  (org-roam-setup)
+  (cl-defmethod org-roam-node-filetitle ((node org-roam-node))
+    "Return the file TITLE for the node."
+    (org-roam-get-keyword "TITLE" (org-roam-node-file node)))
+  (cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
+    "Return the hierarchy for the node."
+    (let ((title (org-roam-node-title node))
+          (olp (org-roam-node-olp node))
+          (level (org-roam-node-level node))
+          (filetitle (org-roam-node-filetitle node)))
+      (concat
+       (if (> level 0) (concat filetitle " > "))
+       (if (> level 1) (concat (string-join olp " > ") " > "))
+       title)))
+  (setq org-roam-node-display-template "${hierarchy:*} ${tags:20}")
+  (require 'org-roam-dailies))
 
-;; Org-roam-ui
+;;; Org-roam-ui
 
 ;; (add-to-list 'load-path "~/.emacs.d/elpa/org-roam-ui-20211116.1306")
 (load-library "org-roam-ui")
 
-;; KeyChord
+
+;;; KeyChord
 ;; https://github.com/emacsorphanage/key-chord/
 (require 'key-chord)
 (key-chord-mode 1)
