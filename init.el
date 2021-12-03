@@ -721,9 +721,10 @@ Version 2018-10-05"
 (add-to-list
  'custom-theme-load-path
  (file-name-as-directory "~/.emacs.d/elpa/color-theme-modern-0.0.3/"))
-;;
-(load-theme 'comidia t t)
-(enable-theme 'comidia)
+;; hober
+;; desert
+(load-theme 'hober t t)
+(enable-theme 'hober)
 ;;
 ;; (load-theme 'tango t)
 ;; (enable-theme 'wheatgrass)
@@ -1443,7 +1444,7 @@ Version 2018-10-05"
 ;; http://reangdblog.blogspot.com/2016/06/emacs-ide-go.html
 
 (require 'company)
-(require 'flycheck)
+;; (require 'flycheck)
 (require 'yasnippet)
 (require 'multi-compile)
 (require 'go-eldoc)
@@ -1849,8 +1850,8 @@ Version 2018-10-05"
 
 ;;; KeyChord
 ;; https://github.com/emacsorphanage/key-chord/
-(require 'key-chord)
-(key-chord-mode 1)
+;; (require 'key-chord)
+;; (key-chord-mode 1)
 ;; (key-chord-define-global "hj"     'undo)
 ;; (key-chord-define-global "[?h ?j]"  'undo)  ; the same
 ;; (key-chord-define-global ",."     "<>\C-b")
