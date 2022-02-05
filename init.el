@@ -563,6 +563,9 @@ Version 2018-10-05"
                              (name . "*\\*sldb.*")))
                ("LISP"      (or
                              (mode . lisp-mode)))
+               ("RUST"      (or
+                             (mode . rustic-mode)
+                             (mode . rust-mode)))
                ("ORG"       (or
                              (mode . org-mode)))
                ("SYS"       (or
