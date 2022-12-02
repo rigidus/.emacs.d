@@ -602,12 +602,12 @@ Version 2018-10-05"
 (global-highlight-parentheses-mode)
 
 
-;;; FORTH
+;; ;;; FORTH
 
-(autoload 'forth-mode "gforth.el")
-(autoload 'forth-block-mode "gforth.el")
-(add-to-list 'auto-mode-alist '("\\.fs$" . forth-mode))
-(add-to-list 'auto-mode-alist '("\\.f$" . forth-mode))
+;; (autoload 'forth-mode "gforth.el")
+;; (autoload 'forth-block-mode "gforth.el")
+;; (add-to-list 'auto-mode-alist '("\\.fs$" . forth-mode))
+;; (add-to-list 'auto-mode-alist '("\\.f$" . forth-mode))
 
 
 ;;; JABBER
@@ -1266,7 +1266,7 @@ Version 2018-10-05"
          (ruby . t)
          (gnuplot . t)
          (clojure . t)
-         ;; (shell . t)
+         (shell . t)
          ;; (ledger . t)
          (org . t)
          (plantuml . t)
@@ -1426,12 +1426,12 @@ Version 2018-10-05"
  '(lj-cache-login-information t)
  '(lj-default-username "rigidus")
  '(menu-bar-mode nil)
- '(org-agenda-files '("~/src/1inch/test_example.org"))
+ '(org-agenda-files '("/home/rigidus/src/1inch/test_example.org"))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(rustic solidity-mode elmacro wgrep ripgrep org-download ivy-hydra multiple-cursors counsel-projectile go-projectile consult-eglot consult-lsp dumb-jump counsel swiper auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
+   '(forth-mode edit-server rustic solidity-mode elmacro wgrep ripgrep org-download ivy-hydra multiple-cursors counsel-projectile go-projectile consult-eglot consult-lsp dumb-jump counsel swiper auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tab-width 4)
@@ -1858,7 +1858,7 @@ Version 2018-10-05"
 ;;; Org-roam-ui
 
 ;; (add-to-list 'load-path "~/.emacs.d/elpa/org-roam-ui-20211116.1306")
-(load-library "org-roam-ui")
+;; (load-library "org-roam-ui")
 
 
 ;;; KeyChord
@@ -2050,3 +2050,31 @@ Version 2018-10-05"
 (ivy-add-actions
  t
  '(("e" extract-fn "extract")))
+
+
+(setq c-default-style "linux" c-basic-offset 4)
+
+
+(use-package edit-server
+  :ensure t
+  :commands edit-server-start
+  :init (if after-init-time
+            (edit-server-start)
+          (add-hook 'after-init-hook
+                    #'(lambda() (edit-server-start))))
+  :config (setq edit-server-new-frame-alist
+                '((name . "Edit with Emacs FRAME")
+                  (top . 200)
+                  (left . 200)
+                  (width . 80)
+                  (height . 25)
+                  (minibuffer . t)
+                  (menu-bar-lines . t)
+                  (window-system . x))))
+
+(when (require 'edit-server nil t)
+  (setq edit-server-new-frame nil)
+  (edit-server-start))
+
+(when (and (require 'edit-server nil t) (daemonp))
+  (edit-server-start))
