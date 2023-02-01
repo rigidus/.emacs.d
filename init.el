@@ -472,6 +472,22 @@ Version 2018-10-05"
 (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
 (setq slime-lisp-implementations '((sbcl ("sbcl" "--dynamic-space-size" "4096"))))
 (setq slime-startup-animation nil)
+;; ;; Способ узнать размер кучи в SBCL:
+;; (define-alien-variable ("dynamic_space_size" dynamic-space-size-bytes)
+;;   unsigned-long)
+;; ;;
+;; (defun heap-n-bytes ()
+;;   (+ dynamic-space-size-bytes
+;;      (- sb-vm::read-only-space-end sb-vm::read-only-space-start)
+;;      (- sb-vm::static-space-end sb-vm::static-space-start)))
+;; ;;
+;; (defun get-heap-size-in-gb ()
+;;   (floor
+;;    (floor
+;;     (heap-n-bytes)
+;;     1024)
+;;    1024))
+;; ;; end-code
 ;; Путь к локльной копии Common Lisp Hyper Specifications.
 ;; Если его не задавать - справка по функциям будет ходить в интернет
 ;; (setq common-lisp-hyperspec-root "file:///Users/lisp/HyperSpec")
