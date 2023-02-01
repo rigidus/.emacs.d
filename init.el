@@ -1,4 +1,3 @@
-;;
 ;;    ___ _ __ ___   __ _  ___ ___
 ;;   / _ \ '_ ` _ \ / _` |/ __/ __|
 ;;  |  __/ | | | | | (_| | (__\__ \
@@ -470,8 +469,8 @@ Version 2018-10-05"
 
 ;;; SBCL
 
-(setq inferior-lisp-program "sbcl --dynamic-space-size 2048")
-(setq slime-lisp-implementations '((sbcl ("sbcl"))))
+(setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
+(setq slime-lisp-implementations '((sbcl ("sbcl" "--dynamic-space-size" "4096"))))
 (setq slime-startup-animation nil)
 ;; Путь к локльной копии Common Lisp Hyper Specifications.
 ;; Если его не задавать - справка по функциям будет ходить в интернет
