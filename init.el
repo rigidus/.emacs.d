@@ -1446,7 +1446,7 @@ Version 2018-10-05"
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(edit-server rustic solidity-mode elmacro wgrep ripgrep org-download ivy-hydra multiple-cursors counsel-projectile go-projectile consult-eglot consult-lsp dumb-jump counsel swiper auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename company-go yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
+   '(go-autocomplete edit-server rustic solidity-mode elmacro wgrep ripgrep org-download ivy-hydra multiple-cursors counsel-projectile go-projectile consult-eglot consult-lsp dumb-jump counsel swiper auctex org-roam-ui org-roam ace-jump-mode emacs-everywhere rust-mode exec-path-from-shell toml-mode lsp-ui lsp-mode python-mode flymake-yaml yaml-mode vyper-mode flymake-solidity solidity-flycheck company-solidity org-tree-slide org-pdftools use-package pdf-tools plantuml-mode projectile better-defaults clojure-mode cider htmlize helm-projectile lisp-extra-font-lock go-guru go-direx go-scratch gotest multi-compile go-rename yasnippet go-eldoc go-mode slime helm telega wanderlust unfill gnuplot-mode gnuplot company-flx color-theme-modern ace-mc))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tab-width 4)
@@ -1468,30 +1468,86 @@ Version 2018-10-05"
 ;;; GoLang
 ;; http://reangdblog.blogspot.com/2016/06/emacs-ide-go.html
 
+;; (require 'company)
+;; ;; (require 'flycheck)
+;; (require 'yasnippet)
+;; (require 'multi-compile)
+;; (require 'go-eldoc)
+;; ;; (require 'company-go)
+
+;; (require 'go-autocomplete)
+;; (require 'go-autocomplete)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+
+;; ;; (add-hook 'before-save-hook 'gofmt-before-save)
+;; (setq-default gofmt-command "goimports")
+;; (add-hook 'go-mode-hook 'go-eldoc-setup)
+;; (add-hook 'go-mode-hook
+;;           (lambda ()
+;;             (set (make-local-variable 'company-backends) '(company-go))
+;;             (company-mode)))
+
+;; (add-hook 'go-mode-hook 'yas-minor-mode)
+;; ;; (add-hook 'go-mode-hook 'flycheck-mode)
+;; (setq multi-compile-alist
+;;       '((go-mode
+;;          . (("go-build" "go build -v"
+;;              (locate-dominating-file buffer-file-name ".git"))
+;;             ("go-build-and-run"
+;;              "go build -v && echo 'build finish' && eval ./${PWD##*/}"
+;;              (multi-compile-locate-file-dir ".git"))))))
+
+(add-to-list 'load-path "/home/rigidus/.emacs.d/elpa/golint-20180221.2015/" t)
+(require 'golint)
+
+(require 'lsp-mode)
+(add-hook 'go-mode-hook #'lsp-deferred)
+
+;; Set up before-save hooks to format buffer and add/delete imports.
+;; Make sure you don't have other gofmt/goimports hooks enabled.
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+(require 'project)
+
+(defun project-find-go-module (dir)
+  (when-let ((root (locate-dominating-file dir "go.mod")))
+    (cons 'go-module root)))
+
+(cl-defmethod project-root ((project (head go-module)))
+  (cdr project))
+
+(add-hook 'project-find-functions #'project-find-go-module)
+
+;; Optional: load other packages before eglot to enable eglot integrations.
 (require 'company)
-;; (require 'flycheck)
 (require 'yasnippet)
-(require 'multi-compile)
-(require 'go-eldoc)
-(require 'company-go)
 
-;; (add-hook 'before-save-hook 'gofmt-before-save)
-(setq-default gofmt-command "goimports")
-(add-hook 'go-mode-hook 'go-eldoc-setup)
-(add-hook 'go-mode-hook
-          (lambda ()
-            (set (make-local-variable 'company-backends) '(company-go))
-            (company-mode)))
+(require 'go-mode)
+(require 'eglot)
+(add-hook 'go-mode-hook 'eglot-ensure)
 
-(add-hook 'go-mode-hook 'yas-minor-mode)
-;; (add-hook 'go-mode-hook 'flycheck-mode)
-(setq multi-compile-alist
-      '((go-mode
-         . (("go-build" "go build -v"
-             (locate-dominating-file buffer-file-name ".git"))
-            ("go-build-and-run"
-             "go build -v && echo 'build finish' && eval ./${PWD##*/}"
-             (multi-compile-locate-file-dir ".git"))))))
+;; Optional: install eglot-format-buffer as a save hook.
+;; The depth of -10 places this before eglot's willSave notification,
+;; so that that notification reports the actual contents that will be saved.
+(defun eglot-format-buffer-on-save ()
+  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
+(add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
+
+
+;; GoMode hooks
+(defun my-go-mode-hook ()
+  ;; Call Gofmt before saving
+  ;; (add-hook 'before-save-hook 'gofmt-before-save)
+  ;; Godef jump key binding
+  (local-set-key (kbd "M-.") 'godef-jump)
+  (local-set-key (kbd "M-*") 'pop-tag-mark)
+  )
+(add-hook 'go-mode-hook 'my-go-mode-hook)
+
 
 
 ;;; assembler comments for GAS
