@@ -1,4 +1,4 @@
-;;; dom.el --- DOM implementation and manipulation library
+;;; dom2.el --- DOM implementation and manipulation library
 
 ;; Copyright (C) 2001  Alex Schroeder <alex@gnu.org>
 
@@ -198,15 +198,15 @@ matches all tags."
 (defconst dom-element-node 1)
 (defconst dom-attribute-node 2)
 (defconst dom-text-node 3)
-                                        ; (defconst dom-cdata-section-node 4)
-                                        ; (defconst dom-entity-reference-node 5)
-                                        ; (defconst dom-entity-node 6)
-                                        ; (defconst dom-processing-instruction-node 7)
-                                        ; (defconst dom-comment-node 8)
+;; (defconst dom-cdata-section-node 4)
+;; (defconst dom-entity-reference-node 5)
+;; (defconst dom-entity-node 6)
+;; (defconst dom-processing-instruction-node 7)
+;; (defconst dom-comment-node 8)
 (defconst dom-document-node 9)
-                                        ; (defconst dom-document-type-node 10)
-                                        ; (defconst dom-document-fragment-node 11)
-                                        ; (defconst dom-notation-node 12)
+;; (defconst dom-document-type-node 10)
+;; (defconst dom-document-fragment-node 11)
+;; (defconst dom-notation-node 12)
 
 ;; Default names used for Text and Document nodes.
 

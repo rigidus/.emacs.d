@@ -2338,3 +2338,16 @@ Version 2018-10-05"
 
 
 (provide 'gopls-config)
+
+
+;; Encrypting org files
+;; https://orgmode.org/worg/org-tutorials/encrypting-files.html
+(require 'epa-file)
+(epa-file-enable)
+
+(require 'org-crypt)
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance (quote ("crypt")))
+;; GPG key to use for encryption
+;; Either the Key ID or set to nil to use symmetric encryption.
+(setq org-crypt-key nil)

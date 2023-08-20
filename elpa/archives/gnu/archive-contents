@@ -405,18 +405,18 @@
 	     ("Kjartan Oli Agustsson" . "kjartanoli@disroot.org"))
 	    (:commit . "ad65bf9b51edaf85371db958a1dcaff2f620519f"))])
  (cape .
-       [(0 16)
+       [(0 17)
 	((emacs
 	  (27 1))
 	 (compat
-	  (29 1 4 0)))
+	  (29 1 4 2)))
 	"Completion At Point Extensions" tar
 	((:url . "https://github.com/minad/cape")
 	 (:keywords "abbrev" "convenience" "matching" "completion" "wp")
 	 (:maintainer "Daniel Mendler" . "mail@daniel-mendler.de")
 	 (:authors
 	  ("Daniel Mendler" . "mail@daniel-mendler.de"))
-	 (:commit . "c8e3a75f2b1096fbb09c9f4b3f60ab1fdcfee13b"))])
+	 (:commit . "7bec22b26be62bc0dab0c2a1ba6bc4b33fcabba1"))])
  (capf-autosuggest .
 		   [(0 3)
 		    ((emacs
@@ -613,18 +613,18 @@
 		      ("Jackson Ray Hamilton" . "jackson@jacksonrayhamilton.com"))
 		     (:keywords "convenience" "faces" "tools"))])
  (corfu .
-	[(0 37)
+	[(0 38)
 	 ((emacs
 	   (27 1))
 	  (compat
-	   (29 1 4 0)))
+	   (29 1 4 2)))
 	 "COmpletion in Region FUnction" tar
 	 ((:url . "https://github.com/minad/corfu")
 	  (:keywords "abbrev" "convenience" "matching" "completion" "wp")
 	  (:maintainer "Daniel Mendler" . "mail@daniel-mendler.de")
 	  (:authors
 	   ("Daniel Mendler" . "mail@daniel-mendler.de"))
-	  (:commit . "664ef966f3668f3b5c30a8c5db429ae38ca00c61"))])
+	  (:commit . "d73dcb484e0bfb23fe4b73ad3fc8df3c0d94b096"))])
  (coterm .
 	 [(1 6)
 	  ((emacs
@@ -1737,7 +1737,7 @@
 	   ("Durand" . "mmemmew@gmail.com"))
 	  (:url . "https://elpa.gnu.org/packages/ilist.html"))])
  (inspector .
-	    [(0 31)
+	    [(0 32)
 	     ((emacs
 	       (27 1)))
 	     "Tool for inspection of Emacs Lisp objects" tar
@@ -1746,7 +1746,7 @@
 	      (:maintainer "Mariano Montone" . "marianomontone@gmail.com")
 	      (:authors
 	       ("Mariano Montone" . "marianomontone@gmail.com"))
-	      (:commit . "baa486ac2e4faed9a362322c0b2914d6f0c59ede"))])
+	      (:commit . "b1bfe9769ec4e8757ecfd5b9509f9cbf6d86aaa4"))])
  (ioccur .
 	 [(2 6)
 	  ((emacs
@@ -2818,7 +2818,7 @@
 	       ("Scott Andrew Borton" . "scott@pp.htv.fi"))
 	      (:maintainer "John Darrington" . "john@darrington.wattle.id.au"))])
  (pulsar .
-	 [(0 5 0)
+	 [(1 0 1)
 	  ((emacs
 	    (27 1)))
 	  "Pulse highlight on demand or after select functions" tar
@@ -2827,7 +2827,7 @@
 	   (:maintainer "Pulsar Development" . "~protesilaos/pulsar@lists.sr.ht")
 	   (:authors
 	    ("Protesilaos Stavrou" . "info@protesilaos.com"))
-	   (:commit . "e01a8f7e80c5c83dfcfb87b10e0213d4963e4d15"))])
+	   (:commit . "f9d09afc97d08f90a6a462b9da86900e6b555a74"))])
  (pyim .
        [(5 3 2)
 	((emacs
@@ -3988,7 +3988,7 @@
 	     ("Daniel Mendler" . "mail@daniel-mendler.de"))
 	    (:commit . "438f9a47f8adc0c1d3de056c190d4edba3d4ad35"))])
  (vertico-posframe .
-		   [(0 7 2)
+		   [(0 7 3)
 		    ((emacs
 		      (26 0))
 		     (posframe
@@ -4001,7 +4001,7 @@
 		     (:maintainer "Feng Shu" . "tumashu@163.com")
 		     (:authors
 		      ("Feng Shu" . "tumashu@163.com"))
-		     (:commit . "36123af44b28f77c0c4179aefff3afcf0e169160"))])
+		     (:commit . "db9fbc95bb8316165ec74e500a76d6857e6ced1a"))])
  (vigenere .
 	   [(1 0)
 	    ((emacs
