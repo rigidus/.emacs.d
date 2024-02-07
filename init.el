@@ -1446,7 +1446,9 @@ Version 2018-10-05"
  '(lj-default-username "rigidus")
  '(lsp-ui-imenu-enable t)
  '(menu-bar-mode nil)
- '(org-agenda-files '("/home/rigidus/src/Lambda/vac-dec8.org"))
+ '(org-agenda-files '("/home/rigidus/src/Lambda/vac-dec8.org"
+                      "/home/rigidus/src/Lambda/decode9.org"
+                      "/home/rigidus/src/Lambda/vac.org"))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
@@ -2276,67 +2278,67 @@ Version 2018-10-05"
 (use-package use-package-hydra
   :ensure t)
 
-;; go hydra
-(use-package hydra
-  :ensure t
-  :config
-  (require 'hydra)
-  (require 'dap-mode)
-  (require 'dap-ui)
-  ;;:commands (ace-flyspell-setup)
-  :bind
-  ;;("M-s" . hydra-go/body)
-  :init
-  (add-hook 'dap-stopped-hook
-            (lambda (arg) (call-interactively #'hydra-go/body)))
-  :hydra (hydra-go (:color pink :hint nil :foreign-keys run)
-                   "
-   _n_: Next       _c_: Continue _g_: goroutines      _i_: break log
-   _s_: Step in    _o_: Step out _k_: break condition _h_: break hit condition
-   _Q_: Disconnect _q_: quit     _l_: locals
-   "
-	               ("n" dap-next)
-	               ("c" dap-continue)
-	               ("s" dap-step-in)
-	               ("o" dap-step-out)
-	               ("g" dap-ui-sessions)
-	               ("l" dap-ui-locals)
-	               ("e" dap-eval-thing-at-point)
-	               ("h" dap-breakpoint-hit-condition)
-	               ("k" dap-breakpoint-condition)
-	               ("i" dap-breakpoint-log-message)
-	               ("q" nil "quit" :color blue)
-	               ("Q" dap-disconnect :color red)))
+;; ;; go hydra
+;; (use-package hydra
+;;   :ensure t
+;;   :config
+;;   (require 'hydra)
+;;   (require 'dap-mode)
+;;   (require 'dap-ui)
+;;   ;;:commands (ace-flyspell-setup)
+;;   :bind
+;;   ;;("M-s" . hydra-go/body)
+;;   :init
+;;   (add-hook 'dap-stopped-hook
+;;             (lambda (arg) (call-interactively #'hydra-go/body)))
+;;   :hydra (hydra-go (:color pink :hint nil :foreign-keys run)
+;;                    "
+;;    _n_: Next       _c_: Continue _g_: goroutines      _i_: break log
+;;    _s_: Step in    _o_: Step out _k_: break condition _h_: break hit condition
+;;    _Q_: Disconnect _q_: quit     _l_: locals
+;;    "
+;; 	               ("n" dap-next)
+;; 	               ("c" dap-continue)
+;; 	               ("s" dap-step-in)
+;; 	               ("o" dap-step-out)
+;; 	               ("g" dap-ui-sessions)
+;; 	               ("l" dap-ui-locals)
+;; 	               ("e" dap-eval-thing-at-point)
+;; 	               ("h" dap-breakpoint-hit-condition)
+;; 	               ("k" dap-breakpoint-condition)
+;; 	               ("i" dap-breakpoint-log-message)
+;; 	               ("q" nil "quit" :color blue)
+;; 	               ("Q" dap-disconnect :color red)))
 
-;; DAP
-(use-package dap-mode
-  ;;:custom
-  ;;(dap-go-debug-program `("node" "~/extension/out/src/debugAdapter/goDebug.js"))
-  :config
-  (dap-mode 1)
-  (setq dap-print-io t)
-  ;;(setq fit-window-to-buffer-horizontally t)
-  ;;(setq window-resize-pixelwise t)
-  (require 'dap-hydra)
-  ;; old version
-  ;;  (require 'dap-go)		; download and expand vscode-go-extenstion to the =~/.extensions/go=
-  ;;  (dap-go-setup)
-  ;; new version
-  (require 'dap-dlv-go)
+;; ;; DAP
+;; (use-package dap-mode
+;;   ;;:custom
+;;   ;;(dap-go-debug-program `("node" "~/extension/out/src/debugAdapter/goDebug.js"))
+;;   :config
+;;   (dap-mode 1)
+;;   (setq dap-print-io t)
+;;   ;;(setq fit-window-to-buffer-horizontally t)
+;;   ;;(setq window-resize-pixelwise t)
+;;   (require 'dap-hydra)
+;;   ;; old version
+;;   ;;  (require 'dap-go)		; download and expand vscode-go-extenstion to the =~/.extensions/go=
+;;   ;;  (dap-go-setup)
+;;   ;; new version
+;;   (require 'dap-dlv-go)
 
-  (use-package dap-ui
-    :ensure nil
-    :config
-    (dap-ui-mode 1)
-    )
-  )
-
-
-(add-hook 'dap-stopped-hook
-          (lambda (arg) (call-interactively #'dap-hydra)))
+;;   (use-package dap-ui
+;;     :ensure nil
+;;     :config
+;;     (dap-ui-mode 1)
+;;     )
+;;   )
 
 
-(provide 'gopls-config)
+;; (add-hook 'dap-stopped-hook
+;;           (lambda (arg) (call-interactively #'dap-hydra)))
+
+
+;; (provide 'gopls-config)
 
 
 ;; Encrypting org files
@@ -2368,11 +2370,11 @@ Version 2018-10-05"
 ;; AI
 (use-package org-ai
   :ensure t
-  :commands (org-ai-mode
-             org-ai-global-mode)
+  :commands (org-ai-mode org-ai-global-mode)
   :init
   (add-hook 'org-mode-hook #'org-ai-mode) ; enable org-ai in org-mode
   (org-ai-global-mode) ; installs global keybindings on C-c M-a
+  (load-file "ai.el")
   :config
   (setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
   (org-ai-install-yasnippets) ; if you are using yasnippet and want `ai` snippets
