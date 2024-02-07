@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+#name : org-ai-block
+#key : ai
+#contributor : Robert Krahn
+# --
+* ${1:what}
+#+begin_ai
+${2:[SYS]: ${3:You are a helpful assistant.}
+
+}[ME]: $0
+#+end_ai

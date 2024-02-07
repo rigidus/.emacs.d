@@ -1446,13 +1446,12 @@ Version 2018-10-05"
  '(lj-default-username "rigidus")
  '(lsp-ui-imenu-enable t)
  '(menu-bar-mode nil)
- '(org-agenda-files
-   '("~/src/ad-yo/doc.org" "/home/rigidus/Documents/org/todo.org"))
+ '(org-agenda-files '("/home/rigidus/src/Lambda/vac-dec8.org"))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(use-package-hydra treemacs dap-mode flycheck-golangci-lint projectile flx-ido yasnippet use-package lsp-ui go-mode flycheck))
+   '(org-ai org-transclusion use-package-hydra treemacs dap-mode flycheck-golangci-lint projectile flx-ido yasnippet use-package lsp-ui go-mode flycheck))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tab-width 4)
@@ -2351,3 +2350,31 @@ Version 2018-10-05"
 ;; GPG key to use for encryption
 ;; Either the Key ID or set to nil to use symmetric encryption.
 (setq org-crypt-key nil)
+
+
+;; Transclusion interceptor
+(defun org-dblock-write:transclusion (params)
+  (progn
+    (with-temp-buffer
+      (insert-file-contents (plist-get params :filename))
+      (let ((range-start (or (plist-get params :min) (line-number-at-pos (point-min))))
+            (range-end (or (plist-get params :max) (line-number-at-pos (point-max)))))
+        (copy-region-as-kill (line-beginning-position range-start)
+                             (line-end-position range-end))))
+    (insert "\n#+begin_src elisp\n")
+    (yank)
+    (insert "\n#+end_src\n")))
+
+;; AI
+(use-package org-ai
+  :ensure t
+  :commands (org-ai-mode
+             org-ai-global-mode)
+  :init
+  (add-hook 'org-mode-hook #'org-ai-mode) ; enable org-ai in org-mode
+  (org-ai-global-mode) ; installs global keybindings on C-c M-a
+  :config
+  (setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
+  (org-ai-install-yasnippets) ; if you are using yasnippet and want `ai` snippets
+  (setq org-ai-use-auth-source t)
+  )
