@@ -1446,14 +1446,13 @@ Version 2018-10-05"
  '(lj-default-username "rigidus")
  '(lsp-ui-imenu-enable t)
  '(menu-bar-mode nil)
- '(org-agenda-files '("/home/rigidus/src/Lambda/vac-dec8.org"
-                      "/home/rigidus/src/Lambda/decode9.org"
-                      "/home/rigidus/src/Lambda/vac.org"))
+ '(org-agenda-files
+   '("/home/rigidus/src/Lambda/vac-dec8.org" "/home/rigidus/src/Lambda/decode9.org" "/home/rigidus/src/Lambda/vac.org"))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(org-ai org-transclusion use-package-hydra treemacs dap-mode flycheck-golangci-lint projectile flx-ido yasnippet use-package lsp-ui go-mode flycheck))
+   '(irony-eldoc irony auto-complete-c-headers org-ai org-transclusion use-package-hydra treemacs dap-mode flycheck-golangci-lint projectile flx-ido yasnippet use-package lsp-ui go-mode flycheck))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tab-width 4)
@@ -1962,7 +1961,7 @@ Version 2018-10-05"
 ;; (key-chord-define lisp-mode-map "|P"     "(defparameter *")
 ;; (key-chord-define lisp-mode-map "|L"     "(lambda (")
 
-;; Ivy and Councel
+;; Ivy Councel Swiper
 (ivy-mode)
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
@@ -2374,9 +2373,64 @@ Version 2018-10-05"
   :init
   (add-hook 'org-mode-hook #'org-ai-mode) ; enable org-ai in org-mode
   (org-ai-global-mode) ; installs global keybindings on C-c M-a
-  (load-file "ai.el")
+  (load-file "~/.emacs.d/ai.el")
   :config
   (setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
   (org-ai-install-yasnippets) ; if you are using yasnippet and want `ai` snippets
   (setq org-ai-use-auth-source t)
   )
+
+;; C & CPP
+(require 'auto-complete)
+(require 'auto-complete-config)
+(ac-config-default)
+
+(require 'yasnippet)
+(yas-global-mode 1)
+
+(defun  my:ac-c-header-init ()
+  (require 'auto-complete-c-headers)
+  (add-to-list 'ac-sources 'ac-sources-c-headers)
+  (add-to-list 'achead:include-directories "/usr/include/c++/9")
+  (add-to-list 'achead:include-directories "/usr/include/x86_64-linux-gnu/c++/9")
+  (add-to-list 'achead:include-directories "/usr/include/c++/9/backward")
+  (add-to-list 'achead:include-directories "/usr/lib/gcc/x86_64-linux-gnu/9/include")
+  (add-to-list 'achead:include-directories "/usr/local/include")
+  (add-to-list 'achead:include-directories "/usr/include/x86_64-linux-gnu")
+  (add-to-list 'achead:include-directories "/usr/include")
+  (add-to-list 'achead:include-directories "~/src/falltergeist/")
+  )
+
+(add-hook 'c++-mode-hook 'my:ac-c-header-init)
+(add-hook 'c-mode-hook 'my:ac-c-header-init)
+
+(semantic-mode 1)
+
+(defun my:add-semantic-to-autocomplete()
+  (add-to-list 'ac-sources 'ac-source-semantic))
+
+(add-hook 'c-mode-common-hook 'my:add-semantic-to-autocomplete)
+
+(global-ede-mode 1)
+
+(ede-cpp-root-project "falltergeist"
+                      :file "~/src/falltergeist/main.cpp"
+                      )
+
+(require 'eglot)
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map
+    [remap completion-at-point] 'counsel-irony)
+  (define-key irony-mode-map
+    [remap complete-symbol] 'counsel-irony))
+
+;; (add-hook 'irony-mode-hook 'my-irony-mode-hook) ;; BUG(!)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(add-hook 'irony-mode-hook #'irony-eldoc)
