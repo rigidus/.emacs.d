@@ -9,6 +9,8 @@
 ;; Документация Emacs находится в пакете emacs-common-non-dfsg.
 ;; Или emacs27-common-non-dfsg. Потом: C-h i
 
+;; (setq ns-function-modifier 'hyper)
+
 ;;; Comment function
 (defun comment-or-uncomment-this (&optional lines)
   (interactive "P")
@@ -1121,10 +1123,10 @@ Version 2018-10-05"
 
 
 ;; http://orgmode.org/manual/Installation.html
-;; (add-to-list 'load-path "~/src/org-mode/lisp")
-;; (add-to-list 'load-path "~/src/org-mode/contrib/lisp" t)
-;; (add-to-list 'load-path "~/repo/org-mode/lisp")
-;; (add-to-list 'load-path "~/repo/org-mode/contrib/lisp" t)
+(add-to-list 'load-path "~/src/org-mode/lisp")
+(add-to-list 'load-path "~/src/org-mode/contrib/lisp" t)
+(add-to-list 'load-path "~/repo/org-mode/lisp")
+(add-to-list 'load-path "~/repo/org-mode/contrib/lisp" t)
 
 ;; Переключаться автоматически в org-mode при открытии файла с расширением .org:
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
@@ -1426,7 +1428,35 @@ Version 2018-10-05"
 
 ;;; CUSTOM
 
-
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(Buffer-menu-use-frame-buffer-list nil)
+ '(blink-cursor-mode t)
+ '(c-tab-always-indent nil)
+ '(column-number-mode t)
+ '(ecb-options-version "2.40")
+ '(inhibit-startup-screen t)
+ '(ispell-dictionary nil)
+ '(jabber-history-size-limit 49741824)
+ '(jabber-use-global-history nil)
+ '(lj-cache-login-information t)
+ '(lj-default-username "rigidus")
+ '(lsp-ui-imenu-enable t)
+ '(menu-bar-mode nil)
+ '(org-agenda-files
+   '("/home/rigidus/src/Lambda/vac-dec8.org" "/home/rigidus/src/Lambda/decode9.org" "/home/rigidus/src/Lambda/vac.org"))
+ '(org-default-notes-file "~/org/notes.org")
+ '(org-directory "~/org/")
+ '(org-support-shift-select t)
+ '(package-selected-packages
+   '(irony-eldoc irony auto-complete-c-headers org-ai org-transclusion use-package-hydra treemacs dap-mode flycheck-golangci-lint projectile flx-ido yasnippet use-package lsp-ui go-mode flycheck))
+ '(show-paren-mode t)
+ '(size-indication-mode t)
+ '(tab-width 4)
+ '(tool-bar-mode nil))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -1931,7 +1961,7 @@ Version 2018-10-05"
 ;; (key-chord-define lisp-mode-map "|P"     "(defparameter *")
 ;; (key-chord-define lisp-mode-map "|L"     "(lambda (")
 
-;; Ivy and Councel
+;; Ivy Councel Swiper
 (ivy-mode)
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
@@ -2017,7 +2047,7 @@ Version 2018-10-05"
 (require 'go-projectile)
 
 
-;;; OrgDownload
+;; OrgDownload
 
 (require 'org-download)
 ;; Drag-and-drop to `dired`
@@ -2133,21 +2163,22 @@ Version 2018-10-05"
 ;;; already installed. You can skip this if you already have use-package
 
 ;; enable melpa if it isn't enabled
-(require 'package)
-(when (not (assoc "melpa" package-archives))
-  (setq package-archives (append '(("stable" . "https://stable.melpa.org/packages/")) package-archives))
-  (setq package-archives (append '(("melpa" . "https://melpa.org/packages/")) package-archives))
-  (setq package-archives (append '(("gnu" . "https://elpa.gnu.org/packages/")) package-archives)))
-(package-initialize)
+;; (require 'package)
+;; (when (not (assoc "melpa" package-archives))
+;;   (setq package-archives (append '(("stable" . "https://stable.melpa.org/packages/")) package-archives))
+;;   (setq package-archives (append '(("melpa" . "https://melpa.org/packages/")) package-archives))
+;;   (setq package-archives (append '(("gnu" . "https://elpa.gnu.org/packages/")) package-archives)))
+;; (package-initialize)
 
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+;; (add-to-list 'load-path "~/.emacs.d/lisp/")
 
-;; refresh package list if it is not already available
-(when (not package-archive-contents) (package-refresh-contents))
+;; ;; refresh package list if it is not already available
+;; (when (not package-archive-contents) (package-refresh-contents))
 
-;; install use-package if it isn't already installed
-(when (not (package-installed-p 'use-package))
-  (package-install 'use-package))
+;; ;; install use-package if it isn't already installed
+;; (when (not (package-installed-p 'use-package))
+;;   (package-install 'use-package))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Install and configure packages
 
@@ -2247,67 +2278,164 @@ Version 2018-10-05"
 (use-package use-package-hydra
   :ensure t)
 
-;; go hydra
-(use-package hydra
+;; ;; go hydra
+;; (use-package hydra
+;;   :ensure t
+;;   :config
+;;   (require 'hydra)
+;;   (require 'dap-mode)
+;;   (require 'dap-ui)
+;;   ;;:commands (ace-flyspell-setup)
+;;   :bind
+;;   ;;("M-s" . hydra-go/body)
+;;   :init
+;;   (add-hook 'dap-stopped-hook
+;;             (lambda (arg) (call-interactively #'hydra-go/body)))
+;;   :hydra (hydra-go (:color pink :hint nil :foreign-keys run)
+;;                    "
+;;    _n_: Next       _c_: Continue _g_: goroutines      _i_: break log
+;;    _s_: Step in    _o_: Step out _k_: break condition _h_: break hit condition
+;;    _Q_: Disconnect _q_: quit     _l_: locals
+;;    "
+;; 	               ("n" dap-next)
+;; 	               ("c" dap-continue)
+;; 	               ("s" dap-step-in)
+;; 	               ("o" dap-step-out)
+;; 	               ("g" dap-ui-sessions)
+;; 	               ("l" dap-ui-locals)
+;; 	               ("e" dap-eval-thing-at-point)
+;; 	               ("h" dap-breakpoint-hit-condition)
+;; 	               ("k" dap-breakpoint-condition)
+;; 	               ("i" dap-breakpoint-log-message)
+;; 	               ("q" nil "quit" :color blue)
+;; 	               ("Q" dap-disconnect :color red)))
+
+;; ;; DAP
+;; (use-package dap-mode
+;;   ;;:custom
+;;   ;;(dap-go-debug-program `("node" "~/extension/out/src/debugAdapter/goDebug.js"))
+;;   :config
+;;   (dap-mode 1)
+;;   (setq dap-print-io t)
+;;   ;;(setq fit-window-to-buffer-horizontally t)
+;;   ;;(setq window-resize-pixelwise t)
+;;   (require 'dap-hydra)
+;;   ;; old version
+;;   ;;  (require 'dap-go)		; download and expand vscode-go-extenstion to the =~/.extensions/go=
+;;   ;;  (dap-go-setup)
+;;   ;; new version
+;;   (require 'dap-dlv-go)
+
+;;   (use-package dap-ui
+;;     :ensure nil
+;;     :config
+;;     (dap-ui-mode 1)
+;;     )
+;;   )
+
+
+;; (add-hook 'dap-stopped-hook
+;;           (lambda (arg) (call-interactively #'dap-hydra)))
+
+
+;; (provide 'gopls-config)
+
+
+;; Encrypting org files
+;; https://orgmode.org/worg/org-tutorials/encrypting-files.html
+(require 'epa-file)
+(epa-file-enable)
+
+(require 'org-crypt)
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance (quote ("crypt")))
+;; GPG key to use for encryption
+;; Either the Key ID or set to nil to use symmetric encryption.
+(setq org-crypt-key nil)
+
+
+;; Transclusion interceptor
+(defun org-dblock-write:transclusion (params)
+  (progn
+    (with-temp-buffer
+      (insert-file-contents (plist-get params :filename))
+      (let ((range-start (or (plist-get params :min) (line-number-at-pos (point-min))))
+            (range-end (or (plist-get params :max) (line-number-at-pos (point-max)))))
+        (copy-region-as-kill (line-beginning-position range-start)
+                             (line-end-position range-end))))
+    (insert "\n#+begin_src elisp\n")
+    (yank)
+    (insert "\n#+end_src\n")))
+
+;; AI
+(use-package org-ai
   :ensure t
-  :config
-  (require 'hydra)
-  (require 'dap-mode)
-  (require 'dap-ui)
-  ;;:commands (ace-flyspell-setup)
-  :bind
-  ;;("M-s" . hydra-go/body)
+  :commands (org-ai-mode org-ai-global-mode)
   :init
-  (add-hook 'dap-stopped-hook
-            (lambda (arg) (call-interactively #'hydra-go/body)))
-  :hydra (hydra-go (:color pink :hint nil :foreign-keys run)
-                   "
-   _n_: Next       _c_: Continue _g_: goroutines      _i_: break log
-   _s_: Step in    _o_: Step out _k_: break condition _h_: break hit condition
-   _Q_: Disconnect _q_: quit     _l_: locals
-   "
-	               ("n" dap-next)
-	               ("c" dap-continue)
-	               ("s" dap-step-in)
-	               ("o" dap-step-out)
-	               ("g" dap-ui-sessions)
-	               ("l" dap-ui-locals)
-	               ("e" dap-eval-thing-at-point)
-	               ("h" dap-breakpoint-hit-condition)
-	               ("k" dap-breakpoint-condition)
-	               ("i" dap-breakpoint-log-message)
-	               ("q" nil "quit" :color blue)
-	               ("Q" dap-disconnect :color red)))
-
-;; DAP
-(use-package dap-mode
-  ;;:custom
-  ;;(dap-go-debug-program `("node" "~/extension/out/src/debugAdapter/goDebug.js"))
+  (add-hook 'org-mode-hook #'org-ai-mode) ; enable org-ai in org-mode
+  (org-ai-global-mode) ; installs global keybindings on C-c M-a
+  (load-file "~/.emacs.d/ai.el")
   :config
-  (dap-mode 1)
-  (setq dap-print-io t)
-  ;;(setq fit-window-to-buffer-horizontally t)
-  ;;(setq window-resize-pixelwise t)
-  (require 'dap-hydra)
-  ;; old version
-  ;;  (require 'dap-go)		; download and expand vscode-go-extenstion to the =~/.extensions/go=
-  ;;  (dap-go-setup)
-  ;; new version
-  (require 'dap-dlv-go)
-
-  (use-package dap-ui
-    :ensure nil
-    :config
-    (dap-ui-mode 1)
-    )
+  (setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
+  (org-ai-install-yasnippets) ; if you are using yasnippet and want `ai` snippets
+  (setq org-ai-use-auth-source t)
   )
 
+;; C & CPP
+;; (require 'auto-complete)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
 
-(add-hook 'dap-stopped-hook
-          (lambda (arg) (call-interactively #'dap-hydra)))
+;; (require 'yasnippet)
+;; (yas-global-mode 1)
 
+;; (defun  my:ac-c-header-init ()
+;;   (require 'auto-complete-c-headers)
+;;   (add-to-list 'ac-sources 'ac-sources-c-headers)
+;;   (add-to-list 'achead:include-directories "/usr/include/c++/9")
+;;   (add-to-list 'achead:include-directories "/usr/include/x86_64-linux-gnu/c++/9")
+;;   (add-to-list 'achead:include-directories "/usr/include/c++/9/backward")
+;;   (add-to-list 'achead:include-directories "/usr/lib/gcc/x86_64-linux-gnu/9/include")
+;;   (add-to-list 'achead:include-directories "/usr/local/include")
+;;   (add-to-list 'achead:include-directories "/usr/include/x86_64-linux-gnu")
+;;   (add-to-list 'achead:include-directories "/usr/include")
+;;   (add-to-list 'achead:include-directories "~/src/falltergeist/")
+;;   )
 
-(provide 'gopls-config)
+;; (add-hook 'c++-mode-hook 'my:ac-c-header-init)
+;; (add-hook 'c-mode-hook 'my:ac-c-header-init)
+
+;; (semantic-mode 1)
+
+;; (defun my:add-semantic-to-autocomplete()
+;;   (add-to-list 'ac-sources 'ac-source-semantic))
+
+;; (add-hook 'c-mode-common-hook 'my:add-semantic-to-autocomplete)
+
+;; (global-ede-mode 1)
+
+;; (ede-cpp-root-project "falltergeist"
+;;                       :file "~/src/falltergeist/main.cpp"
+;;                       )
+
+;; (require 'eglot)
+;; (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+;; (add-hook 'c-mode-hook 'eglot-ensure)
+;; (add-hook 'c++-mode-hook 'eglot-ensure)
+
+;; (add-hook 'c++-mode-hook 'irony-mode)
+;; (add-hook 'c-mode-hook 'irony-mode)
+
+;; (defun my-irony-mode-hook ()
+;;   (define-key irony-mode-map
+;;     [remap completion-at-point] 'counsel-irony)
+;;   (define-key irony-mode-map
+;;     [remap complete-symbol] 'counsel-irony))
+
+;; ;; (add-hook 'irony-mode-hook 'my-irony-mode-hook) ;; BUG(!)
+;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+;; (add-hook 'irony-mode-hook #'irony-eldoc)
+
 
 
 ;; For Rust.
