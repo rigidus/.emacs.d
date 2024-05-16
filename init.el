@@ -743,9 +743,11 @@ Version 2018-10-05"
 ;;  (file-name-as-directory "~/.emacs.d/elpa/color-theme-modern-0.0.3/"))
 ;; hober
 ;; desert
-(load-theme 'hober t t)
-(enable-theme 'hober)
-;; (enable-theme 'snowish)
+;; (load-theme 'hober t t)
+;; (enable-theme 'hober)
+(load-theme 'infodoc t t)
+(enable-theme 'infodoc)
+;; (enable-theme 'infodoc)
 ;; (load-theme 'tango t)
 ;; (enable-theme 'wheatgrass)
 ;; Here's list of emacs 24.3 themes.
@@ -1437,6 +1439,8 @@ Version 2018-10-05"
  '(blink-cursor-mode t)
  '(c-tab-always-indent nil)
  '(column-number-mode t)
+ '(custom-safe-themes
+   '("bd28a7a54d9bfbda4456afb650a5990282b391f1e0494fb04b095981255066ae" default))
  '(ecb-options-version "2.40")
  '(inhibit-startup-screen t)
  '(ispell-dictionary nil)
@@ -1446,13 +1450,12 @@ Version 2018-10-05"
  '(lj-default-username "rigidus")
  '(lsp-ui-imenu-enable t)
  '(menu-bar-mode nil)
- '(org-agenda-files
-   '("/home/rigidus/src/Lambda/vac-dec8.org" "/home/rigidus/src/Lambda/decode9.org" "/home/rigidus/src/Lambda/vac.org"))
+ '(org-agenda-files '("/home/rigidus/src/1inch/test_example.org"))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(irony-eldoc irony auto-complete-c-headers org-ai org-transclusion use-package-hydra treemacs dap-mode flycheck-golangci-lint projectile flx-ido yasnippet use-package lsp-ui go-mode flycheck))
+   '(racer ob-rust flycheck-rust cargo rustic rust-mode use-package-hydra treemacs dap-mode flycheck-golangci-lint projectile flx-ido yasnippet use-package lsp-ui go-mode flycheck))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tab-width 4)
@@ -2453,33 +2456,3 @@ Version 2018-10-05"
 ;; ​(​straight-use-package​ ​'tree-sitter-langs​)
 ;; ​(global-tree-sitter-mode)
 ;; ​(​add-hook​ ​'tree-sitter-after-on-hook​ ​#​'tree-sitter-hl-mode​)
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(Buffer-menu-use-frame-buffer-list nil)
- '(blink-cursor-mode t)
- '(c-tab-always-indent nil)
- '(column-number-mode t)
- '(ecb-options-version "2.40")
- '(inhibit-startup-screen t)
- '(ispell-dictionary nil)
- '(jabber-history-size-limit 49741824)
- '(jabber-use-global-history nil)
- '(lj-cache-login-information t)
- '(lj-default-username "rigidus")
- '(lsp-ui-imenu-enable t)
- '(menu-bar-mode nil)
- '(org-agenda-files '("/home/rigidus/src/1inch/test_example.org"))
- '(org-default-notes-file "~/org/notes.org")
- '(org-directory "~/org/")
- '(org-support-shift-select t)
- '(package-selected-packages
-   '(racer ob-rust flycheck-rust cargo rustic rust-mode use-package-hydra treemacs dap-mode flycheck-golangci-lint projectile flx-ido yasnippet use-package lsp-ui go-mode flycheck))
- '(show-paren-mode t)
- '(size-indication-mode t)
- '(tab-width 4)
- '(tool-bar-mode nil))
