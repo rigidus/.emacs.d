@@ -745,10 +745,9 @@ Version 2018-10-05"
 ;; desert
 ;; (load-theme 'hober t t)
 ;; (enable-theme 'hober)
-(load-theme 'infodoc t t)
-(enable-theme 'infodoc)
+;; (load-theme 'infodoc t t)
 ;; (enable-theme 'infodoc)
-;; (load-theme 'tango t)
+(load-theme 'tango-dark t)
 ;; (enable-theme 'wheatgrass)
 ;; Here's list of emacs 24.3 themes.
 ;; adwaita
