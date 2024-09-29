@@ -1,4 +1,4 @@
-;;; flycheck-golangci-lint-autoloads.el --- automatically extracted autoloads  -*- lexical-binding: t -*-
+;;; flycheck-golangci-lint-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
 

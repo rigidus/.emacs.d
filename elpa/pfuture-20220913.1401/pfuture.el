@@ -5,8 +5,6 @@
 ;; Author: Alexander Miller <alexanderm@web.de>
 ;; Homepage: https://github.com/Alexander-Miller/pfuture
 ;; Package-Requires: ((emacs "25.2"))
-;; Package-Version: 20220913.1401
-;; Package-Commit: 19b53aebbc0f2da31de6326c495038901bffb73c
 ;; Version: 1.10.3
 
 ;; This program is free software; you can redistribute it and/or modify

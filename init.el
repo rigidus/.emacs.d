@@ -747,6 +747,8 @@ Version 2018-10-05"
 ;; (enable-theme 'hober)
 ;; (load-theme 'infodoc t t)
 ;; (enable-theme 'infodoc)
+;; (enable-theme 'snowish)
+;; (load-theme 'tango t)
 (load-theme 'tango-dark t)
 ;; (enable-theme 'wheatgrass)
 ;; Here's list of emacs 24.3 themes.
@@ -1438,8 +1440,6 @@ Version 2018-10-05"
  '(blink-cursor-mode t)
  '(c-tab-always-indent nil)
  '(column-number-mode t)
- '(custom-safe-themes
-   '("bd28a7a54d9bfbda4456afb650a5990282b391f1e0494fb04b095981255066ae" default))
  '(ecb-options-version "2.40")
  '(inhibit-startup-screen t)
  '(ispell-dictionary nil)
@@ -1449,12 +1449,13 @@ Version 2018-10-05"
  '(lj-default-username "rigidus")
  '(lsp-ui-imenu-enable t)
  '(menu-bar-mode nil)
- '(org-agenda-files '("/home/rigidus/src/1inch/test_example.org"))
+ '(org-agenda-files
+   '("~/src/ad-yo/doc.org" "/home/rigidus/Documents/org/todo.org"))
  '(org-default-notes-file "~/org/notes.org")
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(racer ob-rust flycheck-rust cargo rustic rust-mode use-package-hydra treemacs dap-mode flycheck-golangci-lint projectile flx-ido yasnippet use-package lsp-ui go-mode flycheck))
+   '(use-package-hydra treemacs dap-mode flycheck-golangci-lint projectile flx-ido yasnippet use-package lsp-ui go-mode flycheck))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tab-width 4)
@@ -1751,188 +1752,188 @@ Version 2018-10-05"
 ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;; rustic = basic rust-mode + additions
 
-(use-package rustic
-  :ensure
-  :bind (:map rustic-mode-map
-              ("M-j" . lsp-ui-imenu)
-              ("M-?" . lsp-find-references)
-              ("C-c C-c l" . flycheck-list-errors)
-              ("C-c C-c a" . lsp-execute-code-action)
-              ("C-c C-c r" . lsp-rename)
-              ("C-c C-c q" . lsp-workspace-restart)
-              ("C-c C-c Q" . lsp-workspace-shutdown)
-              ("C-c C-c s" . lsp-rust-analyzer-status)
-              ("C-c C-c e" . lsp-rust-analyzer-expand-macro)
-              ("C-c C-c d" . dap-hydra)
-              ("C-c C-c h" . lsp-ui-doc-glance))
-  :config
-  ;; uncomment for less flashiness
-  ;; (setq lsp-eldoc-hook nil)
-  ;; (setq lsp-enable-symbol-highlighting nil)
-  ;; (setq lsp-signature-auto-activate nil)
-
-  ;; comment to disable rustfmt on save
-  (setq rustic-format-on-save nil)
-  (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
-
-(defun rk/rustic-mode-hook ()
-  ;; so that run C-c C-c C-r works without having to confirm, but don't try to
-  ;; save rust buffers that are not file visiting. Once
-  ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
-  ;; no longer be necessary.
-  (when buffer-file-name
-    (setq-local buffer-save-without-query t)
-    (define-key yas-minor-mode-map [(tab)] nil)
-    (define-key yas-minor-mode-map (kbd "TAB") nil)
-    (yas-minor-mode-on)))
-
-;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;; for rust-analyzer integration
-
-(use-package lsp-mode
-  :ensure
-  :commands lsp
-  :custom
-  ;; what to use when checking on-save. "check" is default, I prefer clippy
-  (lsp-rust-analyzer-cargo-watch-command "clippy")
-  (lsp-eldoc-render-all t)
-  (lsp-idle-delay 0.6)
-  (lsp-rust-analyzer-server-display-inlay-hints t)
-  :config
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
-
-(use-package lsp-ui
-  :ensure
-  :commands lsp-ui-mode
-  :custom
-  (lsp-ui-peek-always-show t)
-  (lsp-ui-sideline-show-hover t)
-  (lsp-ui-doc-enable nil))
-
-
-;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;; inline errors
-
-(use-package flycheck :ensure)
-
-;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;; auto-completion and code snippets
-
-;; (use-package yasnippet
+;; (use-package rustic
 ;;   :ensure
+;;   :bind (:map rustic-mode-map
+;;               ("M-j" . lsp-ui-imenu)
+;;               ("M-?" . lsp-find-references)
+;;               ("C-c C-c l" . flycheck-list-errors)
+;;               ("C-c C-c a" . lsp-execute-code-action)
+;;               ("C-c C-c r" . lsp-rename)
+;;               ("C-c C-c q" . lsp-workspace-restart)
+;;               ("C-c C-c Q" . lsp-workspace-shutdown)
+;;               ("C-c C-c s" . lsp-rust-analyzer-status)
+;;               ("C-c C-c e" . lsp-rust-analyzer-expand-macro)
+;;               ("C-c C-c d" . dap-hydra)
+;;               ("C-c C-c h" . lsp-ui-doc-glance))
 ;;   :config
-;;   (yas-reload-all)
-;;   (add-hook 'prog-mode-hook 'yas-minor-mode)
-;;   (add-hook 'text-mode-hook 'yas-minor-mode))
+;;   ;; uncomment for less flashiness
+;;   ;; (setq lsp-eldoc-hook nil)
+;;   ;; (setq lsp-enable-symbol-highlighting nil)
+;;   ;; (setq lsp-signature-auto-activate nil)
 
-;; (use-package company
+;;   ;; comment to disable rustfmt on save
+;;   (setq rustic-format-on-save nil)
+;;   (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
+
+;; (defun rk/rustic-mode-hook ()
+;;   ;; so that run C-c C-c C-r works without having to confirm, but don't try to
+;;   ;; save rust buffers that are not file visiting. Once
+;;   ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
+;;   ;; no longer be necessary.
+;;   (when buffer-file-name
+;;     (setq-local buffer-save-without-query t)
+;;     (define-key yas-minor-mode-map [(tab)] nil)
+;;     (define-key yas-minor-mode-map (kbd "TAB") nil)
+;;     (yas-minor-mode-on)))
+
+;; ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+;; ;; for rust-analyzer integration
+
+;; (use-package lsp-mode
 ;;   :ensure
-;;   :bind
-;;   (:map company-active-map
-;;         ("C-n". company-select-next)
-;;         ("C-p". company-select-previous)
-;;         ("M-<". company-select-first)
-;;         ("M->". company-select-last))
-;;   (:map company-mode-map
-;;         ("<tab>". tab-indent-or-complete)
-;;         ("TAB". tab-indent-or-complete)))
+;;   :commands lsp
+;;   :custom
+;;   ;; what to use when checking on-save. "check" is default, I prefer clippy
+;;   (lsp-rust-analyzer-cargo-watch-command "clippy")
+;;   (lsp-eldoc-render-all t)
+;;   (lsp-idle-delay 0.6)
+;;   (lsp-rust-analyzer-server-display-inlay-hints t)
+;;   :config
+;;   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
 
-;; (defun company-yasnippet-or-completion ()
-;;   (interactive)
-;;   (or (do-yas-expand)
-;;       (company-complete-common)))
-
-;; (defun check-expansion ()
-;;   (save-excursion
-;;     (if (looking-at "\\_>") t
-;;       (backward-char 1)
-;;       (if (looking-at "\\.") t
-;;         (backward-char 1)
-;;         (if (looking-at "::") t nil)))))
-
-;; (defun do-yas-expand ()
-;;   (let ((yas/fallback-behavior 'return-nil))
-;;     (yas/expand)))
-
-;; (defun tab-indent-or-complete ()
-;;   (interactive)
-;;   (if (minibufferp)
-;;       (minibuffer-complete)
-;;     (if (or (not yas/minor-mode)
-;;             (null (do-yas-expand)))
-;;         (if (check-expansion)
-;;             (company-complete-common)
-;;           (indent-for-tab-command)))))
-
-
-;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;; for Cargo.toml and other config files
-
-;; (use-package toml-mode :ensure)
-
-;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;; setting up debugging support with dap-mode
-
-;; (use-package exec-path-from-shell
+;; (use-package lsp-ui
 ;;   :ensure
-;;   :init (exec-path-from-shell-initialize))
+;;   :commands lsp-ui-mode
+;;   :custom
+;;   (lsp-ui-peek-always-show t)
+;;   (lsp-ui-sideline-show-hover t)
+;;   (lsp-ui-doc-enable nil))
 
-;; (when (executable-find "lldb-mi")
-;;   (use-package dap-mode
-;;     :ensure
-;;     :config
-;;     (dap-ui-mode)
-;;     (dap-ui-controls-mode 1)
 
-;;     (require 'dap-lldb)
-;;     (require 'dap-gdb-lldb)
-;;     ;; installs .extension/vscode
-;;     (dap-gdb-lldb-setup)
-;;     (dap-register-debug-template
-;;      "Rust::LLDB Run Configuration"
-;;      (list :type "lldb"
-;;            :request "launch"
-;;            :name "LLDB::Run"
-;;            :gdbpath "rust-lldb"
-;;            ;; uncomment if lldb-mi is not in PATH
-;;            ;; :lldbmipath "path/to/lldb-mi"
-;;            ))))
+;; ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+;; ;; inline errors
 
-;; Org-roam
-;; https://github.com/aragaer/dotfiles/blob/master/emacs.d/myinit.org#org-roam
-(use-package org-roam
-  :ensure t
-  :init (setq org-roam-v2-ack t)
-  :hook (after-init . org-roam-setup)
-  :custom
-  (org-roam-directory (file-truename "~/src/org/"))
-  (org-roam-db-update-method 'immediate)
-  (org-roam-complete-everywhere t)
-  :bind ((("C-c n l" . org-roam-buffer-toggle)
-          ("C-c n c" . org-roam-capture)
-          ("C-c n f" . org-roam-node-find)
-          ("C-c j" . org-roam-dailies-map))
-         :map org-mode-map
-         (("C-c n i" . org-roam-node-insert)
-          ("C-c n w" . org-roam-refile)
-          ("C-M-i"   . completion-at-point)))
-  :config
-  (org-roam-setup)
-  (cl-defmethod org-roam-node-filetitle ((node org-roam-node))
-    "Return the file TITLE for the node."
-    (org-roam-get-keyword "TITLE" (org-roam-node-file node)))
-  (cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
-    "Return the hierarchy for the node."
-    (let ((title (org-roam-node-title node))
-          (olp (org-roam-node-olp node))
-          (level (org-roam-node-level node))
-          (filetitle (org-roam-node-filetitle node)))
-      (concat
-       (if (> level 0) (concat filetitle " > "))
-       (if (> level 1) (concat (string-join olp " > ") " > "))
-       title)))
-  (setq org-roam-node-display-template "${hierarchy:*} ${tags:20}")
-  (require 'org-roam-dailies))
+;; (use-package flycheck :ensure)
+
+;; ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+;; ;; auto-completion and code snippets
+
+;; ;; (use-package yasnippet
+;; ;;   :ensure
+;; ;;   :config
+;; ;;   (yas-reload-all)
+;; ;;   (add-hook 'prog-mode-hook 'yas-minor-mode)
+;; ;;   (add-hook 'text-mode-hook 'yas-minor-mode))
+
+;; ;; (use-package company
+;; ;;   :ensure
+;; ;;   :bind
+;; ;;   (:map company-active-map
+;; ;;         ("C-n". company-select-next)
+;; ;;         ("C-p". company-select-previous)
+;; ;;         ("M-<". company-select-first)
+;; ;;         ("M->". company-select-last))
+;; ;;   (:map company-mode-map
+;; ;;         ("<tab>". tab-indent-or-complete)
+;; ;;         ("TAB". tab-indent-or-complete)))
+
+;; ;; (defun company-yasnippet-or-completion ()
+;; ;;   (interactive)
+;; ;;   (or (do-yas-expand)
+;; ;;       (company-complete-common)))
+
+;; ;; (defun check-expansion ()
+;; ;;   (save-excursion
+;; ;;     (if (looking-at "\\_>") t
+;; ;;       (backward-char 1)
+;; ;;       (if (looking-at "\\.") t
+;; ;;         (backward-char 1)
+;; ;;         (if (looking-at "::") t nil)))))
+
+;; ;; (defun do-yas-expand ()
+;; ;;   (let ((yas/fallback-behavior 'return-nil))
+;; ;;     (yas/expand)))
+
+;; ;; (defun tab-indent-or-complete ()
+;; ;;   (interactive)
+;; ;;   (if (minibufferp)
+;; ;;       (minibuffer-complete)
+;; ;;     (if (or (not yas/minor-mode)
+;; ;;             (null (do-yas-expand)))
+;; ;;         (if (check-expansion)
+;; ;;             (company-complete-common)
+;; ;;           (indent-for-tab-command)))))
+
+
+;; ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+;; ;; for Cargo.toml and other config files
+
+;; ;; (use-package toml-mode :ensure)
+
+;; ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+;; ;; setting up debugging support with dap-mode
+
+;; ;; (use-package exec-path-from-shell
+;; ;;   :ensure
+;; ;;   :init (exec-path-from-shell-initialize))
+
+;; ;; (when (executable-find "lldb-mi")
+;; ;;   (use-package dap-mode
+;; ;;     :ensure
+;; ;;     :config
+;; ;;     (dap-ui-mode)
+;; ;;     (dap-ui-controls-mode 1)
+
+;; ;;     (require 'dap-lldb)
+;; ;;     (require 'dap-gdb-lldb)
+;; ;;     ;; installs .extension/vscode
+;; ;;     (dap-gdb-lldb-setup)
+;; ;;     (dap-register-debug-template
+;; ;;      "Rust::LLDB Run Configuration"
+;; ;;      (list :type "lldb"
+;; ;;            :request "launch"
+;; ;;            :name "LLDB::Run"
+;; ;;            :gdbpath "rust-lldb"
+;; ;;            ;; uncomment if lldb-mi is not in PATH
+;; ;;            ;; :lldbmipath "path/to/lldb-mi"
+;; ;;            ))))
+
+;; ;; Org-roam
+;; ;; https://github.com/aragaer/dotfiles/blob/master/emacs.d/myinit.org#org-roam
+;; (use-package org-roam
+;;   :ensure t
+;;   :init (setq org-roam-v2-ack t)
+;;   :hook (after-init . org-roam-setup)
+;;   :custom
+;;   (org-roam-directory (file-truename "~/src/org/"))
+;;   (org-roam-db-update-method 'immediate)
+;;   (org-roam-complete-everywhere t)
+;;   :bind ((("C-c n l" . org-roam-buffer-toggle)
+;;           ("C-c n c" . org-roam-capture)
+;;           ("C-c n f" . org-roam-node-find)
+;;           ("C-c j" . org-roam-dailies-map))
+;;          :map org-mode-map
+;;          (("C-c n i" . org-roam-node-insert)
+;;           ("C-c n w" . org-roam-refile)
+;;           ("C-M-i"   . completion-at-point)))
+;;   :config
+;;   (org-roam-setup)
+;;   (cl-defmethod org-roam-node-filetitle ((node org-roam-node))
+;;     "Return the file TITLE for the node."
+;;     (org-roam-get-keyword "TITLE" (org-roam-node-file node)))
+;;   (cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
+;;     "Return the hierarchy for the node."
+;;     (let ((title (org-roam-node-title node))
+;;           (olp (org-roam-node-olp node))
+;;           (level (org-roam-node-level node))
+;;           (filetitle (org-roam-node-filetitle node)))
+;;       (concat
+;;        (if (> level 0) (concat filetitle " > "))
+;;        (if (> level 1) (concat (string-join olp " > ") " > "))
+;;        title)))
+;;   (setq org-roam-node-display-template "${hierarchy:*} ${tags:20}")
+;;   (require 'org-roam-dailies))
 
 ;;; Org-roam-ui
 
@@ -1963,7 +1964,7 @@ Version 2018-10-05"
 ;; (key-chord-define lisp-mode-map "|P"     "(defparameter *")
 ;; (key-chord-define lisp-mode-map "|L"     "(lambda (")
 
-;; Ivy Councel Swiper
+;; Ivy and Councel
 (ivy-mode)
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
@@ -2049,7 +2050,7 @@ Version 2018-10-05"
 (require 'go-projectile)
 
 
-;; OrgDownload
+;;; OrgDownload
 
 (require 'org-download)
 ;; Drag-and-drop to `dired`
@@ -2165,22 +2166,21 @@ Version 2018-10-05"
 ;;; already installed. You can skip this if you already have use-package
 
 ;; enable melpa if it isn't enabled
-;; (require 'package)
-;; (when (not (assoc "melpa" package-archives))
-;;   (setq package-archives (append '(("stable" . "https://stable.melpa.org/packages/")) package-archives))
-;;   (setq package-archives (append '(("melpa" . "https://melpa.org/packages/")) package-archives))
-;;   (setq package-archives (append '(("gnu" . "https://elpa.gnu.org/packages/")) package-archives)))
-;; (package-initialize)
+(require 'package)
+(when (not (assoc "melpa" package-archives))
+  (setq package-archives (append '(("stable" . "https://stable.melpa.org/packages/")) package-archives))
+  (setq package-archives (append '(("melpa" . "https://melpa.org/packages/")) package-archives))
+  (setq package-archives (append '(("gnu" . "https://elpa.gnu.org/packages/")) package-archives)))
+(package-initialize)
 
-;; (add-to-list 'load-path "~/.emacs.d/lisp/")
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 
-;; ;; refresh package list if it is not already available
-;; (when (not package-archive-contents) (package-refresh-contents))
+;; refresh package list if it is not already available
+(when (not package-archive-contents) (package-refresh-contents))
 
-;; ;; install use-package if it isn't already installed
-;; (when (not (package-installed-p 'use-package))
-;;   (package-install 'use-package))
-
+;; install use-package if it isn't already installed
+(when (not (package-installed-p 'use-package))
+  (package-install 'use-package))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Install and configure packages
 
@@ -2277,10 +2277,10 @@ Version 2018-10-05"
 ;;         (before-save . lsp-format-buffer)
 ;;         (before-save . lsp-organize-imports)))
 
-(use-package use-package-hydra
-  :ensure t)
+;; (use-package use-package-hydra
+;;   :ensure t)
 
-;; ;; go hydra
+;; go hydra
 ;; (use-package hydra
 ;;   :ensure t
 ;;   :config
@@ -2354,104 +2354,3 @@ Version 2018-10-05"
 ;; GPG key to use for encryption
 ;; Either the Key ID or set to nil to use symmetric encryption.
 (setq org-crypt-key nil)
-
-
-;; Transclusion interceptor
-(defun org-dblock-write:transclusion (params)
-  (progn
-    (with-temp-buffer
-      (insert-file-contents (plist-get params :filename))
-      (let ((range-start (or (plist-get params :min) (line-number-at-pos (point-min))))
-            (range-end (or (plist-get params :max) (line-number-at-pos (point-max)))))
-        (copy-region-as-kill (line-beginning-position range-start)
-                             (line-end-position range-end))))
-    (insert "\n#+begin_src elisp\n")
-    (yank)
-    (insert "\n#+end_src\n")))
-
-;; AI
-(use-package org-ai
-  :ensure t
-  :commands (org-ai-mode org-ai-global-mode)
-  :init
-  (add-hook 'org-mode-hook #'org-ai-mode) ; enable org-ai in org-mode
-  (org-ai-global-mode) ; installs global keybindings on C-c M-a
-  (load-file "~/.emacs.d/ai.el")
-  :config
-  (setq org-ai-default-chat-model "gpt-4") ; if you are on the gpt-4 beta:
-  (org-ai-install-yasnippets) ; if you are using yasnippet and want `ai` snippets
-  (setq org-ai-use-auth-source t)
-  )
-
-;; C & CPP
-;; (require 'auto-complete)
-;; (require 'auto-complete-config)
-;; (ac-config-default)
-
-;; (require 'yasnippet)
-;; (yas-global-mode 1)
-
-;; (defun  my:ac-c-header-init ()
-;;   (require 'auto-complete-c-headers)
-;;   (add-to-list 'ac-sources 'ac-sources-c-headers)
-;;   (add-to-list 'achead:include-directories "/usr/include/c++/9")
-;;   (add-to-list 'achead:include-directories "/usr/include/x86_64-linux-gnu/c++/9")
-;;   (add-to-list 'achead:include-directories "/usr/include/c++/9/backward")
-;;   (add-to-list 'achead:include-directories "/usr/lib/gcc/x86_64-linux-gnu/9/include")
-;;   (add-to-list 'achead:include-directories "/usr/local/include")
-;;   (add-to-list 'achead:include-directories "/usr/include/x86_64-linux-gnu")
-;;   (add-to-list 'achead:include-directories "/usr/include")
-;;   (add-to-list 'achead:include-directories "~/src/falltergeist/")
-;;   )
-
-;; (add-hook 'c++-mode-hook 'my:ac-c-header-init)
-;; (add-hook 'c-mode-hook 'my:ac-c-header-init)
-
-;; (semantic-mode 1)
-
-;; (defun my:add-semantic-to-autocomplete()
-;;   (add-to-list 'ac-sources 'ac-source-semantic))
-
-;; (add-hook 'c-mode-common-hook 'my:add-semantic-to-autocomplete)
-
-;; (global-ede-mode 1)
-
-;; (ede-cpp-root-project "falltergeist"
-;;                       :file "~/src/falltergeist/main.cpp"
-;;                       )
-
-;; (require 'eglot)
-;; (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-;; (add-hook 'c-mode-hook 'eglot-ensure)
-;; (add-hook 'c++-mode-hook 'eglot-ensure)
-
-;; (add-hook 'c++-mode-hook 'irony-mode)
-;; (add-hook 'c-mode-hook 'irony-mode)
-
-;; (defun my-irony-mode-hook ()
-;;   (define-key irony-mode-map
-;;     [remap completion-at-point] 'counsel-irony)
-;;   (define-key irony-mode-map
-;;     [remap complete-symbol] 'counsel-irony))
-
-;; ;; (add-hook 'irony-mode-hook 'my-irony-mode-hook) ;; BUG(!)
-;; (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-;; (add-hook 'irony-mode-hook #'irony-eldoc)
-
-
-
-;; For Rust.
-;; (require 'package)
-;; (add-to-list 'package-archives
-;;              '("melpa" . "https://melpa.org/packages/") t)
-;; (package-initialize)
-;; (package-refresh-contents)
-
-;; ​(use-package​'rust-mode)
-;; ​(​add-to-list​ ​'eglot-server-programs​ '((​rust-mode​) ​.​ (​"​rust-analyzer​"​)))
-;; ​(​add-hook​ ​'rust-mode-hook​ ​'eglot-ensure​)
-;; ​;​; Go colorful with Tree-sitter.
-;; ​(​straight-use-package​ ​'tree-sitter​)
-;; ​(​straight-use-package​ ​'tree-sitter-langs​)
-;; ​(global-tree-sitter-mode)
-;; ​(​add-hook​ ​'tree-sitter-after-on-hook​ ​#​'tree-sitter-hl-mode​)

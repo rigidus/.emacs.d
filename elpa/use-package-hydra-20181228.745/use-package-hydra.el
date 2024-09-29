@@ -7,8 +7,6 @@
 ;; Created: 6 Jan 2018
 ;; Modified: 18 Aug 2018
 ;; Version: 0.1
-;; Package-Version: 20181228.745
-;; Package-Commit: 8cd55a1128fbdf6327bb38a199d206225896d146
 ;; Package-Requires: ((emacs "24.3") (use-package "2.4"))
 ;; Keywords: convenience extensions tools
 ;; URL: https://gitlab.com/to1ne/use-package-hydra

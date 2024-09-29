@@ -18,6 +18,10 @@ Read a string using a pos-frame with given PROMPT and INITIAL-INPUT.
 
 ;;;***
 
+;;;### (autoloads nil nil ("cfrs-pkg.el") (0 0 0 0))
+
+;;;***
+
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t

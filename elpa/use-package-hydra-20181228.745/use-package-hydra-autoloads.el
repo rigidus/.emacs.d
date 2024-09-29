@@ -23,6 +23,10 @@ ARGS, REST, and STATE are prepared by `use-package-normalize/:hydra'.
 
 ;;;***
 
+;;;### (autoloads nil nil ("use-package-hydra-pkg.el") (0 0 0 0))
+
+;;;***
+
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t

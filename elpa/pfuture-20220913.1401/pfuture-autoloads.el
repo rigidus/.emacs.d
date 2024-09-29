@@ -27,6 +27,10 @@ this is right: (pfuture-new \"git\" \"status\")
 
 ;;;***
 
+;;;### (autoloads nil nil ("pfuture-pkg.el") (0 0 0 0))
+
+;;;***
+
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
