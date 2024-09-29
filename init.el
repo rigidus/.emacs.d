@@ -1019,46 +1019,53 @@ Version 2018-10-05"
 
 
 ;;; ERC
-;; (require 'erc)
+(require 'erc)
 
-;; ;; загружаем авто-подключение к каналам, и задаем список каналов для
-;; ;; подключения
-;; (erc-autojoin-mode t)
+;; загружаем авто-подключение к каналам, и задаем список каналов для
+;; подключения
+(erc-autojoin-mode t)
 
-;; (setq erc-autojoin-channels-alist
-;;       '(("irc.freenode.net" "#lisp" "#emacs")))
-
-
-;; (require 'erc-fill)
-;; (erc-fill-mode t)
-
-;; ;; задаем персональные данные, хотя их можно задать и через
-;; ;; M-x customize-group erc
-;; (setq erc-user-full-name "rigidus")
-;; (setq erc-email-userid "avenger-f@yandex.ru")
-
-;; ;; часть относящаяся к логированию переговоров на каналах
-;; ;; нужно ли вставлять старый лог в окно канала?
-;; (setq erc-log-insert-log-on-open nil)
-
-;; ;; логировать переговоры на каналах?
-;; (setq erc-log-channels t)
-
-;; ;; где будут храниться логи
-;; (setq erc-log-channels-directory "~/.irclogs/")
-
-;; ;; сохранять ли логи при возникновении PART
-;; (setq erc-save-buffer-on-part t)
-
-;; ;; убирать или нет временные отметки?
-;; (setq erc-hide-timestamps nil)
-
-;; ;; максимальный размер буфера канала
-;; (setq erc-max-buffer-size 500000)
+(setq erc-autojoin-channels-alist
+      '(("irc.freenode.net" "#lisp" "#emacs")))
 
 
+(require 'erc-fill)
+(erc-fill-mode t)
 
-;;; COMPANY-MODE
+;; задаем персональные данные, хотя их можно задать и через
+;; M-x customize-group erc
+(setq erc-user-full-name "rigidus")
+(setq erc-email-userid "i.am.rigidus@gmail.com")
+
+;; часть относящаяся к логированию переговоров на каналах
+;; нужно ли вставлять старый лог в окно канала?
+(setq erc-log-insert-log-on-open nil)
+
+;; логировать переговоры на каналах?
+(setq erc-log-channels t)
+
+;; где будут храниться логи
+(setq erc-log-channels-directory "~/.irclogs/")
+
+;; сохранять ли логи при возникновении PART
+(setq erc-save-buffer-on-part t)
+
+;; убирать или нет временные отметки?
+(setq erc-hide-timestamps nil)
+
+;; максимальный размер буфера канала
+(setq erc-max-buffer-size 500000)
+
+
+;;; EGLOT
+
+(require 'eglot)
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+
+
+;;; COMPANY-MODE (conflicting Eglot)
 
 ;; Once installed, enable company-mode with M-x company-mode.
 
@@ -1091,12 +1098,6 @@ Version 2018-10-05"
 ;; type M-x customize-group RET company.
 
 
-
-
-;;; COMPANY-FLX
-
-;; (with-eval-after-load 'company
-;;   (company-flx-mode +1))
 
 
 ;;; TELEGA
@@ -1190,31 +1191,32 @@ Version 2018-10-05"
 ;; Показывать картинки при открытии org-файлов
 (setq org-startup-with-inline-images t)
 
-;; (define-key mode-specific-map [?a] 'org-agenda)
+(define-key mode-specific-map [?a] 'org-agenda)
 
-;; (eval-after-load "org"
-;;   '(progn
-;;      (define-prefix-command 'org-todo-state-map)
+(eval-after-load "org"
+  '(progn
+     (define-prefix-command 'org-todo-state-map)
 
-;;      (define-key org-mode-map "\C-cx" 'org-todo-state-map)
+     (define-key org-mode-map "\C-cx" 'org-todo-state-map)
 
-;;      (define-key org-todo-state-map "x"
-;;        #'(lambda nil (interactive) (org-todo "CANCELLED")))
-;;      (define-key org-todo-state-map "d"
-;;        #'(lambda nil (interactive) (org-todo "DONE")))
-;;      (define-key org-todo-state-map "f"
-;;        #'(lambda nil (interactive) (org-todo "DEFERRED")))
-;;      (define-key org-todo-state-map "l"
-;;        #'(lambda nil (interactive) (org-todo "DELEGATED")))
-;;      (define-key org-todo-state-map "s"
-;;        #'(lambda nil (interactive) (org-todo "STARTED")))
-;;      (define-key org-todo-state-map "w"
-;;        #'(lambda nil (interactive) (org-todo "WAITING")))
+     (define-key org-todo-state-map "x"
+       #'(lambda nil (interactive) (org-todo "CANCELLED")))
+     (define-key org-todo-state-map "d"
+       #'(lambda nil (interactive) (org-todo "DONE")))
+     (define-key org-todo-state-map "f"
+       #'(lambda nil (interactive) (org-todo "DEFERRED")))
+     (define-key org-todo-state-map "l"
+       #'(lambda nil (interactive) (org-todo "DELEGATED")))
+     (define-key org-todo-state-map "s"
+       #'(lambda nil (interactive) (org-todo "STARTED")))
+     (define-key org-todo-state-map "w"
+       #'(lambda nil (interactive) (org-todo "WAITING")))
 
-;;      (define-key org-agenda-mode-map "\C-n" 'next-line)
-;;      (define-key org-agenda-keymap "\C-n" 'next-line)
-;;      (define-key org-agenda-mode-map "\C-p" 'previous-line)
-;;      (define-key org-agenda-keymap "\C-p" 'previous-line)))
+     ;; (define-key org-agenda-mode-map "\C-n" 'next-line)
+     ;; (define-key org-agenda-keymap "\C-n" 'next-line)
+     ;; (define-key org-agenda-mode-map "\C-p" 'previous-line)
+     ;; (define-key org-agenda-keymap "\C-p" 'previous-line)
+     ))
 
 ;; (require 'remember)
 
@@ -1474,6 +1476,7 @@ Version 2018-10-05"
 
 
 
+
 ;;; GoLang
 ;; http://reangdblog.blogspot.com/2016/06/emacs-ide-go.html
 
@@ -1564,6 +1567,7 @@ Version 2018-10-05"
   "*The comment-start character assumed by Asm mode."
   :type 'character
   :group 'asm)
+
 
 ;;; Pdf-Tools
 
