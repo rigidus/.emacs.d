@@ -17,13 +17,13 @@
   (if mark-active
       (if (< (mark) (point))
           (comment-or-uncomment-region (mark) (point))
-	(comment-or-uncomment-region (point) (mark)))
+        (comment-or-uncomment-region (point) (mark)))
     (comment-or-uncomment-region
      (line-beginning-position)
      (line-end-position lines))))
 
 (global-set-key (kbd "C-x /")
- 		'comment-or-uncomment-this)
+                'comment-or-uncomment-this)
 
 ;;; Debug-Init
 (require 'cl)
@@ -103,17 +103,17 @@
 (defun save-point-and-switch ()
   "Save current point to register 0 and go to the previously
    saved position"
- (interactive)
- (let (temp)
-   (setq temp (point-marker))
-   (when (not (equal (get-register 0) nil))
-     (jump-to-register 0))
-   (set-register 0 temp)))
+  (interactive)
+  (let (temp)
+    (setq temp (point-marker))
+    (when (not (equal (get-register 0) nil))
+      (jump-to-register 0))
+    (set-register 0 temp)))
 ;;
 (defun save-point-only ()
- "Save current point to register 0"
- (interactive)
- (set-register 0 (point-marker)))
+  "Save current point to register 0"
+  (interactive)
+  (set-register 0 (point-marker)))
 ;;
 (global-set-key (kbd "\e\e/") 'save-point-and-switch)
 (global-set-key (kbd "\e\e?") 'save-point-only)
@@ -136,16 +136,17 @@
                   (line  (line-number-at-pos))
                   (contents (thing-at-point 'line)))
               (with-current-buffer newbuff
-                (insert-text-button (format "%d:" line)
-                                    'buff buff
-                                    'point point
-                                    'action (lambda (x)
-                                              (let* ((pos   (posn-point (event-end x)))
-                                                     (buff  (get-text-property pos 'buff))
-                                                     (point (get-text-property pos 'point)))
-                                                (with-current-buffer buff
-                                                  (goto-char point))
-                                                (switch-to-buffer buff))))
+                (insert-text-button
+                 (format "%d:" line)
+                 'buff buff
+                 'point point
+                 'action (lambda (x)
+                           (let* ((pos   (posn-point (event-end x)))
+                                  (buff  (get-text-property pos 'buff))
+                                  (point (get-text-property pos 'point)))
+                             (with-current-buffer buff
+                               (goto-char point))
+                             (switch-to-buffer buff))))
                 (princ contents))))
           (goto-char (point-max))
           (princ (format "\nDone. %s finded." cnt))
@@ -156,11 +157,15 @@
 
 ;;; MELPA
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
 ;; Comment/uncomment this line to enable MELPA Stable if desired.
 ;; See `package-archive-priorities` and `package-pinned-packages`
 ;; Most users will not need or want to do this.
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+;; (add-to-list 'package-archives
+;;              '("gnu" . "http://elpa.gnu.org/packages/"))
 ;; (package-initialize)
 
 ;; Посмотреть установленные пакеты можно в переменной С-h v package-activated-list
@@ -255,13 +260,25 @@ Version 2018-10-05"
 (prefer-coding-system 'windows-1251-dos)
 (prefer-coding-system 'utf-8-unix)
 
+;;; before-save-hooks
+(setq untabify-modes '(c-mode emacs-lisp-mode lisp-mode))
+(defun untabify-hook ()
+  (when (member major-mode untabify-modes)
+    (untabify (point-min) (point-max))
+    ;; (delete-trailing-whitespace)
+    ))
+(add-hook 'before-save-hook 'untabify-hook)
+
 ;;; Delete trailing whitespaces before saving file
 (defun delete-trailing-whitespaces ()
   (interactive "*")
   (delete-trailing-whitespace))
-(add-hook 'before-save-hook
-          '(lambda ()
-             (delete-trailing-whitespace)))
+;; (add-hook 'before-save-hook
+;;           '(lambda ()
+;;              (delete-trailing-whitespace)))
+
+(require 'ws-butler)
+(add-hook 'prog-mode-hook #'ws-butler-mode)
 
 ;;; Auto Fill Mode (disbled)
 (setq default-major-mode 'text-mode)
@@ -275,7 +292,7 @@ Version 2018-10-05"
 ;;; Backups
 ;; (info "(emacs)Auto Save")
 (setq auto-save-interval 512)            ;; Количество нажатий до автосохранения
-(setq auto-save-timeout 20)   ;; Автосохранение в перерыве между нажатиями (в секундах)
+(setq auto-save-timeout 20) ;; Автосохранение в перерыве между нажатиями (в секундах)
 (setq backup-directory-alist             ;; Все временные копии в один каталог.
       '((".*" . "~/.emacs.d/backups")))  ;; Каталог создаётся автоматически.
 (setq backup-by-copying t)               ;; Режим сохранения копий
@@ -300,7 +317,7 @@ Version 2018-10-05"
 (setq column-number-mode t)          ;; Показывать номер текущей колонки
 (setq line-number-mode t)            ;; Показывать номер текущей строки
 (setq inhibit-startup-message t)     ;; Не показываем сообщение при старте
-(fset 'yes-or-no-p 'y-or-n-p)	     ;; не заставляйте меня печать "yes" целиком
+(fset 'yes-or-no-p 'y-or-n-p)        ;; не заставляйте меня печать "yes" целиком
 (setq echo-keystrokes 0.001)         ;; Мгновенное отображение набранных сочетаний клавиш
 (setq use-dialog-boxes nil)          ;; Не использовать диалоговые окна
 (setq cursor-in-non-selected-windows nil) ;; Не показывать курсоры в неактивных окнах
@@ -420,10 +437,10 @@ Version 2018-10-05"
 
 (global-set-key (kbd "C-x ]")
                 '(lambda ()
-                  (interactive)
-                  (set-input-method nil)
-                  (insert "#+NAME:")
-                  (newline)))
+                   (interactive)
+                   (set-input-method nil)
+                   (insert "#+NAME:")
+                   (newline)))
 
 ;;; Fast-Jumps
 ;; В целях дальнейшего улучшения эргономики и отказа
@@ -453,14 +470,14 @@ Version 2018-10-05"
 ;;      ;; include at least commas; presumably also close parens and dollars.
 ;;      (while (string-match "[,)$]" url)
 ;;        (setq url (replace-match
-;; 				  (format "%%%x" (string-to-char (match-string 0 url)))
-;; 				  t t url)))
+;;                (format "%%%x" (string-to-char (match-string 0 url)))
+;;                t t url)))
 ;;      (let* ((process-environment (browse-url-process-environment))
-;; 			(process
-;; 			 (apply 'start-process
-;; 					(concat "conkeror " url)
-;; 					nil "conkeror"
-;; 					(list url)))))))
+;;          (process
+;;           (apply 'start-process
+;;                  (concat "conkeror " url)
+;;                  nil "conkeror"
+;;                  (list url)))))))
 ;; ;; set conkeror-browser
 ;; (setq browse-url-browser-function 'browse-url-conkeror)
 
@@ -524,7 +541,7 @@ Version 2018-10-05"
 
 ;; Отступ при переводе строки в lisp-mode
 (add-hook 'lisp-mode-hook
-		  '(lambda ()
+          '(lambda ()
              (local-set-key (kbd "RET") 'newline-and-indent)))
 
 
@@ -540,8 +557,8 @@ Version 2018-10-05"
 (setq ibuffer-saved-filter-groups
       (quote (("default"
                ("ERC"    (or
-                             (mode . ERC-List-mode)
-                             (mode . erc-mode)))
+                          (mode . ERC-List-mode)
+                          (mode . erc-mode)))
                ("CHAT"      (or
                              (name . "^\\*---.*")))
                ("JABBER"    (or
@@ -958,7 +975,7 @@ Version 2018-10-05"
 ;;       wl-thread-vertical-str             "|"
 ;;       wl-thread-horizontal-str           "-"
 ;;       wl-thread-space-str                " "
-;;       wl-summary-width	nil
+;;       wl-summary-width   nil
 ;;       wl-summary-line-format "%n%T%P %W %D-%M-%Y %h:%m %t%[%c %f% %] %s"
 ;;       wl-message-buffer-prefetch-folder-type-list nil
 ;;       mime-transfer-level 8
@@ -1024,10 +1041,8 @@ Version 2018-10-05"
 ;; загружаем авто-подключение к каналам, и задаем список каналов для
 ;; подключения
 (erc-autojoin-mode t)
-
 (setq erc-autojoin-channels-alist
       '(("irc.freenode.net" "#lisp" "#emacs")))
-
 
 (require 'erc-fill)
 (erc-fill-mode t)
@@ -1060,6 +1075,7 @@ Version 2018-10-05"
 ;;; EGLOT
 
 (require 'eglot)
+(setf eldoc-echo-area-use-multiline-p 2) ;; echo area size
 (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
@@ -1200,17 +1216,17 @@ Version 2018-10-05"
      (define-key org-mode-map "\C-cx" 'org-todo-state-map)
 
      (define-key org-todo-state-map "x"
-       #'(lambda nil (interactive) (org-todo "CANCELLED")))
+                 #'(lambda nil (interactive) (org-todo "CANCELLED")))
      (define-key org-todo-state-map "d"
-       #'(lambda nil (interactive) (org-todo "DONE")))
+                 #'(lambda nil (interactive) (org-todo "DONE")))
      (define-key org-todo-state-map "f"
-       #'(lambda nil (interactive) (org-todo "DEFERRED")))
+                 #'(lambda nil (interactive) (org-todo "DEFERRED")))
      (define-key org-todo-state-map "l"
-       #'(lambda nil (interactive) (org-todo "DELEGATED")))
+                 #'(lambda nil (interactive) (org-todo "DELEGATED")))
      (define-key org-todo-state-map "s"
-       #'(lambda nil (interactive) (org-todo "STARTED")))
+                 #'(lambda nil (interactive) (org-todo "STARTED")))
      (define-key org-todo-state-map "w"
-       #'(lambda nil (interactive) (org-todo "WAITING")))
+                 #'(lambda nil (interactive) (org-todo "WAITING")))
 
      ;; (define-key org-agenda-mode-map "\C-n" 'next-line)
      ;; (define-key org-agenda-keymap "\C-n" 'next-line)
@@ -1408,7 +1424,7 @@ Version 2018-10-05"
         ;;  :publishing-function org-publish-attachment)
         ;; ("in-solar"
         ;;  :components ("in-solar-notes" "in-solar-static"))
-         ))
+        ))
 
 
 ;;; OrgPresent
@@ -1457,7 +1473,7 @@ Version 2018-10-05"
  '(org-directory "~/org/")
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(use-package-hydra treemacs dap-mode flycheck-golangci-lint projectile flx-ido yasnippet use-package lsp-ui go-mode flycheck))
+   '(ws-butler use-package-hydra treemacs dap-mode flycheck-golangci-lint projectile flx-ido yasnippet use-package lsp-ui go-mode flycheck))
  '(show-paren-mode t)
  '(size-indication-mode t)
  '(tab-width 4)
@@ -1510,55 +1526,55 @@ Version 2018-10-05"
 ;;              "go build -v && echo 'build finish' && eval ./${PWD##*/}"
 ;;              (multi-compile-locate-file-dir ".git"))))))
 
-(add-to-list 'load-path "/home/rigidus/.emacs.d/elpa/golint-20180221.2015/" t)
-(require 'golint)
+;; (add-to-list 'load-path "/home/rigidus/.emacs.d/elpa/golint-20180221.2015/" t)
+;; (require 'golint)
 
-(require 'lsp-mode)
-(add-hook 'go-mode-hook #'lsp-deferred)
+;; (require 'lsp-mode)
+;; (add-hook 'go-mode-hook #'lsp-deferred)
 
-;; Set up before-save hooks to format buffer and add/delete imports.
-;; Make sure you don't have other gofmt/goimports hooks enabled.
-(defun lsp-go-install-save-hooks ()
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+;; ;; Set up before-save hooks to format buffer and add/delete imports.
+;; ;; Make sure you don't have other gofmt/goimports hooks enabled.
+;; (defun lsp-go-install-save-hooks ()
+;;   (add-hook 'before-save-hook #'lsp-format-buffer t t)
+;;   (add-hook 'before-save-hook #'lsp-organize-imports t t))
+;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
-(require 'project)
+;; (require 'project)
 
-(defun project-find-go-module (dir)
-  (when-let ((root (locate-dominating-file dir "go.mod")))
-    (cons 'go-module root)))
+;; (defun project-find-go-module (dir)
+;;   (when-let ((root (locate-dominating-file dir "go.mod")))
+;;     (cons 'go-module root)))
 
-(cl-defmethod project-root ((project (head go-module)))
-  (cdr project))
+;; (cl-defmethod project-root ((project (head go-module)))
+;;   (cdr project))
 
-(add-hook 'project-find-functions #'project-find-go-module)
+;; (add-hook 'project-find-functions #'project-find-go-module)
 
-;; Optional: load other packages before eglot to enable eglot integrations.
-(require 'company)
-(require 'yasnippet)
+;; ;; Optional: load other packages before eglot to enable eglot integrations.
+;; (require 'company)
+;; (require 'yasnippet)
 
-(require 'go-mode)
-(require 'eglot)
-(add-hook 'go-mode-hook 'eglot-ensure)
+;; (require 'go-mode)
+;; (require 'eglot)
+;; (add-hook 'go-mode-hook 'eglot-ensure)
 
-;; Optional: install eglot-format-buffer as a save hook.
-;; The depth of -10 places this before eglot's willSave notification,
-;; so that that notification reports the actual contents that will be saved.
-(defun eglot-format-buffer-on-save ()
-  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
-(add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
+;; ;; Optional: install eglot-format-buffer as a save hook.
+;; ;; The depth of -10 places this before eglot's willSave notification,
+;; ;; so that that notification reports the actual contents that will be saved.
+;; (defun eglot-format-buffer-on-save ()
+;;   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
+;; (add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
 
 
-;; GoMode hooks
-(defun my-go-mode-hook ()
-  ;; Call Gofmt before saving
-  ;; (add-hook 'before-save-hook 'gofmt-before-save)
-  ;; Godef jump key binding
-  (local-set-key (kbd "M-.") 'godef-jump)
-  (local-set-key (kbd "M-*") 'pop-tag-mark)
-  )
-(add-hook 'go-mode-hook 'my-go-mode-hook)
+;; ;; GoMode hooks
+;; (defun my-go-mode-hook ()
+;;   ;; Call Gofmt before saving
+;;   ;; (add-hook 'before-save-hook 'gofmt-before-save)
+;;   ;; Godef jump key binding
+;;   (local-set-key (kbd "M-.") 'godef-jump)
+;;   (local-set-key (kbd "M-*") 'pop-tag-mark)
+;;   )
+;; (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 
 
@@ -1682,11 +1698,11 @@ Version 2018-10-05"
   (global-set-key (kbd "<f8>") 'org-tree-slide-mode)
   (global-set-key (kbd "S-<f8>") 'org-tree-slide-skip-done-toggle)
   (define-key org-tree-slide-mode-map (kbd "<f9>")
-    'org-tree-slide-move-previous-tree)
+              'org-tree-slide-move-previous-tree)
   (define-key org-tree-slide-mode-map (kbd "<f10>")
-    'org-tree-slide-move-next-tree)
+              'org-tree-slide-move-next-tree)
   (define-key org-tree-slide-mode-map (kbd "<f11>")
-    'org-tree-slide-content)
+              'org-tree-slide-content)
   (setq org-tree-slide-skip-outline-level 4)
   (org-tree-slide-narrowing-control-profile)
   (setq org-tree-slide-skip-done nil))
@@ -1993,37 +2009,37 @@ Version 2018-10-05"
 (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
-;: Lsp-mode
+                                        ;: Lsp-mode
 ;; https://github.com/golang/tools/blob/master/gopls/doc/emacs.md/
 
 (require 'lsp-mode)
-(add-hook 'go-mode-hook #'lsp-deferred)
+;; (add-hook 'go-mode-hook #'lsp-deferred)
 
-;; Set up before-save hooks to format buffer and add/delete imports.
-;; Make sure you don't have other gofmt/goimports hooks enabled.
-(defun lsp-go-install-save-hooks ()
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+;; ;; Set up before-save hooks to format buffer and add/delete imports.
+;; ;; Make sure you don't have other gofmt/goimports hooks enabled.
+;; (defun lsp-go-install-save-hooks ()
+;;   (add-hook 'before-save-hook #'lsp-format-buffer t t)
+;;   (add-hook 'before-save-hook #'lsp-organize-imports t t))
+;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
-(lsp-register-custom-settings
- '(("gopls.completeUnimported" t t)
-   ("gopls.staticcheck" t t)))
+;; (lsp-register-custom-settings
+;;  '(("gopls.completeUnimported" t t)
+;;    ("gopls.staticcheck" t t)))
 
-(require 'project)
+;; (require 'project)
 
-(defun project-find-go-module (dir)
-  (when-let ((root (locate-dominating-file dir "go.mod")))
-    (cons 'go-module root)))
+;; (defun project-find-go-module (dir)
+;;   (when-let ((root (locate-dominating-file dir "go.mod")))
+;;     (cons 'go-module root)))
 
-(cl-defmethod project-root ((project (head go-module)))
-  (cdr project))
+;; (cl-defmethod project-root ((project (head go-module)))
+;;   (cdr project))
 
-(add-hook 'project-find-functions #'project-find-go-module)
+;; (add-hook 'project-find-functions #'project-find-go-module)
 
-;; Optional: load other packages before eglot to enable eglot integrations.
-(require 'company)
-(require 'yasnippet)
+;; ;; Optional: load other packages before eglot to enable eglot integrations.
+;; (require 'company)
+;; (require 'yasnippet)
 
 ;; Omar Munchav, [11/18/21 7:26 PM]
 ;; Я юзал lsp-mode + gopls
@@ -2033,25 +2049,25 @@ Version 2018-10-05"
 ;; Мне пришлось ссылку в bin создавать
 ;; Либо эту папку добавить в path
 
-(require 'go-mode)
+;; (require 'go-mode)
 ;; https://github.com/joaotavora/eglot#1-2-3
 ;; https://github.com/joaotavora/eglot/blob/master/README.md/
-(require 'eglot)
-(add-hook 'go-mode-hook 'eglot-ensure)
+;; (require 'eglot)
+;; (add-hook 'go-mode-hook 'eglot-ensure)
 
 ;; Optional: install eglot-format-buffer as a save hook.
 ;; The depth of -10 places this before eglot's willSave notification,
 ;; so that that notification reports the actual contents that will be saved.
-(defun eglot-format-buffer-on-save ()
-  (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
-(add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
+;; (defun eglot-format-buffer-on-save ()
+;;   (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
+;; (add-hook 'go-mode-hook #'eglot-format-buffer-on-save)
 
-(setq-default eglot-workspace-configuration
-              '((:gopls .
-                        ((staticcheck . t)
-                         (matcher . "CaseSensitive")))))
+;; (setq-default eglot-workspace-configuration
+;;               '((:gopls .
+;;                         ((staticcheck . t)
+;;                          (matcher . "CaseSensitive")))))
 
-(require 'go-projectile)
+;; (require 'go-projectile)
 
 
 ;;; OrgDownload
@@ -2060,80 +2076,80 @@ Version 2018-10-05"
 ;; Drag-and-drop to `dired`
 (add-hook 'dired-mode-hook 'org-download-enable)
 
-;;; ElMacro - https://github.com/Silex/elmacro
-(elmacro-mode)
-;; M-x elmacro-show-last-macro
-;; C-x C-k C-e - Edit the last defined keyboard macro (kmacro-edit-macro).
-;; C-x C-k e name RET - Edit a previously defined keyboard macro name (edit-kbd-macro).
-;; C-x C-k l - Edit the last 300 keystrokes as a keyboard macro (kmacro-edit-lossage).
-;; C-x C-k n - Give a command name (for the duration of the Emacs session) to the most recently defined keyboard macro (kmacro-name-last-macro).
-;; C-x C-k b - Bind the most recently defined keyboard macro to a key sequence (for the duration of the session) (kmacro-bind-to-key).
-;; M-x insert-kbd-macro - Insert in the buffer a keyboard macro’s definition, as Lisp code.
-(defun last-macro ()
-  (interactive)
-  (isearch-backward-regexp nil 1)
-  (isearch-printing-char 102 1)
-  (isearch-printing-char 117 1)
-  (isearch-printing-char 110 1)
-  (isearch-printing-char 99 1)
-  (isearch-printing-char 46 1)
-  (isearch-printing-char 42 1)
-  (isearch-printing-char 123 1)
-  (isearch-exit)
-  (set-mark-command nil)
-  (isearch-forward-regexp nil 1)
-  (isearch-printing-char 123 1)
-  (isearch-exit)
-  (left-char 1)
-  (forward-list 1)
-  (kill-ring-save 3446 4701 1)
-  ;; (yank nil)
-  )
-;; (defun ivy-last-macro-action (x)
-;;   (last-macro)
-;;   (with-ivy-window
-;;     (insert x)))
-(defun my-action-1 (x)
-  (message "action-11: %s" (ivy--trim-grep-line-number x)))
-(defun my-action-2 (x)
-  (message "action-2: %s" x))
-(defun my-action-3 (x)
-  (message "action-3: %s" x))
-(defun my-command-with-3-actions ()
-  (interactive)
-  (ivy-read "test: " '("foo" "bar" "baz")
-            :action '(1
-                      ("o" my-action-1 "action 1")
-                      ("j" my-action-2 "action 2")
-                      ("k" my-action-3 "action 3"))))
-;; extractor
-(defun extract-fn (x)
-  ;; (let ((x "par/pre.lsp:7:2:(defun verbose-enough (n)"))
-  (if (null (string-match ":[0-9]+:" x))
-      (user-error "No file and line")
-    ;; else
-    (let* ((line (substring x (+ (match-beginning 0) 1) (- (match-end 0) 1)))
-           (line-no (string-to-number (ivy--remove-props line 'face)))
-           (file (substring x 0 (match-beginning 0)))
-           (char (if (null (string-match ":[0-9]+:" x (- (match-end 0) 1)))
-                     (user-error "No pos in line")
-                   (substring x (+ (match-beginning 0) 1)
-                              (- (match-end 0) 1))))
-           (char-no (string-to-number (ivy--remove-props char 'face)))
-           (buffer (find-file file)))
-      (with-current-buffer buffer
-        (message "bfn : %s" (buffer-file-name buffer))
-        (message "line-no : %s" line-no)
-        (message "char-no : %s" char-no)
-        (goto-line line-no)
-        (forward-char char-no)
-        (last-macro)
-        (kill-buffer buffer)
-    ))))
-;; Extract
-(ivy-add-actions
- t
- '(("e" extract-fn "extract")))
+;; ;;; ElMacro - https://github.com/Silex/elmacro
+;; (elmacro-mode)
+;; ;; M-x elmacro-show-last-macro
+;; ;; C-x C-k C-e - Edit the last defined keyboard macro (kmacro-edit-macro).
+;; ;; C-x C-k e name RET - Edit a previously defined keyboard macro name (edit-kbd-macro).
+;; ;; C-x C-k l - Edit the last 300 keystrokes as a keyboard macro (kmacro-edit-lossage).
+;; ;; C-x C-k n - Give a command name (for the duration of the Emacs session) to the most recently defined keyboard macro (kmacro-name-last-macro).
+;; ;; C-x C-k b - Bind the most recently defined keyboard macro to a key sequence (for the duration of the session) (kmacro-bind-to-key).
+;; ;; M-x insert-kbd-macro - Insert in the buffer a keyboard macro’s definition, as Lisp code.
+;; (defun last-macro ()
+;;   (interactive)
+;;   (isearch-backward-regexp nil 1)
+;;   (isearch-printing-char 102 1)
+;;   (isearch-printing-char 117 1)
+;;   (isearch-printing-char 110 1)
+;;   (isearch-printing-char 99 1)
+;;   (isearch-printing-char 46 1)
+;;   (isearch-printing-char 42 1)
+;;   (isearch-printing-char 123 1)
+;;   (isearch-exit)
+;;   (set-mark-command nil)
+;;   (isearch-forward-regexp nil 1)
+;;   (isearch-printing-char 123 1)
+;;   (isearch-exit)
+;;   (left-char 1)
+;;   (forward-list 1)
+;;   (kill-ring-save 3446 4701 1)
+;;   ;; (yank nil)
+;;   )
+;; ;; (defun ivy-last-macro-action (x)
+;; ;;   (last-macro)
+;; ;;   (with-ivy-window
+;; ;;     (insert x)))
+;; (defun my-action-1 (x)
+;;   (message "action-11: %s" (ivy--trim-grep-line-number x)))
+;; (defun my-action-2 (x)
+;;   (message "action-2: %s" x))
+;; (defun my-action-3 (x)
+;;   (message "action-3: %s" x))
+;; (defun my-command-with-3-actions ()
+;;   (interactive)
+;;   (ivy-read "test: " '("foo" "bar" "baz")
+;;             :action '(1
+;;                       ("o" my-action-1 "action 1")
+;;                       ("j" my-action-2 "action 2")
+;;                       ("k" my-action-3 "action 3"))))
+;; ;; extractor
+;; (defun extract-fn (x)
+;;   ;; (let ((x "par/pre.lsp:7:2:(defun verbose-enough (n)"))
+;;   (if (null (string-match ":[0-9]+:" x))
+;;       (user-error "No file and line")
+;;     ;; else
+;;     (let* ((line (substring x (+ (match-beginning 0) 1) (- (match-end 0) 1)))
+;;            (line-no (string-to-number (ivy--remove-props line 'face)))
+;;            (file (substring x 0 (match-beginning 0)))
+;;            (char (if (null (string-match ":[0-9]+:" x (- (match-end 0) 1)))
+;;                      (user-error "No pos in line")
+;;                    (substring x (+ (match-beginning 0) 1)
+;;                               (- (match-end 0) 1))))
+;;            (char-no (string-to-number (ivy--remove-props char 'face)))
+;;            (buffer (find-file file)))
+;;       (with-current-buffer buffer
+;;         (message "bfn : %s" (buffer-file-name buffer))
+;;         (message "line-no : %s" line-no)
+;;         (message "char-no : %s" char-no)
+;;         (goto-line line-no)
+;;         (forward-char char-no)
+;;         (last-macro)
+;;         (kill-buffer buffer)
+;;     ))))
+;; ;; Extract
+;; (ivy-add-actions
+;;  t
+;;  '(("e" extract-fn "extract")))
 
 
 (setq c-default-style "linux" c-basic-offset 4)
@@ -2164,84 +2180,84 @@ Version 2018-10-05"
   (edit-server-start))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Pre gopls/lsp-mode/go-mode setup
-;;; This section installs use-package from melpa if it isn't
-;;; already installed. You can skip this if you already have use-package
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;; Pre gopls/lsp-mode/go-mode setup
+;; ;;; This section installs use-package from melpa if it isn't
+;; ;;; already installed. You can skip this if you already have use-package
 
-;; enable melpa if it isn't enabled
-(require 'package)
-(when (not (assoc "melpa" package-archives))
-  (setq package-archives (append '(("stable" . "https://stable.melpa.org/packages/")) package-archives))
-  (setq package-archives (append '(("melpa" . "https://melpa.org/packages/")) package-archives))
-  (setq package-archives (append '(("gnu" . "https://elpa.gnu.org/packages/")) package-archives)))
-(package-initialize)
+;; ;; enable melpa if it isn't enabled
+;; (require 'package)
+;; (when (not (assoc "melpa" package-archives))
+;;   (setq package-archives (append '(("stable" . "https://stable.melpa.org/packages/")) package-archives))
+;;   (setq package-archives (append '(("melpa" . "https://melpa.org/packages/")) package-archives))
+;;   (setq package-archives (append '(("gnu" . "https://elpa.gnu.org/packages/")) package-archives)))
+;; (package-initialize)
 
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+;; (add-to-list 'load-path "~/.emacs.d/lisp/")
 
-;; refresh package list if it is not already available
-(when (not package-archive-contents) (package-refresh-contents))
+;; ;; refresh package list if it is not already available
+;; (when (not package-archive-contents) (package-refresh-contents))
 
-;; install use-package if it isn't already installed
-(when (not (package-installed-p 'use-package))
-  (package-install 'use-package))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Install and configure packages
+;; ;; install use-package if it isn't already installed
+;; (when (not (package-installed-p 'use-package))
+;;   (package-install 'use-package))
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; Install and configure packages
 
-(setq fit-window-to-buffer-horizontally t)
+;; (setq fit-window-to-buffer-horizontally t)
 
-;; (add-hook 'after-init-hook 'global-flycheck-mode)
-;; (add-hook 'after-init-hook 'global-company-mode)
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
+;; ;; (add-hook 'after-init-hook 'global-flycheck-mode)
+;; ;; (add-hook 'after-init-hook 'global-company-mode)
+;; (eval-after-load 'flycheck
+;;   '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
 
-;; use golangci
-(use-package flycheck-golangci-lint
-  :ensure t)
+;; ;; use golangci
+;; (use-package flycheck-golangci-lint
+;;   :ensure t)
 
-;; optional, provides snippets for method signature completion
-(use-package yasnippet
-  :ensure t)
+;; ;; optional, provides snippets for method signature completion
+;; (use-package yasnippet
+;;   :ensure t)
 
-(use-package lsp-mode
-  :ensure t
-  ;; uncomment to enable gopls http debug server
-  ;; :custom (lsp-gopls-server-args '("-debug" "127.0.0.1:0"))
-  :commands (lsp lsp-deferred)
-  :hook (go-mode . lsp-deferred)
-  :config (progn
-            ;; use flycheck, not flymake
-            (setq lsp-prefer-flymake nil)
-	        ;;(setq lsp-trace nil)
-	        (setq lsp-print-performance nil)
-	        (setq lsp-log-io nil))
-  )
+;; (use-package lsp-mode
+;;   :ensure t
+;;   ;; uncomment to enable gopls http debug server
+;;   ;; :custom (lsp-gopls-server-args '("-debug" "127.0.0.1:0"))
+;;   :commands (lsp lsp-deferred)
+;;   :hook (go-mode . lsp-deferred)
+;;   :config (progn
+;;             ;; use flycheck, not flymake
+;;             (setq lsp-prefer-flymake nil)
+;;          ;;(setq lsp-trace nil)
+;;          (setq lsp-print-performance nil)
+;;          (setq lsp-log-io nil))
+;;   )
 
-;; Set up before-save hooks to format buffer and add/delete imports.
-;; Make sure you don't have other gofmt/goimports hooks enabled.
-(defun lsp-go-install-save-hooks ()
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+;; ;; Set up before-save hooks to format buffer and add/delete imports.
+;; ;; Make sure you don't have other gofmt/goimports hooks enabled.
+;; (defun lsp-go-install-save-hooks ()
+;;   (add-hook 'before-save-hook #'lsp-format-buffer t t)
+;;   (add-hook 'before-save-hook #'lsp-organize-imports t t))
+;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
-;; debug
-;;(setq lsp-log-io t)
+;; ;; debug
+;; ;;(setq lsp-log-io t)
 
 
-;; optional - provides fancy overlay information
-;; https://ladicle.com/post/config/
-(use-package lsp-ui
-  :ensure t
-  :after(lsp-mode)
-  :commands lsp-ui-mode
-  :config (progn
-            ;; disable inline documentation
-            (setq lsp-ui-sideline-enable nil)
-            ;; disable showing docs on hover at the top of the window
-            (setq lsp-ui-doc-enable nil)
-	        (setq lsp-ui-imenu-enable t)
-	        (setq lsp-ui-imenu-kind-position 'top))
-  )
+;; ;; optional - provides fancy overlay information
+;; ;; https://ladicle.com/post/config/
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :after(lsp-mode)
+;;   :commands lsp-ui-mode
+;;   :config (progn
+;;             ;; disable inline documentation
+;;             (setq lsp-ui-sideline-enable nil)
+;;             ;; disable showing docs on hover at the top of the window
+;;             (setq lsp-ui-doc-enable nil)
+;;          (setq lsp-ui-imenu-enable t)
+;;          (setq lsp-ui-imenu-kind-position 'top))
+;;   )
 
 
 ;; (use-package company
@@ -2303,18 +2319,18 @@ Version 2018-10-05"
 ;;    _s_: Step in    _o_: Step out _k_: break condition _h_: break hit condition
 ;;    _Q_: Disconnect _q_: quit     _l_: locals
 ;;    "
-;; 	               ("n" dap-next)
-;; 	               ("c" dap-continue)
-;; 	               ("s" dap-step-in)
-;; 	               ("o" dap-step-out)
-;; 	               ("g" dap-ui-sessions)
-;; 	               ("l" dap-ui-locals)
-;; 	               ("e" dap-eval-thing-at-point)
-;; 	               ("h" dap-breakpoint-hit-condition)
-;; 	               ("k" dap-breakpoint-condition)
-;; 	               ("i" dap-breakpoint-log-message)
-;; 	               ("q" nil "quit" :color blue)
-;; 	               ("Q" dap-disconnect :color red)))
+;;                 ("n" dap-next)
+;;                 ("c" dap-continue)
+;;                 ("s" dap-step-in)
+;;                 ("o" dap-step-out)
+;;                 ("g" dap-ui-sessions)
+;;                 ("l" dap-ui-locals)
+;;                 ("e" dap-eval-thing-at-point)
+;;                 ("h" dap-breakpoint-hit-condition)
+;;                 ("k" dap-breakpoint-condition)
+;;                 ("i" dap-breakpoint-log-message)
+;;                 ("q" nil "quit" :color blue)
+;;                 ("Q" dap-disconnect :color red)))
 
 ;; ;; DAP
 ;; (use-package dap-mode
@@ -2327,7 +2343,7 @@ Version 2018-10-05"
 ;;   ;;(setq window-resize-pixelwise t)
 ;;   (require 'dap-hydra)
 ;;   ;; old version
-;;   ;;  (require 'dap-go)		; download and expand vscode-go-extenstion to the =~/.extensions/go=
+;;   ;;  (require 'dap-go)      ; download and expand vscode-go-extenstion to the =~/.extensions/go=
 ;;   ;;  (dap-go-setup)
 ;;   ;; new version
 ;;   (require 'dap-dlv-go)
