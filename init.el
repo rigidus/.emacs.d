@@ -118,6 +118,16 @@
 (global-set-key (kbd "\e\e/") 'save-point-and-switch)
 (global-set-key (kbd "\e\e?") 'save-point-only)
 
+;;; semantic-idle-breadcrums-mode for c-mode
+(require 'semantic/idle)
+(defun my-c-mode-setup ()
+  (semantic-mode 1)                  ; Включаем Semantic
+  (semantic-idle-breadcrumbs-mode 1) ; Включаем idle breadcrumbs
+  (setq semantic-idle-breadcrumbs-format-tag-list-function
+        'semantic-idle-breadcrumbs--format-innermost-first))
+
+(add-hook 'c-mode-hook 'my-c-mode-setup)
+
 ;;; What-Can-I-Do
 
 (defun what-can-i-do ()
@@ -157,8 +167,8 @@
 
 ;;; MELPA
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
+;; (add-to-list 'package-archives
+;;              '("melpa" . "https://melpa.org/packages/") t)
 ;; Comment/uncomment this line to enable MELPA Stable if desired.
 ;; See `package-archive-priorities` and `package-pinned-packages`
 ;; Most users will not need or want to do this.
@@ -1114,7 +1124,7 @@ Version 2018-10-05"
 ;; type M-x customize-group RET company.
 
 
-
+(require 'use-package)
 
 ;;; TELEGA
 
@@ -1632,8 +1642,6 @@ Version 2018-10-05"
 
 ;; USING: M-x org-latex-export-to-pdf
 
-
-(require 'use-package)
 
 ;; (use-package pdf-tools :ensure t
 ;;   :defer 18

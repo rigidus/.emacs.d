@@ -541,7 +541,7 @@
 		(:keywords "languages" "elixir")
 		(:commit . "00d6580a040a750e019218f9392cf9a4c2dac23a"))])
  (elpher .
-	 [(3 6 2)
+	 [(3 6 3)
 	  ((emacs
 	    (27 1)))
 	  "A friendly gopher and gemini client" tar
@@ -550,7 +550,7 @@
 	   (:maintainer "Tim Vaughan" . "plugd@thelambdalab.xyz")
 	   (:authors
 	    ("Tim Vaughan" . "plugd@thelambdalab.xyz"))
-	   (:commit . "0bd12913940a047724d830725bf8649e4f8df499"))])
+	   (:commit . "e3760dfedbd803dd8ff2a5d4fbbda249c1963bd1"))])
  (emacsql .
 	  [(4 0 3)
 	   ((emacs
@@ -1032,7 +1032,7 @@
 	       ("Jonas Bernoulli" . "emacs.git-modes@jonas.bernoulli.dev"))
 	      (:commit . "f99010bbeb8b6d8a0819fac0195a2ef0159d08f0"))])
  (gnosis .
-	 [(0 4 3)
+	 [(0 4 4)
 	  ((emacs
 	    (27 2))
 	   (emacsql
@@ -1047,7 +1047,7 @@
 	   (:maintainer "Thanos Apollo" . "public@thanosapollo.org")
 	   (:authors
 	    ("Thanos Apollo" . "public@thanosapollo.org"))
-	   (:commit . "40f63788afdb74fa71177abd882e852177829881"))])
+	   (:commit . "fd1315830e3aedf5d7cedc8410ec4f4bc2b781f0"))])
  (gnu-apl-mode .
 	       [(1 5 1)
 		nil "Emacs mode for GNU APL" tar
@@ -1498,7 +1498,7 @@
 	       ("Jon Oddie" . "j.j.oddie@gmail.com"))
 	      (:commit . "31d4adcca4f08cfd7a45f85e691aaa7a9316b355"))])
  (magit .
-	[(4 1 0)
+	[(4 1 1)
 	 ((emacs
 	   (26 1))
 	  (compat
@@ -1506,11 +1506,11 @@
 	  (dash
 	   (2 19 1))
 	  (magit-section
-	   (4 1 0))
+	   (4 1 1))
 	  (seq
 	   (2 24))
 	  (transient
-	   (0 7 5))
+	   (0 7 6))
 	  (with-editor
 	   (3 4 2)))
 	 "A Git porcelain inside Emacs" tar
@@ -1522,9 +1522,9 @@
 	  (:authors
 	   ("Marius Vollmer" . "marius.vollmer@gmail.com")
 	   ("Jonas Bernoulli" . "emacs.magit@jonas.bernoulli.dev"))
-	  (:commit . "0aa26864e3fc4e6949711a4821caf6819e7ab171"))])
+	  (:commit . "93e86ceca7bf5b0ff9023d7f138e5f06990fc276"))])
  (magit-section .
-		[(4 1 0)
+		[(4 1 1)
 		 ((emacs
 		   (26 1))
 		  (compat
@@ -1539,7 +1539,7 @@
 		  (:maintainer "Jonas Bernoulli" . "emacs.magit@jonas.bernoulli.dev")
 		  (:authors
 		   ("Jonas Bernoulli" . "emacs.magit@jonas.bernoulli.dev"))
-		  (:commit . "0aa26864e3fc4e6949711a4821caf6819e7ab171"))])
+		  (:commit . "93e86ceca7bf5b0ff9023d7f138e5f06990fc276"))])
  (markdown-mode .
 		[(2 6)
 		 ((emacs
@@ -1761,14 +1761,14 @@
 	       ((:url . "http://github.com/bastibe/org-journal")
 		(:commit . "18df4d5ae5e15580df42562c143d007c6d28d75f"))])
  (org-mime .
-	   [(0 3 3)
+	   [(0 3 4)
 	    ((emacs
 	      (27 1)))
 	    "org html export for text/html MIME emails" tar
 	    ((:url . "http://github.com/org-mime/org-mime")
 	     (:keywords "mime" "mail" "email" "html")
 	     (:maintainer "Chen Bin" . "chenbin.sh@gmail.com")
-	     (:commit . "468604b8404d3c7d6148be83a4cf308ee95d2cfb"))])
+	     (:commit . "90aa9081ec00a1705552434cb45ff223aa9f8711"))])
  (org-present .
 	      [(0 1)
 	       ((org
@@ -2013,7 +2013,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:commit . "1edda80e2e32b72e77f4f16ae5b83c312c68ee95"))])
  (racket-mode .
-	      [(1 0 20240924 164110)
+	      [(1 0 20241001 105847)
 	       ((emacs
 		 (25 1)))
 	       "Racket editing, REPL, and more" tar
@@ -2260,14 +2260,14 @@
 		     ("John Olsson" . "john@cryon.se"))
 		    (:commit . "2d5acd143a153e16372d59000e57d76291ab81dd"))])
  (subed .
-	[(1 2 15)
+	[(1 2 16)
 	 ((emacs
 	   (25 1)))
 	 "A major mode for editing subtitles" tar
 	 ((:url . "https://github.com/sachac/subed")
 	  (:keywords "convenience" "files" "hypermedia" "multimedia")
 	  (:maintainer "Sacha Chua" . "sacha@sachachua.com")
-	  (:commit . "47403ce79d084d7dec8599553456f35370d8aef2"))])
+	  (:commit . "4558c30f392e32a4658cfbcca335368035bf8da9"))])
  (sweeprolog .
 	     [(0 27 6)
 	      ((emacs
